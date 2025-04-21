@@ -40,13 +40,14 @@ import {
   ]
 })
 export class AuthPage implements OnInit {
-  pageType: string = 'register'; // 'register', 'athlete-login', 'coach-login'
+  pageType: string = 'register';
   pageTitle: string = 'Registro';
   
   userData = {
     email: '',
     name: '',
-    password: ''
+    password: '',
+    coachId: ''  // Para el registro de atleta
   };
 
   constructor(
@@ -55,20 +56,23 @@ export class AuthPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    // Determinar el tipo de página basado en el parámetro de ruta
+
     this.route.queryParams.subscribe(params => {
       if (params['type']) {
         this.pageType = params['type'];
         
         switch(this.pageType) {
           case 'register':
-            this.pageTitle = 'Registro';
+            this.pageTitle = 'Registro de Atleta';
             break;
           case 'athlete-login':
             this.pageTitle = 'Iniciar Sesión - Atleta';
             break;
           case 'coach-login':
             this.pageTitle = 'Iniciar Sesión - Entrenador';
+            break;
+          case 'coach-register':
+            this.pageTitle = 'Registro - Entrenador';
             break;
           default:
             this.pageTitle = 'Registro';
@@ -82,23 +86,24 @@ export class AuthPage implements OnInit {
     console.log('Formulario enviado:', this.userData);
     console.log('Tipo de página:', this.pageType);
     
-    // Aquí implementarías la lógica específica para cada tipo de formulario
+
     switch(this.pageType) {
       case 'register':
-        // Lógica de registro
-        console.log('Procesando registro');
+        // Registro de atleta: idEntrenador, correo, usuario, contraseña
+        console.log('Procesando registro de atleta');
         break;
       case 'athlete-login':
-        // Lógica de inicio de sesión para atletas
+        // Login atleta: correo, contraseña
         console.log('Procesando inicio de sesión de atleta');
         break;
       case 'coach-login':
-        // Lógica de inicio de sesión para entrenadores
+        // Login entrenador: correo, contraseña
         console.log('Procesando inicio de sesión de entrenador');
         break;
+      case 'coach-register':
+        // Registro entrenador: correo, usuario, contraseña
+        console.log('Procesando registro de entrenador');
+        break;
     }
-    
-    // Redirigir a la página principal después del éxito
-    // this.router.navigate(['/home']);
   }
 }
