@@ -24,6 +24,7 @@ interface NullCause {
 }
 
 interface Exercise {
+  id: number;
   name: string;
   video: string;
   description: string;
@@ -57,6 +58,7 @@ interface Exercise {
 export class VideosPage implements OnInit {
   exercises: Exercise[] = [
     {
+      id: 1,
       name: "Sentadilla",
       video: "Url",
       description: "La sentadilla es un ejercicio donde cargas el peso de la barra sobre tu espalda o hombros y bajas hasta que las rodillas hagan o pasen el ángulo de 90º",
@@ -68,6 +70,7 @@ export class VideosPage implements OnInit {
       ]
     },
     {
+      id: 2,
       name: "Press Banca",
       video: "Url",
       description: "Es un ejercicio donde tienes que tumbarte en un banco plano, sacar la barra del rack y ser capaz de llevarla desde el rack a tu pecho y volver a subirla de forma controlada",
@@ -79,6 +82,7 @@ export class VideosPage implements OnInit {
       ]
     },
     {
+      id: 3,
       name: "Peso Muerto",
       video: "Url",
       description: "El peso muerto es un ejercicio en el que la barra estara en el suelo y deberas cogerla con tus manos, una vez preparado tienes que subir hasta la altura de la cadera la barra",
@@ -90,6 +94,7 @@ export class VideosPage implements OnInit {
       ]
     },
     {
+      id: 4,
       name: "Extension de cuádriceps",
       video: "Url",
       description: "En una maquina, sentado tendrás que levantar el peso haciendo uso solo de tus piernas",
@@ -101,6 +106,7 @@ export class VideosPage implements OnInit {
       ]
     },
     {
+      id: 5,
       name: "Press Inclinado",
       video: "Url",
       description: "En este ejercicio tendrás que tener un banco con una inclinación de unos 45º, y en una maquina guiada bajaras de forma controlada la barra hasta la mitad del pecho y volverás a subirla de forma controlada",
@@ -112,6 +118,7 @@ export class VideosPage implements OnInit {
       ]
     },
     {
+      id: 6,
       name: "Press militar de pie",
       video: "Url",
       description: "Tendras que tener una barra a la altura del pecho y has de subirla por encima de tu cabeza, hasta donde seas capaz, y luego bajarla de forma controlada otra vez a tu pecho",
@@ -123,6 +130,7 @@ export class VideosPage implements OnInit {
       ]
     },
     {
+      id: 7,
       name: "Remo en Barra",
       video: "Url",
       description: "El remo en barra es un ejercicio en el que, con las piernas ligeramente flexionadas y la espalda recta, debes tirar de la barra hacia tu abdomen, manteniendo los codos pegados al cuerpo.",
@@ -134,6 +142,7 @@ export class VideosPage implements OnInit {
       ]
     },
     {
+      id: 8,
       name: "Peso Muerto Rumano",
       video: "Url",
       description: "El peso muerto rumano es similar al peso muerto tradicional, pero en este caso debes mantener las piernas más rectas mientras bajas la barra, centrándote en activar los isquiotibiales y glúteos.",
@@ -145,6 +154,7 @@ export class VideosPage implements OnInit {
       ]
     },
     {
+      id: 9,
       name: "Curl de Bíceps en Barra",
       video: "Url",
       description: "El curl de bíceps en barra es un ejercicio clásico para trabajar los bíceps. Se realiza sosteniendo una barra con las manos en supinación y realizando un movimiento de flexión del codo para elevar la barra.",
@@ -156,6 +166,7 @@ export class VideosPage implements OnInit {
       ]
     },
     {
+      id: 10,
       name: "Elevaciones Laterales con Mancuerna",
       video: "Url",
       description: "Este ejercicio consiste en levantar una mancuerna con cada mano hacia los lados, manteniendo los codos ligeramente flexionados para trabajar los deltoides laterales.",
@@ -167,6 +178,7 @@ export class VideosPage implements OnInit {
       ]
     },
     {
+      id: 11,
       name: "Extensión de Tríceps en Polea",
       video: "Url",
       description: "En este ejercicio, debes usar una polea alta con una cuerda o barra para extender los brazos hacia abajo, trabajando los tríceps.",

@@ -45,5 +45,9 @@ export const routes: Routes = [
     path: 'perfil-usuario',
     loadComponent: () => import('./paginas/perfil-usuario/perfil-usuario.page').then(m => m.PerfilUsuarioPage)
   },
+  {
+    path: 'videos-detalles/:id',
+    loadComponent: () => import('./paginas/videos-detalles/videos-detalles.page').then( m => m.VideosDetallesPage)
+  }
   // Add other routes here
 ];
