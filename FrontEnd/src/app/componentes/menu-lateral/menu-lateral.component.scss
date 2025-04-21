@@ -1,0 +1,14 @@
+.logout-container {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding-bottom: 16px;
+}
+
+.logout-button {
+  --background: transparent;
+  
+  ion-icon {
+    color: var(--ion-color-danger);
+  }
+}
