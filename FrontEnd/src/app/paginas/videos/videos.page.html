@@ -17,14 +17,14 @@
   <ion-grid>
     <ion-row>
       <ion-col size="12" size-md="6" size-lg="4" *ngFor="let exercise of exercises">
-        <!-- Añade un evento (click) a cada tarjeta o botón -->
-        <ion-card (click)="verDetallesEjercicio(exercise.id)" *ngFor="let exercise of exercises">
+        <!-- Corregido: eliminado el segundo *ngFor -->
+        <ion-card (click)="verDetallesEjercicio(exercise.id)" class="exercise-card">
           <ion-card-header>
-            <ion-card-title>{{ exercise.name }}</ion-card-title>
+            <ion-card-title class="ion-text-center">{{ exercise.name }}</ion-card-title>
           </ion-card-header>
           
-          <div class="video-placeholder">
-            <!-- Placeholder para el video, se puede reemplazar con un iframe cuando tengas las URLs reales -->
+          <div class="video-placeholder ion-text-center">
+
             <div class="video-container">
               <img src="assets/video-placeholder.jpg" alt="{{ exercise.name }}" />
               <div class="play-button">
@@ -33,15 +33,9 @@
             </div>
           </div>
           
-          <ion-card-content>
+          <ion-card-content class="ion-text-center">
             <p>{{ exercise.description }}</p>
             
-            <div class="null-causes" *ngIf="exercise.nullCauses && exercise.nullCauses.length > 0 && exercise.nullCauses[0].reason !== 'Este ejercicio no tiene motivo de nulo' && exercise.nullCauses[0].reason !== 'Este ejercicio no tiene motivos de nulo'">
-              <h4>Causas de nulo:</h4>
-              <ul>
-                <li *ngFor="let cause of exercise.nullCauses">{{ cause.reason }}</li>
-              </ul>
-            </div>
           </ion-card-content>
         </ion-card>
       </ion-col>

@@ -1,0 +1,44 @@
+.exercise-card {
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  box-shadow: none;
+  margin: 10px;
+  overflow: hidden;
+}
+
+.video-placeholder {
+  padding: 10px;
+  
+  .video-container {
+    position: relative;
+    max-width: 100%;
+    margin: 0 auto;
+    
+    img {
+      width: 100%;
+      border-radius: 8px;
+    }
+    
+    .play-button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      
+      ion-icon {
+        font-size: 48px;
+        color: white;
+        opacity: 0.8;
+      }
+    }
+  }
+}
+
+ion-card-content {
+  padding: 16px;
+  
+  p {
+    margin: 0;
+    line-height: 1.5;
+  }
+}

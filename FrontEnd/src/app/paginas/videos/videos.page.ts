@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { 
@@ -52,7 +53,7 @@ interface Exercise {
     IonGrid,
     IonRow,
     IonCol,
-    IonIcon // Add this to the imports array
+    IonIcon 
   ]
 })
 export class VideosPage implements OnInit {
@@ -191,8 +192,12 @@ export class VideosPage implements OnInit {
     }
   ];
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
+  }
+
+  verDetallesEjercicio(id: number) {
+    this.router.navigate(['/videos-detalles', id]);
   }
 }
