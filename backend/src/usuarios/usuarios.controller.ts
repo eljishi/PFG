@@ -6,198 +6,132 @@ import {
     InternalServerErrorException,
     NotFoundException,
     Param,
-    Post, Put
+    Post, Put, Req, UnauthorizedException
 } from '@nestjs/common';
 import {UsuariosService} from "./usuarios.service";
 import {UsuarioDTO} from "./dto/usuarios.dto/usuarios.dto";
+import * as bcrypt from 'bcrypt';
+import {JwtService} from "@nestjs/jwt";
 
 
-@Controller('api/v1/ejercicios')
+
+@Controller('api/v1/users')
 export class UsuariosController {
 
     constructor(
-        private readonly usuariosService: UsuariosService) {
+        private readonly usuariosService: UsuariosService,
+        private readonly jwtService: JwtService) {
     }
 
 
-    @Post('')
-    async create(@Body() usuarioDto: UsuarioDTO) {
+    @Post('register')
+    async register(@Body() usuarioDto: UsuarioDTO) {
         try {
-            const resp = await this.usuariosService.create(usuarioDto);
-            return {
-                status: 'Ok',
-                message: 'Ejercicio creado'
+            const hashedPassword =
+                await bcrypt.hash(usuarioDto.password, 20)
+            const user = await this.usuariosService.create({
+                id: usuarioDto.id,
+                mail: usuarioDto.mail,
+                user: usuarioDto.user,
+                password: hashedPassword,
+                esEntrenador: usuarioDto.esEntrenador
+
+            });
+            if (!user){
+                throw new BadRequestException()
             }
-        } catch (e: any) {
-            throw new BadRequestException(
-                {
-                    status: 'Error',
+            return{
+                ok: true,
+                token: user
+            }
+        }catch (e:any){
+            if (e instanceof BadRequestException){
+                throw new BadRequestException({
+                    ok: false,
                     message: e.message
                 })
-        }
-
-    }
-
-
-    @Get('')
-    async getUsuarios() {
-        try {
-            const data =
-                await this.usuariosService.getUsuarios();
-            return {
-                status: 'Ok',
-                data
-            }
-        } catch (e: any) {
-            return new BadRequestException({
-                status: 'Error',
-                message: e.message
-            })
-        }
-    }
-
-    //pilla una serie
-    @Get('usuario/:id')
-    async getUsuario(@Param('id') id: string) {
-        try {
-            const data =
-                await this.usuariosService.getUsuario(id);
-            if (data) {
-                return {
-                    status: 'Ok',
-                    data
-                }
-            }
-            return new NotFoundException({
-                status: 'Error',
-                message: 'Usuario no encontrada'
-            })
-        } catch (e: any) {
-            if (e instanceof NotFoundException) {
-                throw e
             }
             throw new InternalServerErrorException({
-                status: 'Error',
+                ok: false,
                 message: e.message
             })
         }
     }
-    /*
-    @Get('search')
-    async getSerieByTitleOrSynopsis(@Query('query') query: string) {
-        try {
-            const series = await this.ejerciciosService.getSerieByTitleOrSynopsis(query);
-            return {
-                status: 'Ok',
-                data: series
-            };
-        } catch (e: any) {
-            throw new InternalServerErrorException({
-                status: "Error",
-                message: e.message
-            });
-        }
-    }
-    */
+    @Post('login')
+    async login(
+        @Body('email')email: string,
+        @Body('password')password: string
+    ){
+        try{
+            const user = await this.usuariosService.findOne(
+                {email}
+            )
+            if(!user){
+                throw new UnauthorizedException({
+                    ok: false,
+                    message: 'Usuario o Contraseña incorrectas'
+                })
 
-    @Put('/:id')
-    async updateUsuarios(
-        @Param('id') id: string,
-        @Body() usuarioDto: UsuarioDTO) {
-        try {
-            const updatedMovie =
-                await this.usuariosService.updateUsuario(
-                    id, usuarioDto
-                );
-            if (!updatedMovie) {
-                throw new NotFoundException({
-                    status: 'Error',
-                    message: 'Usuario no encontrado'
+            }
+            if (!(await bcrypt.compare(password, user.password))){
+                throw new UnauthorizedException({
+                    ok: false,
+                    message: 'Usuario o Contraseña incorrectas'
                 })
             }
-            return {
-                status: 'Ok',
-                message: 'Usuario actualizado'
-            }
-        } catch (e: any) {
-            if (e instanceof NotFoundException) {
-                throw e
-            }
-            throw new InternalServerErrorException({
-                status: 'Error',
-                message: e.message
+            const jwt = await this.jwtService.signAsync({
+                _id: user._id,
+                username: user.username,
+                email: user.email,
+                avatar: user.avatar
             })
-        }
-    }
-
-    @Delete(':id')
-    async deleteUsuario(@Param('id') id: string) {
-        try {
-            const serieDeleted =
-                await this.usuariosService.deleteUsuario(id);
-            if (!serieDeleted) {
-                throw new NotFoundException({
-                    status: 'Error',
-                    message: 'Usuario no encontrado'
-                })
+            return{
+                ok: true,
+                token: jwt
             }
-            return {
-                status: 'Ok',
-                message: 'Usuario eliminado'
-            }
-        } catch (e: any) {
-            if (e instanceof NotFoundException) {
-                throw e
-            }
-            throw new InternalServerErrorException({
-                status: 'Error',
-                message: e.message
-            })
-        }
-    }
-
-    /*
-    @Get('categorias')
-    async getCategories() {
-        try {
-            const data =
-                await this.seriesService.getCategories();
-
-            return {
-                status: 'Ok',
-                data
-            }
-        } catch (e: any) {
-            throw new InternalServerErrorException({
-                status: 'Error',
-                message: e.message
-            })
-        }
-    }
-
-    @Get('categoria/:categoria')
-    async getSeriesByCategory(@Param('categoria') categoria: string) {
-        try {
-            const data = await this.seriesService.getSeriesByCategory(categoria);
-            if (data.length > 0) {
-                return {
-                    status: 'Ok',
-                    data
-                };
-            }
-            throw new NotFoundException({
-                status: 'Error',
-                message: 'No se encontraron series para esta categoría'
-            });
-        } catch (e: any) {
-            if (e instanceof NotFoundException) {
+        }catch (e: any){
+            if(e instanceof UnauthorizedException){
                 throw e;
             }
             throw new InternalServerErrorException({
-                status: 'Error',
+                ok: false,
                 message: e.message
-            });
+            })
+        }
+    }
+    /*
+    @Get('user-info')
+    async userInfo(@Req() request: Request){
+        try{
+            const data =
+                await this.jwtService.verifyAsync(
+                    request.get('x-token'));
+            if (!data){
+                throw new UnauthorizedException({
+                    ok: false,
+                    message: 'Token incorrecto'
+                })
+            }
+            const user =
+                await this.usuariosService.findOne(
+                    {email: data.email});
+
+            return {
+                ok: true,
+                usuario: (({_id, username, email, avatar}) => ({
+                    _id, username, email, avatar
+                }))(user)
+            }
+        }catch (e) {
+            if (e instanceof UnauthorizedException){
+                throw e;
+            }
+            throw new InternalServerErrorException({
+                ok: false,
+                message: e.message
+            })
         }
     }
     */
+
 }

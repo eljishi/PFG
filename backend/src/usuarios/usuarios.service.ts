@@ -6,7 +6,7 @@ import {UsuarioDTO} from "./dto/usuarios.dto/usuarios.dto";
 
 @Injectable()
 export class UsuariosService {
-    constructor(@InjectModel('Ejercicio')
+    constructor(@InjectModel('Usuario')
     private usuarioModel: Model<Usuario>) {
     }
 
@@ -15,6 +15,9 @@ export class UsuariosService {
         return usuario.save()
     }
 
+    async findOne(condition: any): Promise<any>{
+        return this.usuarioModel.findOne(condition).exec();
+    }
 
     async getUsuarios(): Promise<Usuario[]>{
         return this.usuarioModel.find();
@@ -24,8 +27,6 @@ export class UsuariosService {
     async getUsuario(idUsuario: string): Promise<any>{
         return this.usuarioModel.findById(idUsuario);
     }
-
-
 
     async updateUsuario(
         idUsuario: string, usuarioDto: UsuarioDTO ): Promise<any>{
@@ -40,24 +41,5 @@ export class UsuariosService {
         return this.usuarioModel.findByIdAndDelete(idUsuario);
     }
 
-    //get por un algo por si acaso
-    /*
-    async get?(): Promise<string[]>{
-        return this.serieModel.find().distinct('categorias')
-    }
 
-
-    async getSerieByTitleOrSynopsis(searchTerm: string): Promise<any[]> {
-        return this.serieModel.find({
-            $or: [
-                { titulo: { $regex: searchTerm, $options: 'i' } },
-                { sinopsis: { $regex: searchTerm, $options: 'i' } }
-            ]
-        }).exec();
-    }
-
-    async getSeriesByCategory(categoria: string): Promise<Serie[]> {
-        return this.serieModel.find({ 'categorias.categoria': categoria }).exec();
-    }
-    */
 }

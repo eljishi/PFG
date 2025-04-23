@@ -1,9 +1,11 @@
-export interface Usuario {
-    id : number
-    mail: string
-    user: string
-    password: string
-    esEntrenador: string
+import {Document} from "mongoose";
+
+export interface Usuario extends Document{
+    id : number;
+    mail: string;
+    user: string;
+    password: string;
+    esEntrenador: boolean;
 }
 
 

@@ -3,6 +3,8 @@ import { UsuariosController } from './usuarios.controller';
 import { UsuariosService } from './usuarios.service';
 import {MongooseModule} from "@nestjs/mongoose";
 import {UsuariosSchema} from "./schemas/usuarios.schema/usuarios.schema";
+import {JwtModule} from "@nestjs/jwt";
+import * as process from "node:process";
 
 @Module({
   imports: [
@@ -14,7 +16,11 @@ import {UsuariosSchema} from "./schemas/usuarios.schema/usuarios.schema";
             collection: 'Usuario'
           }
         ]
-    )
+    ),
+      JwtModule.register({
+          secret: process.env.SECRET,
+          signOptions: {expiresIn: '1h'}
+      })
   ],
   controllers: [UsuariosController],
   providers: [UsuariosService]

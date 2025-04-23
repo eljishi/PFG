@@ -1,9 +1,12 @@
 import { Schema } from "mongoose";
+import * as uniqueValidator from 'mongoose-unique-validator';
 
 export const UsuariosSchema = new Schema({
     id: {type: Number},
-    mail: { type: String, required: true },
+    mail: { type: String, required: true , unique: true },
     user: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    esEntrenador: {type: String, required: true}
-}, { versionKey: false });
+    esEntrenador: {type: Boolean, required: true}
+}, {versionKey: false});
+    UsuariosSchema.plugin(uniqueValidator,
+        {status:'Error', message: 'Already in use'})

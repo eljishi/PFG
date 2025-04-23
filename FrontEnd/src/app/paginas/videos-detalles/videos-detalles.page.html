@@ -3,22 +3,22 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/videos"></ion-back-button>
     </ion-buttons>
-    <ion-title>Detalles del Ejercicio</ion-title>
+    <ion-title>Detalles del Entrenamiento</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div class="video-details-container">
     <h2>{{ videoDetails.name }}</h2>
-    
+
     <div class="video-container">
       <img [src]="'assets/placeholder.jpg'" alt="Video placeholder" *ngIf="!videoDetails.videoUrl">
     </div>
-    
+
     <div class="description">
       <p>{{ videoDetails.description }}</p>
     </div>
-    
+
 
     <ion-card>
       <ion-card-header>
