@@ -1,35 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { 
-  IonContent, 
-  IonHeader, 
-  IonTitle, 
-  IonToolbar, 
-  IonButtons, 
-  IonMenuButton, 
-  IonCard, 
-  IonCardHeader, 
-  IonCardTitle, 
-  IonCardContent, 
-  IonGrid, 
-  IonRow, 
-  IonCol,
-  IonIcon 
-} from '@ionic/angular/standalone';
+import { Router } from '@angular/router';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonIcon } from '@ionic/angular/standalone';
+import { HeaderComponent } from 'src/app/componentes/header/header.component';
 
-interface NullCause {
-  reason: string;
-  image: string;
-}
-
+// Define the Exercise interface
 interface Exercise {
   id: number;
   name: string;
   video: string;
   description: string;
-  nullCauses: NullCause[];
+  nullCauses: {
+    reason: string;
+    image: string;
+  }[];
 }
 
 @Component({
@@ -38,22 +23,18 @@ interface Exercise {
   styleUrls: ['./videos.page.scss'],
   standalone: true,
   imports: [
-    IonContent, 
-    IonHeader, 
-    IonTitle, 
-    IonToolbar, 
-    IonButtons, 
-    IonMenuButton, 
     CommonModule, 
-    FormsModule,
-    IonCard,
-    IonCardHeader,
-    IonCardTitle,
-    IonCardContent,
-    IonGrid,
-    IonRow,
-    IonCol,
-    IonIcon 
+    FormsModule, 
+    IonContent, 
+    IonGrid, 
+    IonRow, 
+    IonCol, 
+    IonCard, 
+    IonCardHeader, 
+    IonCardTitle, 
+    IonCardContent, 
+    IonIcon,
+    HeaderComponent
   ]
 })
 export class VideosPage implements OnInit {

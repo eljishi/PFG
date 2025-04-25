@@ -16,6 +16,7 @@ import {
   IonAvatar,
   IonFooter
 } from '@ionic/angular/standalone';
+import { HeaderComponent } from 'src/app/componentes/header/header.component';
 
 @Component({
   selector: 'app-perfil-usuario',
@@ -25,19 +26,15 @@ import {
   imports: [
     CommonModule, 
     FormsModule, 
-    IonHeader, 
-    IonToolbar, 
-    IonTitle, 
-    IonContent, 
-    IonButtons, 
-    IonBackButton,
+   IonContent, 
     IonList,
     IonItem,
     IonLabel,
     IonInput,
     IonButton,
     IonAvatar,
-    IonFooter
+    IonFooter,
+    HeaderComponent
   ]
 })
 export class PerfilUsuarioPage implements OnInit {

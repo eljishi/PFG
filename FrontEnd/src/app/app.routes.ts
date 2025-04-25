@@ -29,6 +29,9 @@ export const routes: Routes = [
       {
         path: 'videos',
         loadComponent: () => import('./paginas/videos/videos.page').then(m => m.VideosPage)
+      },{
+        path: 'calendario',
+        loadComponent: () => import('./paginas/calendario/calendario.page').then(m => m.CalendarioPage)
       },
       {
         path: '',

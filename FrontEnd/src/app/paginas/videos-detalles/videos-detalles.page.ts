@@ -1,14 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
-import { ActivatedRoute, RouterModule } from '@angular/router'; 
+import { FormsModule } from '@angular/forms';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardTitle, IonCardContent } from '@ionic/angular/standalone';
+import { ActivatedRoute } from '@angular/router';
+import { HeaderComponent } from 'src/app/componentes/header/header.component';
 
 @Component({
   selector: 'app-videos-detalles',
   templateUrl: './videos-detalles.page.html',
   styleUrls: ['./videos-detalles.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonicModule, RouterModule]
+  imports: [
+    CommonModule, 
+    FormsModule, 
+    IonContent, 
+    IonCard, 
+    IonCardHeader, 
+    IonCardTitle, 
+    IonCardContent,
+    HeaderComponent,
+  ]
 })
 export class VideosDetallesPage implements OnInit {
   videoId: number = 0; 

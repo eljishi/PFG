@@ -1,0 +1,94 @@
+ion-modal {
+  --width: 400px;
+  --height: 450px;
+  --border-radius: 8px;
+}
+
+ion-modal ion-toolbar {
+  --color: var(--ion-color-dark);
+}
+
+ion-textarea {
+  min-height: 80px;
+}
+
+ion-item {
+  margin-bottom: 0.5rem;
+}
+
+.ion-padding {
+  padding: 12px;
+}
+
+.input-container {
+  --background: transparent;
+  --border-radius: 10px;
+  --border-color: #999999;
+  --border-style: solid;
+  --border-width: 1px;
+  --padding-start: 10px;
+  margin-bottom: 12px;
+}
+
+ion-button[color="primary"] {
+  --background: #666666;
+  --background-activated: #444444;
+  --background-focused: #444444;
+  --background-hover: #555555;
+  --color: white;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+ion-button[color="medium"] {
+  --background: #999999;
+  --background-activated: #777777;
+  --background-focused: #777777;
+  --background-hover: #888888;
+}
+
+.series-section {
+  margin-top: 16px;
+}
+
+.add-series-button {
+  margin-bottom: 12px;
+}
+
+.serie-item {
+  border: 1px solid #cccccc;
+  border-radius: 8px;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+.serie-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.serie-number {
+  font-weight: bold;
+  min-width: 20px;
+}
+
+.serie-input {
+  flex: 1;
+  margin: 0;
+  --min-height: 36px;
+  max-width: 90px;
+}
+
+.serie-input ion-input {
+  --padding-start: 5px;
+  --padding-end: 5px;
+  font-size: 14px;
+}
+
+.delete-btn {
+  margin: 0;
+  height: 36px;
+  --padding-start: 0;
+  --padding-end: 0;
+}

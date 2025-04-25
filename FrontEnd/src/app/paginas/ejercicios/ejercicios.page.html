@@ -1,16 +1,84 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>ejercicios</ion-title>
-    <ion-buttons slot="end">
-      <ion-menu-button menu="end"></ion-menu-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
+<app-header [pageTitle]="'Ejercicios'"></app-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">ejercicios</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="ion-padding">
+    <ion-button expand="block" color="primary" (click)="abrirModalNuevoEjercicio()">
+      <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+      Agregar ejercicio
+    </ion-button>
+  </div>
+
+  
+  <!-- Modal para nuevo ejercicio -->
+  <ion-modal [isOpen]="isModalOpen">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Nuevo ejercicio</ion-title>
+          <!-- Eliminamos el botón X de aquí -->
+        </ion-toolbar>
+      </ion-header>
+      
+      <ion-content class="ion-padding">
+        <ion-item class="input-container">
+          <ion-input [(ngModel)]="nuevoEjercicio.nombre" placeholder="Nombre del ejercicio"></ion-input>
+        </ion-item>
+        
+        <ion-item class="input-container">
+          <ion-textarea 
+            [(ngModel)]="nuevoEjercicio.descripcion" 
+            placeholder="Descripción del ejercicio" 
+            rows="4">
+          </ion-textarea>
+        </ion-item>
+
+        
+        <!-- Sección de Series -->
+        <div class="series-section">
+          <ion-button size="small" expand="block" (click)="agregarSerie()" class="add-series-button">
+            Añadir Serie
+          </ion-button>
+          
+          <div *ngFor="let serie of nuevoEjercicio.series; let i = index" class="serie-item">
+            <div class="serie-row">
+              <span class="serie-number">{{i+1}}</span>
+              
+              <ion-item class="input-container serie-input">
+                <ion-input [(ngModel)]="serie.kg" placeholder="KG" type="number"></ion-input>
+              </ion-item>
+              
+              <ion-item class="input-container serie-input">
+                <ion-input [(ngModel)]="serie.rpe" placeholder="RPE" type="number"></ion-input>
+              </ion-item>
+              
+              <ion-item class="input-container serie-input">
+                <ion-input [(ngModel)]="serie.repeticiones" placeholder="REPS" type="number"></ion-input>
+              </ion-item>
+              
+              <ion-button fill="clear" size="small" (click)="eliminarSerie(i)" class="delete-btn">
+                <ion-icon name="close-outline"></ion-icon>
+              </ion-button>
+            </div>
+          </div>
+        </div>
+      </ion-content>
+      
+      <ion-footer>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-button expand="block" color="medium" (click)="cerrarModal()">
+                Cerrar
+              </ion-button>
+            </ion-col>
+            <ion-col>
+              <ion-button expand="block" color="primary" (click)="guardarEjercicio()">
+                Guardar
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-footer>
+    </ng-template>
+  </ion-modal>
 </ion-content>
