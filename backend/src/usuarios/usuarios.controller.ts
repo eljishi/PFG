@@ -5,13 +5,13 @@ import {
     Get,
     InternalServerErrorException,
     NotFoundException,
-    Param,
     Post, Put, Req, UnauthorizedException
 } from '@nestjs/common';
 import {UsuariosService} from "./usuarios.service";
 import {UsuarioDTO} from "./dto/usuarios.dto/usuarios.dto";
 import * as bcrypt from 'bcrypt';
 import {JwtService} from "@nestjs/jwt";
+import {Request} from "express";
 
 
 
@@ -37,20 +37,18 @@ export class UsuariosController {
                 esEntrenador: usuarioDto.esEntrenador
 
             });
-            if (!user){
-                throw new BadRequestException()
-            }
-            return{
+
+            const jwt = await this.jwtService.signAsync({
+                id: user.id,
+                user: user.user,
+                mail: user.mail,
+                esEntrenador: user.esEntrenador
+            });
+            return {
                 ok: true,
-                token: user
+                token: jwt
             }
         }catch (e:any){
-            if (e instanceof BadRequestException){
-                throw new BadRequestException({
-                    ok: false,
-                    message: e.message
-                })
-            }
             throw new InternalServerErrorException({
                 ok: false,
                 message: e.message
@@ -80,10 +78,10 @@ export class UsuariosController {
                 })
             }
             const jwt = await this.jwtService.signAsync({
-                _id: user._id,
-                username: user.username,
-                email: user.email,
-                avatar: user.avatar
+                id: user.id,
+                user: user.user,
+                mail: user.mail,
+                esEntrenador: user.esEntrenador
             })
             return{
                 ok: true,
@@ -99,13 +97,13 @@ export class UsuariosController {
             })
         }
     }
-    
+
     @Get('user-info')
     async userInfo(@Req() request: Request){
         try{
             const data =
                 await this.jwtService.verifyAsync(
-                    request.get('x-token'));
+                    <string>request.get('x-token'));
             if (!data){
                 throw new UnauthorizedException({
                     ok: false,
@@ -114,12 +112,12 @@ export class UsuariosController {
             }
             const user =
                 await this.usuariosService.findOne(
-                    {email: data.email});
+                    {mail: data.mail});
 
             return {
                 ok: true,
-                usuario: (({_id, username, email, avatar}) => ({
-                    _id, username, email, avatar
+                usuario: (({id, user, mail, esEntrenador}) => ({
+                    id, user, mail, esEntrenador
                 }))(user)
             }
         }catch (e) {
@@ -132,6 +130,6 @@ export class UsuariosController {
             })
         }
     }
-    
+    */
 
 }
