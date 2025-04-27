@@ -9,9 +9,9 @@ import {EntrenamientosSchema} from "./schemas/entrenamientos.schema/entrenamient
     MongooseModule.forFeature(
         [
           {
-            name: 'Ejercicio',
+            name: 'Entrenamiento',
             schema: EntrenamientosSchema,
-            collection: 'Ejercicio'
+            collection: 'entrenamientos'
           }
         ]
     )
