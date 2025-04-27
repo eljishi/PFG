@@ -10,7 +10,6 @@ import {
 } from '@nestjs/common';
 import {EjerciciosService} from "./ejercicios.service";
 import {EjercicioDTO} from "./dto/ejercicios.dto/ejercicios.dto";
-import {Query} from "mongoose";
 
 @Controller('api/v1/ejercicios')
 export class EjerciciosController {
