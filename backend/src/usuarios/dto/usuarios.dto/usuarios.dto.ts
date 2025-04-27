@@ -13,6 +13,6 @@ export class UsuarioDTO {
     @Length(6)
     password: string;
     @IsBoolean()
-    esEntrenador: string
+    esEntrenador: boolean;
 }
 

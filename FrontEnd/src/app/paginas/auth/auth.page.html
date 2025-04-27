@@ -10,7 +10,7 @@
 <ion-content class="ion-padding">
   <div class="form-container">
     <form (ngSubmit)="submitForm()">
-      <!-- Campos para inicio de sesión de atleta -->
+
       @if (pageType === 'athlete-login') {
         <ion-item>
           <ion-input type="email" [(ngModel)]="userData.email" name="email" placeholder="Correo" required></ion-input>
@@ -20,8 +20,7 @@
           <ion-input type="password" [(ngModel)]="userData.password" name="password" placeholder="Contraseña" required></ion-input>
         </ion-item>
       }
-      
-      <!-- Campos para inicio de sesión de entrenador -->
+
       @if (pageType === 'coach-login') {
         <ion-item>
           <ion-input type="email" [(ngModel)]="userData.email" name="email" placeholder="Correo" required></ion-input>
@@ -31,8 +30,7 @@
           <ion-input type="password" [(ngModel)]="userData.password" name="password" placeholder="Contraseña" required></ion-input>
         </ion-item>
       }
-      
-      <!-- Campos para registro de atleta -->
+
       @if (pageType === 'register') {
         <ion-item>
           <ion-input type="text" [(ngModel)]="userData.coachId" name="coachId" placeholder="ID Entrenador" required></ion-input>
@@ -50,8 +48,7 @@
           <ion-input type="password" [(ngModel)]="userData.password" name="password" placeholder="Contraseña" required></ion-input>
         </ion-item>
       }
-      
-      <!-- Campos para registro de entrenador -->
+
       @if (pageType === 'coach-register') {
         <ion-item>
           <ion-input type="email" [(ngModel)]="userData.email" name="email" placeholder="Correo" required></ion-input>
