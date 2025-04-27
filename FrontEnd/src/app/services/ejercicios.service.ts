@@ -11,7 +11,7 @@ export class EjerciciosService {
   private readonly httpClient: HttpClient = inject(HttpClient)
 
   getEjercicios(): Observable<Ejercicios[]> {
-    return this.httpClient.get<Ejercicios[]>(`${environment.urlBase}ejercicios`);
+    return this.httpClient.get<Ejercicios[]>(`${environment.urlBase}ejercicios/ejercicios`);
   }
 
   getEjercicio(id: string): Observable<Ejercicios> {
