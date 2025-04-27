@@ -99,7 +99,7 @@ export class UsuariosController {
             })
         }
     }
-    /*
+    
     @Get('user-info')
     async userInfo(@Req() request: Request){
         try{
@@ -132,6 +132,6 @@ export class UsuariosController {
             })
         }
     }
-    */
+    
 
 }
