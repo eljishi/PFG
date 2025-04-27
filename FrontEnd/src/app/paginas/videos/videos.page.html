@@ -3,23 +3,14 @@
 <ion-content [fullscreen]="true">
   <ion-grid>
     <ion-row>
-      <ion-col size="12" size-md="6" size-lg="4" *ngFor="let exercise of exercises">
-        <ion-card (click)="verDetallesEjercicio(exercise.id)" class="exercise-card">
+      <ion-col size="12" size-md="6" size-lg="4" *ngFor="let ejercicio of ejercicios">
+        <ion-card  class="exercise-card">
           <ion-card-header>
-            <ion-card-title class="ion-text-center">{{ exercise.name }}</ion-card-title>
+            <ion-card-title class="ion-text-center">{{ ejercicio.name }}</ion-card-title>
           </ion-card-header>
-          
-          <div class="video-placeholder ion-text-center">
-            <div class="video-container">
-              <img src="assets/video-placeholder.jpg" alt="{{ exercise.name }}" />
-              <div class="play-button">
-                <ion-icon name="play-circle-outline"></ion-icon>
-              </div>
-            </div>
-          </div>
-          
-          <ion-card-content class="ion-text-center">
-            <p>{{ exercise.description }}</p>
+          <ion-card-content>
+            <img src="assets/video-placeholder.jpg" alt="{{ ejercicio.name }}" />
+            <p>{{ ejercicio.description }}</p>
           </ion-card-content>
         </ion-card>
       </ion-col>

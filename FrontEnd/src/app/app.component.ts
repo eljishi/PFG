@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { MenuLateralComponent } from './componentes/menu-lateral/menu-lateral.component';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
