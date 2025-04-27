@@ -32,11 +32,8 @@ import {
     IonButton,
     IonInput,
     IonItem,
-    IonLabel,
-    IonList,
     IonBackButton,
     IonButtons,
-    IonIcon
   ]
 })
 export class AuthPage implements OnInit {

@@ -9,7 +9,7 @@ import { MenuLateralComponent } from './componentes/menu-lateral/menu-lateral.co
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
   standalone: true,
-  imports: [IonicModule, RouterOutlet, RouterLink, CommonModule, MenuLateralComponent],
+  imports: [IonicModule,  CommonModule, MenuLateralComponent],
 })
 export class AppComponent {
   constructor() {}
