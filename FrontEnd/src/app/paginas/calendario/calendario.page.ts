@@ -10,7 +10,7 @@ import { HeaderComponent } from 'src/app/componentes/header/header.component';
   templateUrl: './calendario.page.html',
   styleUrls: ['./calendario.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, HeaderComponent, IonContent, IonHeader, IonTitle, IonToolbar]
+  imports: [CommonModule, FormsModule, HeaderComponent, IonContent,]
 })
 export class CalendarioPage implements OnInit {
 

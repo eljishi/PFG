@@ -27,18 +27,14 @@ import {
     CommonModule, 
     FormsModule,
     IonContent, 
-    IonHeader, 
-    IonTitle, 
-    IonToolbar,
+
+
     IonButton,
-    IonCard,
-    IonCardHeader,
-    IonCardTitle,
-    IonCardContent,
-    IonGrid,
-    IonRow,
-    IonCol,
-    IonIcon
+
+
+
+
+  
   ]
 })
 export class RegistroPage implements OnInit {
