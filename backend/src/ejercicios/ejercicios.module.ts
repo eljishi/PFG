@@ -11,7 +11,7 @@ import {EjerciciosSchema} from "./schemas/ejercicios.schema/ejercicios.schema";
           {
             name: 'Ejercicio',
             schema: EjerciciosSchema,
-            collection: 'Ejercicio'
+            collection: 'ejercicios'
           }
         ]
     )

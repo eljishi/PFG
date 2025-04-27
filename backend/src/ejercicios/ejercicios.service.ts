@@ -18,7 +18,7 @@ export class EjerciciosService {
 
 
     async getEjercicios(): Promise<Ejercicio[]>{
-        return this.ejercicioModel.find();
+        return this.ejercicioModel.find().exec();
     }
 
     //pilla un ejercicio
