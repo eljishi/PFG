@@ -1,40 +1,28 @@
-<app-header [pageTitle]="'Videos'"></app-header>
+<app-header [pageTitle]="'Videos de ejercicios'"></app-header>
 
 <ion-content [fullscreen]="true">
-  <div class="ion-padding">
-    <!-- Estado de carga -->
-    <div *ngIf="loading" class="loading-container">
-      <p>Cargando ejercicios...</p>
-    </div>
-    
-    <!-- Estado de error -->
-    <div *ngIf="error" class="error-container">
-      <p>No se pudieron cargar los ejercicios.</p>
-      <ion-button (click)="reintentarCarga()">Reintentar</ion-button>
-    </div>
-    
-    <!-- Contenido cuando hay datos -->
-    <div *ngIf="!loading && !error">
-      <!-- Si no hay ejercicios -->
-      <div *ngIf="exercises.length === 0" class="no-data-container">
-        <p>No hay ejercicios disponibles.</p>
-      </div>
-      
-      <!-- Lista de ejercicios -->
-      <ion-grid *ngIf="exercises.length > 0">
-        <ion-row>
-          <ion-col size="12" size-md="6" size-lg="4" *ngFor="let exercise of exercises">
-            <ion-card (click)="verDetallesEjercicio(exercise.id)">
-              <ion-card-header>
-                <ion-card-title>{{ exercise.name }}</ion-card-title>
-              </ion-card-header>
-              <ion-card-content>
-                <p>{{ exercise.description }}</p>
-              </ion-card-content>
-            </ion-card>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </div>
-  </div>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" size-md="6" size-lg="4" *ngFor="let exercise of exercises">
+        <ion-card (click)="verDetallesEjercicio(exercise.id)" class="exercise-card">
+          <ion-card-header>
+            <ion-card-title class="ion-text-center">{{ exercise.name }}</ion-card-title>
+          </ion-card-header>
+          
+          <div class="video-placeholder ion-text-center">
+            <div class="video-container">
+              <img src="assets/video-placeholder.jpg" alt="{{ exercise.name }}" />
+              <div class="play-button">
+                <ion-icon name="play-circle-outline"></ion-icon>
+              </div>
+            </div>
+          </div>
+          
+          <ion-card-content class="ion-text-center">
+            <p>{{ exercise.description }}</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

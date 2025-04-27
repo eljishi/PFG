@@ -38,7 +38,7 @@ export class EjerciciosController {
     }
 
     // pilla todos los ercicios
-    @Get('')
+    @Get('ejercicios')
     async getEjercicios() {
         try {
             const data =

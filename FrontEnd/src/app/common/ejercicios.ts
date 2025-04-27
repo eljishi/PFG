@@ -1,4 +1,5 @@
 export interface Ejercicios {
+    _id: string
     name: string
     video: string
     description: string
