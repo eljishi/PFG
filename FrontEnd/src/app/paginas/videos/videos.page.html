@@ -1,15 +1,25 @@
 <app-header [pageTitle]="'Videos de ejercicios'"></app-header>
 
 <ion-content [fullscreen]="true">
-  <ion-grid>
+
+  <ion-grid *ngIf="!isLoading && !error && ejercicios.length > 0">
     <ion-row>
       <ion-col size="12" size-md="6" size-lg="4" *ngFor="let ejercicio of ejercicios">
-        <ion-card  class="exercise-card">
+        <ion-card class="exercise-card">
           <ion-card-header>
             <ion-card-title class="ion-text-center">{{ ejercicio.name }}</ion-card-title>
           </ion-card-header>
+          
+          <div class="video-placeholder">
+            <div class="video-container">
+
+              <div class="play-button">
+                <ion-icon name="play-circle"></ion-icon>
+              </div>
+            </div>
+          </div>
+          
           <ion-card-content>
-            <img src="assets/video-placeholder.jpg" alt="{{ ejercicio.name }}" />
             <p>{{ ejercicio.description }}</p>
           </ion-card-content>
         </ion-card>
