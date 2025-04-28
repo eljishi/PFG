@@ -1,24 +1,37 @@
 <app-header [pageTitle]="'Detalles del Entrenamiento'"></app-header>
 
 <ion-content>
-  <div class="video-details-container">
-    <h2>{{ videoDetails.name }}</h2>
 
-    <div class="video-container">
-      <img [src]="'assets/placeholder.jpg'" alt="Video placeholder" *ngIf="!videoDetails.videoUrl">
+
+  <div class="video-details-container" *ngIf="!isLoading && !error && videoDetails">
+    <div class="header-section">
+      <h1 class="exercise-title">{{ videoDetails.name }}</h1>
+      <div class="divider"></div>
     </div>
 
-    <div class="description">
-      <p>{{ videoDetails.description }}</p>
+  <!-- <div class="video-container">
+      <img [src]="videoDetails.video" alt="{{ videoDetails.name }}" 
+           onerror="this.src='assets/video-placeholder.jpg'">
+    </div> -->
+
+    <div class="description-card">
+      <h2 class="section-title">Descripción</h2>
+      <p class="description-text">{{ videoDetails.description }}</p>
     </div>
 
-
-    <ion-card>
+    <ion-card class="null-causes-card" *ngIf="videoDetails.nullCauses && videoDetails.nullCauses.length > 0">
       <ion-card-header>
-        <ion-card-title>Información Adicional</ion-card-title>
+        <ion-card-title class="card-title">Causas para nulo</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <p>ID del ejercicio: {{ videoDetails.id }}</p>
+        <div *ngFor="let cause of videoDetails.nullCauses" class="null-cause">
+          <div class="cause-content">
+            <ion-icon name="alert-circle-outline" class="cause-icon"></ion-icon>
+            <p class="cause-text">{{ cause.reason }}</p>
+          </div>
+          <!-- <img [src]="cause.image" alt="Imagen de causa de nulidad" 
+               onerror="this.src='assets/placeholder.jpg'"> -->
+        </div>
       </ion-card-content>
     </ion-card>
   </div>

@@ -1,9 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardTitle, IonCardContent } from '@ionic/angular/standalone';
+import { 
+  IonContent, 
+  IonHeader, 
+  IonTitle, 
+  IonToolbar, 
+  IonCard, 
+  IonCardHeader, 
+  IonCardTitle, 
+  IonCardContent, 
+  IonSpinner,
+  IonIcon  // Add this import
+} from '@ionic/angular/standalone';
 import { ActivatedRoute } from '@angular/router';
 import { HeaderComponent } from 'src/app/componentes/header/header.component';
+import { EjerciciosService } from 'src/app/services/ejercicios.service';
+import { Ejercicios } from 'src/app/common/ejercicios';
 
 @Component({
   selector: 'app-videos-detalles',
@@ -18,29 +31,51 @@ import { HeaderComponent } from 'src/app/componentes/header/header.component';
     IonCardHeader, 
     IonCardTitle, 
     IonCardContent,
+    IonSpinner,
     HeaderComponent,
+    IonIcon  // Add this to the imports array
   ]
 })
 export class VideosDetallesPage implements OnInit {
-  videoId: number = 0; 
-  videoDetails: any;
+  videoId: string = ''; 
+  videoDetails: Ejercicios | null = null;
+  isLoading: boolean = true;
+  error: string | null = null;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(
+    private route: ActivatedRoute,
+    private ejerciciosService: EjerciciosService
+  ) { }
 
   ngOnInit() {
     const idParam = this.route.snapshot.paramMap.get('id');
-
-    this.cargarDetallesVideo();
+    if (idParam) {
+      this.videoId = idParam;
+      this.cargarDetallesVideo();
+    } else {
+      this.error = 'No se ha proporcionado un ID válido';
+      this.isLoading = false;
+    }
   }
 
   cargarDetallesVideo() {
- 
-    this.videoDetails = {
-      id: this.videoId,
-      name: 'Nombre del ejercicio ' + this.videoId,
-      description: 'Descripción detallada del ejercicio en video',
-      videoUrl: 'https://ejemplo.com/video' + this.videoId,
-
-    };
+    this.isLoading = true;
+    this.error = null;
+    
+    this.ejerciciosService.getEjercicio(this.videoId).subscribe({
+      next: (data) => {
+        this.videoDetails = data;
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Error al cargar los detalles del ejercicio:', err);
+        this.error = 'No se pudo cargar la información del ejercicio';
+        this.isLoading = false;
+      },
+      complete: () => {
+        console.log('Carga de detalles completada');
+        this.isLoading = false;
+      }
+    });
   }
 }

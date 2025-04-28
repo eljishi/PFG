@@ -31,12 +31,11 @@ import { Ejercicios } from 'src/app/common/ejercicios';
 export class VideosPage implements OnInit { 
 
   private ejerciciosService: EjerciciosService;
-
   ejercicios: Ejercicios[] = [];
   isLoading: boolean = true;
   error: string | null = null;
 
-  constructor(private injector: Injector) {
+  constructor(private injector: Injector, private router: Router) {
     this.ejerciciosService = injector.get(EjerciciosService);
   }
 
@@ -66,7 +65,10 @@ export class VideosPage implements OnInit {
   }
 
   openVideoDetail(ejercicio: Ejercicios) {
-    // Aquí puedes implementar la navegación a una página de detalle si lo deseas
-    console.log('Abrir detalle del ejercicio:', ejercicio);
+    if (ejercicio && ejercicio._id) {
+      this.router.navigate(['/videos-detalles', ejercicio._id]);
+    } else {
+      console.error('El ejercicio no tiene un ID válido');
+    }
   }
 }
