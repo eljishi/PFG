@@ -1,11 +1,142 @@
 .welcome-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: flex-start; /* Cambiado de center a flex-start */
   height: 100%;
+  padding: 20px;
+  padding-top: 5%; /* Añadido para empezar más arriba */
 }
 
+.main-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: var(--ion-color-primary);
+  margin-bottom: 30px; /* Reducido de 40px a 30px */
+  text-align: center;
+}
+
+.user-type-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Reducido de 30px a 20px */
+  width: 100%;
+  max-width: 500px;
+}
+
+.user-type-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 20px; /* Reducido de 24px a 20px */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  }
+  
+  h2 {
+    font-size: 20px; /* Reducido de 22px a 20px */
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 15px; /* Reducido de 20px a 15px */
+    color: var(--ion-color-dark);
+  }
+}
+
+.athlete {
+  border-top: 5px solid var(--ion-color-primary);
+}
+
+.coach {
+  border-top: 5px solid var(--ion-color-secondary);
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Reducido de 12px a 10px */
+}
+
+.register-btn {
+  --border-radius: 10px;
+  height: 44px; /* Reducido de 48px a 44px */
+  font-weight: 500;
+  --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-size: 14px; /* Añadido para asegurar que el texto quepa */
+  --padding-start: 10px;
+  --padding-end: 10px;
+}
+
+.login-btn {
+  --border-radius: 10px;
+  height: 44px; /* Reducido de 48px a 44px */
+  font-weight: 500;
+  font-size: 14px; /* Añadido para asegurar que el texto quepa */
+  --padding-start: 10px;
+  --padding-end: 10px;
+}
+
+/* Animación para las tarjetas */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.athlete {
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+
+.coach {
+  animation: fadeInUp 0.5s ease-out 0.2s forwards;
+  opacity: 0;
+}
+
+/* Responsive */
+@media (min-width: 768px) {
+  .user-type-container {
+    flex-direction: row;
+    gap: 20px;
+  }
+  
+  .user-type-card {
+    flex: 1;
+  }
+  
+  .register-btn, .login-btn {
+    font-size: 16px; /* Tamaño de fuente más grande en pantallas más grandes */
+  }
+}
+
+/* Asegurarse de que el texto de los botones no se desborde */
+ion-button {
+  white-space: normal; /* Permite que el texto se envuelva si es necesario */
+  text-overflow: unset;
+  overflow: visible;
+}
+
+/* Ajustes para pantallas muy pequeñas */
+@media (max-width: 320px) {
+  .register-btn, .login-btn {
+    font-size: 12px;
+    height: 40px;
+  }
+  
+  .user-type-card h2 {
+    font-size: 18px;
+  }
+  
+  .main-title {
+    font-size: 28px;
+  }
+}
 ion-card {
   max-width: 500px;
   width: 100%;

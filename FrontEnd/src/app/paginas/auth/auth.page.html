@@ -1,50 +1,47 @@
-<div class="row mt-5">
-  <div class="col-4 offset-4">
-    <div class="form-check form-switch">
-      <input type="checkbox" [(ngModel)]="loginUp"
-             class="form-check-input" id="switch" (click)="cleanForm()">
-      <label for="switch" class="form-check-label">
-        {{ loginUp ? 'Login' : 'Register' }}
-      </label>
-    </div>
-  </div>
-</div>
-<form [formGroup]="formUser">
-  <div class="row">
-    <div class="col-md-4 offset-md-4 mt-3">
-      @if (!loginUp){
-        <div class="form-floating mb-3">
-          <input type="text"
-                 formControlName="user"
-                 id="user"
-                 placeholder="user"
-                 class="form-control">
-          <label for="user">Username</label>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ pageTitle }}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/registro"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="auth-container">
+    <div class="auth-card">
+      <h2 class="auth-title">{{ pageTitle }}</h2>
+      
+      <form [formGroup]="formUser" class="auth-form">
+        <!-- Campos para registro -->
+        @if (!loginUp) {
+          <div class="form-field">
+            <ion-label>Nombre de Usuario</ion-label>
+            <ion-input type="text" formControlName="user" placeholder="Ingresa tu nombre de usuario"></ion-input>
+          </div>
+        }
+        
+        <div class="form-field">
+          <ion-label>Correo Electrónico</ion-label>
+          <ion-input type="email" formControlName="mail" placeholder="Ingresa tu correo electrónico"></ion-input>
         </div>
-      }
-      <div class="form-floating mb-3">
-        <input type="mail"
-               formControlName="mail"
-               id="mail"
-               placeholder="mail"
-               class="form-control">
-        <label for="mail">Email</label>
-      </div>
-      <div class="form-floating mb-3">
-        <input type="password"
-               formControlName="password"
-               id="password"
-               placeholder="password"
-               class="form-control">
-        <label for="password">Password</label>
-      </div>
-      <div class="d-flex justify-content-center">
-        <button class="btn btn-success"
-                (click)="loginUp?login(): register()"
-                [disabled]="formUser.invalid">
-          {{loginUp?'Login':'Register'}}
-        </button>
-      </div>
+        
+        <div class="form-field">
+          <ion-label>Contraseña</ion-label>
+          <ion-input type="password" formControlName="password" placeholder="Ingresa tu contraseña"></ion-input>
+        </div>
+        
+        <ion-button expand="block" 
+                  class="submit-button"
+                  (click)="loginUp ? login() : register()" 
+                  [disabled]="formUser.invalid || isLoading">
+          @if (isLoading) {
+            <ion-spinner name="dots"></ion-spinner>
+          } @else {
+            {{ loginUp ? 'Iniciar Sesión' : 'Registrarse' }}
+          }
+        </ion-button>
+      </form>
     </div>
   </div>
-</form>
+</ion-content>

@@ -1,23 +1,33 @@
+
+
 <ion-content class="ion-padding">
-  <div class="page-container">
+  <div class="welcome-container">
     <h1 class="main-title ion-text-center">LiftVault</h1>
     
-    <div class="buttons-container">
-      <ion-button expand="block" color="primary" (click)="navigateToCoachLogin()">
-        Iniciar sesión entrenador
-      </ion-button>
+    <div class="user-type-container">
+      <div class="user-type-card athlete">
+        <h2>Soy un Atleta</h2>
+        <div class="button-group">
+          <ion-button expand="block" class="register-btn" (click)="navigateToRegister()">
+            Registrarme como Atleta
+          </ion-button>
+          <ion-button expand="block" fill="outline" class="login-btn" (click)="navigateToAthleteLogin()">
+            Iniciar Sesión como Atleta
+          </ion-button>
+        </div>
+      </div>
       
-      <ion-button expand="block" color="primary" (click)="navigateToAthleteLogin()">
-        Iniciar sesión atleta
-      </ion-button>
-      
-      <ion-button expand="block" color="primary" (click)="navigateToRegister()">
-        Registrarse
-      </ion-button>
-      
-      <ion-button expand="block" color="primary" (click)="navigateToCoachRegister()">
-        Registrarse entrenador
-      </ion-button>
+      <div class="user-type-card coach">
+        <h2>Soy un Entrenador</h2>
+        <div class="button-group">
+          <ion-button expand="block" class="register-btn" (click)="navigateToCoachRegister()">
+            Registrarme como Entrenador
+          </ion-button>
+          <ion-button expand="block" fill="outline" class="login-btn" (click)="navigateToCoachLogin()">
+            Iniciar Sesión como Entrenador
+          </ion-button>
+        </div>
+      </div>
     </div>
   </div>
 </ion-content>

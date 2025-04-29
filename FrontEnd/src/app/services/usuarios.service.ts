@@ -16,30 +16,42 @@ export class UsuariosService {
   constructor() { }
 
   registroEntrenador(usuario: Usuarios): Promise<any> {
-    return new Promise( resolve => {
-      this.httpClient.post(environment.urlBase+'register',usuario)
-        .subscribe(this.promesaGuardaToken(resolve));
-    })
-      .catch(err => {
-        console.error(err);
-      })
+    return new Promise((resolve, reject) => {
+      this.httpClient.post(environment.urlBase+'users/register',usuario)
+        .subscribe({
+          next: this.promesaGuardaToken(resolve),
+          error: (err) => {
+            console.error(err);
+            reject(err);
+          }
+        });
+    });
   }
 
   registroAtleta(usuario: Usuarios): Promise<any> {
-    return new Promise( resolve => {
-      this.httpClient.post(environment.urlBase+'register',usuario)
-        .subscribe(this.promesaGuardaToken(resolve));
-    })
-      .catch(err => {
-        console.error(err);
-      })
+    return new Promise((resolve, reject) => {
+      this.httpClient.post(environment.urlBase+'users/register',usuario)
+        .subscribe({
+          next: this.promesaGuardaToken(resolve),
+          error: (err) => {
+            console.error(err);
+            reject(err);
+          }
+        });
+    });
   }
 
   login(email: string, password: string){
-    const data ={email, password};
+    const data = {mail: email, password};
     return new Promise(resolve => {
-      this.httpClient.post(environment.urlBase+'login',data)
-        .subscribe(this.promesaGuardaToken(resolve));
+      this.httpClient.post(environment.urlBase+'users/login',data)
+        .subscribe({
+          next: this.promesaGuardaToken(resolve),
+          error: (err) => {
+            console.error('Error en login:', err);
+            resolve(false);
+          }
+        });
     });
   }
 
@@ -77,19 +89,26 @@ export class UsuariosService {
       const headers = new HttpHeaders({
         'x-token': this.token
       });
-      this.httpClient.get(environment.urlBase+'user-info',
+      this.httpClient.get(environment.urlBase+'users/user-info',
         {headers})
-        .subscribe( (resp: any) => {
-          if (resp.ok){
-            console.log(resp)
-            this.usuario = resp.usuario;
-            resolve(true);
-          }else {
+        .subscribe({
+          next: (resp: any) => {
+            if (resp.ok){
+              console.log(resp)
+              this.usuario = resp.usuario;
+              resolve(true);
+            } else {
+              this.router.navigateByUrl('/login');
+              resolve(false);
+            }
+          },
+          error: (err) => {
+            console.error('Error validando token:', err);
             this.router.navigateByUrl('/login');
             resolve(false);
           }
-        })
-    })
+        });
+    });
   }
 
   private async cargarToken() {
