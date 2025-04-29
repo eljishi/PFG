@@ -18,22 +18,47 @@
           <div class="form-field">
             <ion-label>Nombre de Usuario</ion-label>
             <ion-input type="text" formControlName="user" placeholder="Ingresa tu nombre de usuario"></ion-input>
+            <!-- Mostrar error si es inválido y ha sido tocado -->
+            @if (name?.invalid && (name?.dirty || name?.touched)) {
+              <div style="color: red; font-size: 0.8em; margin-top: 4px;">Nombre de usuario requerido.</div>
+            }
           </div>
+
+          <!-- Campo ID Entrenador (solo para registro de atletas) -->
+          @if (pageType === 'register') {
+            <div class="form-field">
+              <ion-label>ID del Entrenador</ion-label>
+              <ion-input type="text" formControlName="idEntrenador" placeholder="Ingresa el ID de tu entrenador"></ion-input>
+              <!-- Mostrar error si es inválido y ha sido tocado -->
+              @if (idEntrenador?.invalid && (idEntrenador?.dirty || idEntrenador?.touched)) {
+                <div style="color: red; font-size: 0.8em; margin-top: 4px;">ID del entrenador requerido.</div>
+              }
+            </div>
+          }
         }
-        
+
         <div class="form-field">
           <ion-label>Correo Electrónico</ion-label>
           <ion-input type="email" formControlName="mail" placeholder="Ingresa tu correo electrónico"></ion-input>
+           @if (mail?.invalid && (mail?.dirty || mail?.touched)) {
+             <div style="color: red; font-size: 0.8em; margin-top: 4px;">
+               @if (mail?.hasError('required')) { Correo requerido. }
+               @if (mail?.hasError('email')) { Formato de correo inválido. }
+             </div>
+           }
         </div>
-        
+
         <div class="form-field">
           <ion-label>Contraseña</ion-label>
           <ion-input type="password" formControlName="password" placeholder="Ingresa tu contraseña"></ion-input>
+           @if (password?.invalid && (password?.dirty || password?.touched)) {
+             <div style="color: red; font-size: 0.8em; margin-top: 4px;">Contraseña requerida.</div>
+           }
         </div>
-        
-        <ion-button expand="block" 
+
+        <ion-button expand="block"
                   class="submit-button"
-                  (click)="loginUp ? login() : register()" 
+                  (click)="loginUp ? login() : register()"
                   [disabled]="formUser.invalid || isLoading">
           @if (isLoading) {
             <ion-spinner name="dots"></ion-spinner>

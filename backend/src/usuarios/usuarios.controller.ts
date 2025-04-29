@@ -8,7 +8,10 @@ import {
     Post, Put, Req, UnauthorizedException
 } from '@nestjs/common';
 import {UsuariosService} from "./usuarios.service";
-import {UsuarioDTO} from "./dto/usuarios.dto/usuarios.dto";
+// Cambia esta importación
+// import {UsuarioDTO} from "./dto/usuarios.dto/usuarios.dto";
+// Por esta:
+import { CreateUsuarioDTO } from './dto/usuarios.dto/create-usuario.dto'; // Asegúrate que la ruta sea correcta
 import * as bcrypt from 'bcrypt';
 import {JwtService} from "@nestjs/jwt";
 import {Request} from "express";
@@ -21,21 +24,23 @@ export class UsuariosController {
     }
 
     @Post('register')
-    async register(@Body() usuarioDto: UsuarioDTO) {
-        const hashedPassword = await bcrypt.hash(usuarioDto.password, 20);
+    // Cambia el tipo aquí de UsuarioDTO a CreateUsuarioDTO
+    async register(@Body() createUsuarioDto: CreateUsuarioDTO) {
+        const hashedPassword = await bcrypt.hash(createUsuarioDto.password, 10); // Ajustado salt rounds a 10 (valor común)
         try {
-
+            // Asegúrate de no pasar _id y usa los campos de createUsuarioDto
             const user = await this.usuariosService.create({
-                _id: usuarioDto._id,
-                idEntrenador: usuarioDto.idEntrenador,
-                mail: usuarioDto.mail,
-                user: usuarioDto.user,
+                // Elimina esta línea: _id: createUsuarioDto._id,
+                idEntrenador: createUsuarioDto.idEntrenador,
+                mail: createUsuarioDto.mail,
+                user: createUsuarioDto.user,
                 password: hashedPassword,
-                esEntrenador: usuarioDto.esEntrenador
+                esEntrenador: createUsuarioDto.esEntrenador
             });
 
+            // El resto del payload del JWT puede seguir igual si la interfaz Usuario lo permite
             const jwt = await this.jwtService.signAsync({
-                _id: user._id,
+                _id: user._id, // user._id será generado por la BD y devuelto por el servicio
                 idEntrenador: user.idEntrenador,
                 user: user.user,
                 mail: user.mail,
