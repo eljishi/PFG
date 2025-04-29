@@ -17,6 +17,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HeaderComponent } from 'src/app/componentes/header/header.component';
 import { EjerciciosService } from 'src/app/services/ejercicios.service';
 import { Ejercicios } from 'src/app/common/ejercicios';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-videos-detalles',
@@ -43,7 +44,8 @@ export class VideosDetallesPage implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private ejerciciosService: EjerciciosService
+    private ejerciciosService: EjerciciosService,
+    private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit() {
@@ -76,5 +78,8 @@ export class VideosDetallesPage implements OnInit {
         this.isLoading = false;
       }
     });
+  }
+  getSafeUrl(url: string): SafeResourceUrl {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 }

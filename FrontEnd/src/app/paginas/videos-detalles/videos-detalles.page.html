@@ -4,9 +4,16 @@
   <div class="video-details-container">
     <h2>{{ videoDetails?.name }}</h2>
 
-    <div class="video-container">
-      @if (videoDetails) {
-        <img [src]="'assets/placeholder.jpg'" alt="Video placeholder">
+    <div class="video-container" style="width: 100%; aspect-ratio: 9/16; position: relative;">
+      @if (videoDetails && videoDetails.video && videoDetails.video.includes('player.vimeo.com')) {
+        <iframe 
+          [src]="getSafeUrl(videoDetails.video)" 
+          style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
+          frameborder="0" 
+          allowfullscreen>
+        </iframe>
+      } @else {
+        <img [src]="'assets/placeholder.jpg'" alt="Video placeholder" style="width: 100%; height: 100%;">
       }
     </div>
 
