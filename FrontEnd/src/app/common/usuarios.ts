@@ -1,5 +1,6 @@
 export interface Usuarios {
-    _id : number;
+    _id : string;
+    idEntrenador: string;
     mail: string;
     user: string;
     password: string;

@@ -13,7 +13,7 @@ import * as process from "node:process";
           {
             name: 'Usuario',
             schema: UsuariosSchema,
-            collection: 'Usuario'
+            collection: 'usuarios'
           }
         ]
     ),

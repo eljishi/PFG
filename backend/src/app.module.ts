@@ -5,6 +5,8 @@ import {MongooseModule} from "@nestjs/mongoose";
 import {ConfigModule} from "@nestjs/config";
 import { EjerciciosModule } from './ejercicios/ejercicios.module';
 import * as process from "node:process";
+import {UsuariosModule} from "./usuarios/usuarios.module";
+import {EntrenamientosModule} from "./entrenamientos/entrenamientos.module";
 
 @Module({
   imports: [
@@ -13,6 +15,8 @@ import * as process from "node:process";
         process.env.DBURL as string
     ),
     EjerciciosModule,
+      UsuariosModule,
+     // EntrenamientosModule
       ],
   controllers: [AppController],
   providers: [AppService],

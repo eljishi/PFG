@@ -19,27 +19,4 @@ export class UsuariosService {
         return this.usuarioModel.findOne(condition).exec();
     }
 
-    async getUsuarios(): Promise<Usuario[]>{
-        return this.usuarioModel.find();
-    }
-
-
-    async getUsuario(idUsuario: string): Promise<any>{
-        return this.usuarioModel.findById(idUsuario);
-    }
-
-    async updateUsuario(
-        idUsuario: string, usuarioDto: UsuarioDTO ): Promise<any>{
-        return this.usuarioModel.findByIdAndUpdate(
-            idUsuario,
-            {$set: usuarioDto},
-            {new: true}
-        );
-    }
-
-    async deleteUsuario(idUsuario: string): Promise<any>{
-        return this.usuarioModel.findByIdAndDelete(idUsuario);
-    }
-
-
 }

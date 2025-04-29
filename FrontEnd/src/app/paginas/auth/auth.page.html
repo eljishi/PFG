@@ -1,73 +1,50 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/registro"></ion-back-button>
-    </ion-buttons>
-    <ion-title>{{ pageTitle }}</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content class="ion-padding">
-  <div class="form-container">
-    <form (ngSubmit)="submitForm()">
-
-      @if (pageType === 'athlete-login') {
-        <ion-item>
-          <ion-input type="email" [(ngModel)]="userData.email" name="email" placeholder="Correo" required></ion-input>
-        </ion-item>
-        
-        <ion-item>
-          <ion-input type="password" [(ngModel)]="userData.password" name="password" placeholder="Contraseña" required></ion-input>
-        </ion-item>
-      }
-
-      @if (pageType === 'coach-login') {
-        <ion-item>
-          <ion-input type="email" [(ngModel)]="userData.email" name="email" placeholder="Correo" required></ion-input>
-        </ion-item>
-        
-        <ion-item>
-          <ion-input type="password" [(ngModel)]="userData.password" name="password" placeholder="Contraseña" required></ion-input>
-        </ion-item>
-      }
-
-      @if (pageType === 'register') {
-        <ion-item>
-          <ion-input type="text" [(ngModel)]="userData.coachId" name="coachId" placeholder="ID Entrenador" required></ion-input>
-        </ion-item>
-        
-        <ion-item>
-          <ion-input type="email" [(ngModel)]="userData.email" name="email" placeholder="Correo" required></ion-input>
-        </ion-item>
-        
-        <ion-item>
-          <ion-input type="text" [(ngModel)]="userData.name" name="name" placeholder="Usuario" required></ion-input>
-        </ion-item>
-        
-        <ion-item>
-          <ion-input type="password" [(ngModel)]="userData.password" name="password" placeholder="Contraseña" required></ion-input>
-        </ion-item>
-      }
-
-      @if (pageType === 'coach-register') {
-        <ion-item>
-          <ion-input type="email" [(ngModel)]="userData.email" name="email" placeholder="Correo" required></ion-input>
-        </ion-item>
-        
-        <ion-item>
-          <ion-input type="text" [(ngModel)]="userData.name" name="name" placeholder="Usuario" required></ion-input>
-        </ion-item>
-        
-        <ion-item>
-          <ion-input type="password" [(ngModel)]="userData.password" name="password" placeholder="Contraseña" required></ion-input>
-        </ion-item>
-      }
-      
-      <div class="ion-padding">
-        <ion-button expand="block" type="submit">
-          {{ pageType.includes('login') ? 'Iniciar Sesión' : 'Registrarse' }}
-        </ion-button>
-      </div>
-    </form>
+<div class="row mt-5">
+  <div class="col-4 offset-4">
+    <div class="form-check form-switch">
+      <input type="checkbox" [(ngModel)]="loginUp"
+             class="form-check-input" id="switch" (click)="cleanForm()">
+      <label for="switch" class="form-check-label">
+        {{ loginUp ? 'Login' : 'Register' }}
+      </label>
+    </div>
   </div>
-</ion-content>
+</div>
+<form [formGroup]="formUser">
+  <div class="row">
+    <div class="col-md-4 offset-md-4 mt-3">
+      @if (!loginUp){
+        <div class="form-floating mb-3">
+          <input type="text"
+                 formControlName="user"
+                 id="user"
+                 placeholder="user"
+                 class="form-control">
+          <label for="user">Username</label>
+        </div>
+      }
+      <div class="form-floating mb-3">
+        <input type="mail"
+               formControlName="mail"
+               id="mail"
+               placeholder="mail"
+               class="form-control">
+        <label for="mail">Email</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input type="password"
+               formControlName="password"
+               id="password"
+               placeholder="password"
+               class="form-control">
+        <label for="password">Password</label>
+      </div>
+      <div class="d-flex justify-content-center">
+        <button class="btn btn-success"
+                (click)="loginUp?login(): register()"
+                [disabled]="formUser.invalid">
+          {{loginUp?'Login':'Register'}}
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

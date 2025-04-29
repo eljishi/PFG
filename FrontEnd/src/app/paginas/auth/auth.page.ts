@@ -1,21 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { 
-  IonContent, 
-  IonHeader, 
-  IonTitle, 
-  IonToolbar, 
+import {Component, inject, OnInit} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {
+  IonContent,
+  IonHeader,
+  IonTitle,
+  IonToolbar,
   IonButton,
   IonInput,
   IonItem,
-  IonLabel,
-  IonList,
   IonBackButton,
   IonButtons,
-  IonIcon
+  IonIcon,
+  LoadingController,
+  AlertController
 } from '@ionic/angular/standalone';
+import {UsuariosService} from "../../services/usuarios.service";
 
 @Component({
   selector: 'app-auth',
@@ -23,84 +24,93 @@ import {
   styleUrls: ['./auth.page.scss'],
   standalone: true,
   imports: [
-    CommonModule, 
+    CommonModule,
     FormsModule,
-    IonContent, 
-    IonHeader, 
-    IonTitle, 
+    IonContent,
+    IonHeader,
+    IonTitle,
     IonToolbar,
     IonButton,
     IonInput,
     IonItem,
     IonBackButton,
     IonButtons,
+    ReactiveFormsModule,
   ]
 })
 export class AuthPage implements OnInit {
   pageType: string = 'register';
   pageTitle: string = 'Registro';
-  
-  userData = {
-    email: '',
-    name: '',
-    password: '',
-    coachId: ''  // Para el registro de atleta
-  };
 
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute
-  ) { }
+  private readonly formBuilder: FormBuilder = inject(FormBuilder);
+  private readonly userService: UsuariosService = inject(UsuariosService);
+  private readonly router: Router = inject(Router);
 
-  ngOnInit() {
+  formUser: FormGroup = this.formBuilder.group({
+    idEntrenador: [''],
+    user: [''],
+    mail: [''],
+    password: [''],
+    esEntrenador: ['']
+  });
 
-    this.route.queryParams.subscribe(params => {
-      if (params['type']) {
-        this.pageType = params['type'];
-        
-        switch(this.pageType) {
-          case 'register':
-            this.pageTitle = 'Registro de Atleta';
-            break;
-          case 'athlete-login':
-            this.pageTitle = 'Iniciar Sesión - Atleta';
-            break;
-          case 'coach-login':
-            this.pageTitle = 'Iniciar Sesión - Entrenador';
-            break;
-          case 'coach-register':
-            this.pageTitle = 'Registro - Entrenador';
-            break;
-          default:
-            this.pageTitle = 'Registro';
-            this.pageType = 'register';
-        }
-      }
-    });
+  loginUp =true;
+
+  constructor() {
   }
 
-  submitForm() {
-    console.log('Formulario enviado:', this.userData);
-    console.log('Tipo de página:', this.pageType);
-    
+// GETTERS
+  get idEntrenador():any{
+    return this.formUser.get('idEntrenador');
+  }
+  get name():any{
+    return this.formUser.get('user');
+  }
+  get password():any{
+    return this.formUser.get('password');
+  }
+  get mail():any{
+    return this.formUser.get('mail');
+  }
+  get esEntrenador():any{
+    return this.formUser.get('esEntrenador');
+  }
 
-    switch(this.pageType) {
-      case 'register':
-        // Registro de atleta: idEntrenador, correo, usuario, contraseña
-        console.log('Procesando registro de atleta');
-        break;
-      case 'athlete-login':
-        // Login atleta: correo, contraseña
-        console.log('Procesando inicio de sesión de atleta');
-        break;
-      case 'coach-login':
-        // Login entrenador: correo, contraseña
-        console.log('Procesando inicio de sesión de entrenador');
-        break;
-      case 'coach-register':
-        // Registro entrenador: correo, usuario, contraseña
-        console.log('Procesando registro de entrenador');
-        break;
+
+  async login(){
+    console.log('log')
+    //if (this.formUser.invalid) return;
+
+    const valido =
+      await this.userService.login(this.mail.value, this.password.value);
+    console.log(valido);
+
+    if (valido){
+      this.router.navigateByUrl('/user');
+    }else {
+      alert('Usuario y contraseña incorrectos');
     }
+  }
+
+  async register(){
+    console.log('reg')
+
+    if (this.formUser.invalid) return;
+    const valido =
+      await this.userService.registroAtleta(this.formUser.getRawValue());
+    console.log(valido);
+    if (valido){
+      this.router.navigateByUrl('/user');
+    }else {
+      alert('El correo o el usuario ya existen');
+    }
+  }
+
+  cleanForm(){
+    this.formUser.reset();
+  }
+
+  async ngOnInit() {
+
   }
 }
