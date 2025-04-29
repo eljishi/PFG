@@ -6,6 +6,7 @@ import { IonContent, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTit
 import { HeaderComponent } from 'src/app/componentes/header/header.component';
 import { EjerciciosService } from 'src/app/services/ejercicios.service';
 import { Ejercicios } from 'src/app/common/ejercicios';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-videos',
@@ -34,7 +35,11 @@ export class VideosPage implements OnInit {
   isLoading: boolean = true;
   error: string | null = null;
 
-  constructor(private injector: Injector, private router: Router) {
+  constructor(
+    private injector: Injector, 
+    private router: Router,
+    private sanitizer: DomSanitizer
+  ) {
     this.ejerciciosService = injector.get(EjerciciosService);
   }
 
@@ -69,5 +74,9 @@ export class VideosPage implements OnInit {
     } else {
       console.error('El ejercicio no tiene un ID válido');
     }
+  }
+
+  getSafeUrl(url: string): SafeResourceUrl {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 }

@@ -14,10 +14,14 @@
               
               <div class="video-placeholder">
                 <div class="video-container">
-
-                  <div class="play-button">
-                    <ion-icon name="play-circle"></ion-icon>
-                  </div>
+                  @if (ejercicio.video && ejercicio.video.includes('player.vimeo.com')) {
+                    <iframe [src]="getSafeUrl(ejercicio.video)" width="100%" height="200" frameborder="0" allowfullscreen></iframe>
+                  } @else {
+                    <img [src]="'assets/placeholder.jpg'" alt="Video placeholder">
+                    <div class="play-button">
+                      <ion-icon name="play-circle"></ion-icon>
+                    </div>
+                  }
                 </div>
               </div>
               
