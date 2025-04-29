@@ -14,11 +14,13 @@
 
 .video-placeholder {
   padding: 10px;
-  
+
   .video-container {
     position: relative;
     max-width: 100%;
     margin: 0 auto;
+    height: 260px; // Cambiado de 200px a 260px para hacer el video más grande
+    aspect-ratio: 9/16;
     
     img {
       width: 100%;

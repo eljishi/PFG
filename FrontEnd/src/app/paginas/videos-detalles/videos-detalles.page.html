@@ -1,38 +1,45 @@
 <app-header [pageTitle]="'Detalles del Entrenamiento'"></app-header>
 
 <ion-content>
+  <div class="video-details-container">
+    <h2>{{ videoDetails?.name }}</h2>
 
-
-  <div class="video-details-container" *ngIf="!isLoading && !error && videoDetails">
-    <div class="header-section">
-      <h1 class="exercise-title">{{ videoDetails.name }}</h1>
-      <div class="divider"></div>
+    <div class="video-container" style="width: 100%; aspect-ratio: 9/16; position: relative;">
+      @if (videoDetails && videoDetails.video && videoDetails.video.includes('player.vimeo.com')) {
+        <iframe 
+          [src]="getSafeUrl(videoDetails.video)" 
+          style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
+          frameborder="0" 
+          allowfullscreen>
+        </iframe>
+      } @else {
+        <img [src]="'assets/placeholder.jpg'" alt="Video placeholder" style="width: 100%; height: 100%;">
+      }
     </div>
-
-  <!-- <div class="video-container">
-      <img [src]="videoDetails.video" alt="{{ videoDetails.name }}" 
-           onerror="this.src='assets/video-placeholder.jpg'">
-    </div> -->
 
     <div class="description-card">
       <h2 class="section-title">Descripción</h2>
-      <p class="description-text">{{ videoDetails.description }}</p>
+      <p class="description-text">{{ videoDetails?.description }}</p>
     </div>
 
-    <ion-card class="null-causes-card" *ngIf="videoDetails.nullCauses && videoDetails.nullCauses.length > 0">
-      <ion-card-header>
-        <ion-card-title class="card-title">Causas para nulo</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <div *ngFor="let cause of videoDetails.nullCauses" class="null-cause">
-          <div class="cause-content">
-            <ion-icon name="alert-circle-outline" class="cause-icon"></ion-icon>
-            <p class="cause-text">{{ cause.reason }}</p>
-          </div>
-          <!-- <img [src]="cause.image" alt="Imagen de causa de nulidad" 
-               onerror="this.src='assets/placeholder.jpg'"> -->
-        </div>
-      </ion-card-content>
-    </ion-card>
+    @if (videoDetails?.nullCauses ) {
+      <ion-card class="null-causes-card">
+        <ion-card-header>
+          <ion-card-title class="card-title">Causas para nulo</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          @for (cause of videoDetails?.nullCauses; track $index) {
+            <div class="null-cause">
+              <div class="cause-content">
+                <ion-icon name="alert-circle-outline" class="cause-icon"></ion-icon>
+                <p class="cause-text">{{ cause.reason }}</p>
+              </div>
+              <!-- <img [src]="cause.image" alt="Imagen de causa de nulidad" 
+                   onerror="this.src='assets/placeholder.jpg'"> -->
+            </div>
+          }
+        </ion-card-content>
+      </ion-card>
+    }
   </div>
 </ion-content>

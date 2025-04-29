@@ -7,7 +7,6 @@
       Agregar ejercicio
     </ion-button>
   </div>
-
   
   <!-- Modal para nuevo ejercicio -->
   <ion-modal [isOpen]="isModalOpen">
@@ -39,27 +38,29 @@
             Añadir Serie
           </ion-button>
           
-          <div *ngFor="let serie of nuevoEjercicio.series; let i = index" class="serie-item">
-            <div class="serie-row">
-              <span class="serie-number">{{i+1}}</span>
-              
-              <ion-item class="input-container serie-input">
-                <ion-input [(ngModel)]="serie.kg" placeholder="KG" type="number"></ion-input>
-              </ion-item>
-              
-              <ion-item class="input-container serie-input">
-                <ion-input [(ngModel)]="serie.rpe" placeholder="RPE" type="number"></ion-input>
-              </ion-item>
-              
-              <ion-item class="input-container serie-input">
-                <ion-input [(ngModel)]="serie.repeticiones" placeholder="REPS" type="number"></ion-input>
-              </ion-item>
-              
-              <ion-button fill="clear" size="small" (click)="eliminarSerie(i)" class="delete-btn">
-                <ion-icon name="close-outline"></ion-icon>
-              </ion-button>
+          @for (serie of nuevoEjercicio.series; track $index; let i = $index) {
+            <div class="serie-item">
+              <div class="serie-row">
+                <span class="serie-number">{{i+1}}</span>
+                
+                <ion-item class="input-container serie-input">
+                  <ion-input [(ngModel)]="serie.kg" placeholder="KG" type="number"></ion-input>
+                </ion-item>
+                
+                <ion-item class="input-container serie-input">
+                  <ion-input [(ngModel)]="serie.rpe" placeholder="RPE" type="number"></ion-input>
+                </ion-item>
+                
+                <ion-item class="input-container serie-input">
+                  <ion-input [(ngModel)]="serie.repeticiones" placeholder="REPS" type="number"></ion-input>
+                </ion-item>
+                
+                <ion-button fill="clear" size="small" (click)="eliminarSerie(i)" class="delete-btn">
+                  <ion-icon name="close-outline"></ion-icon>
+                </ion-button>
+              </div>
             </div>
-          </div>
+          }
         </div>
       </ion-content>
       
