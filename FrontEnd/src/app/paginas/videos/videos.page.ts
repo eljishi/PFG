@@ -24,7 +24,6 @@ import { Ejercicios } from 'src/app/common/ejercicios';
     IonCardTitle, 
     IonCardContent, 
     IonIcon,
-    IonSpinner,
     HeaderComponent
   ]
 })

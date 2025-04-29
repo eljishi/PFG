@@ -31,9 +31,8 @@ import { Ejercicios } from 'src/app/common/ejercicios';
     IonCardHeader, 
     IonCardTitle, 
     IonCardContent,
-    IonSpinner,
     HeaderComponent,
-    IonIcon  // Add this to the imports array
+    IonIcon  
   ]
 })
 export class VideosDetallesPage implements OnInit {
