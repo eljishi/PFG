@@ -13,23 +13,19 @@
       <h2 class="auth-title">{{ pageTitle }}</h2>
       
       <form [formGroup]="formUser" class="auth-form">
-        <!-- Campos para registro -->
+
         @if (!loginUp) {
           <div class="form-field">
             <ion-label>Nombre de Usuario</ion-label>
             <ion-input type="text" formControlName="user" placeholder="Ingresa tu nombre de usuario"></ion-input>
-            <!-- Mostrar error si es inválido y ha sido tocado -->
             @if (name?.invalid && (name?.dirty || name?.touched)) {
               <div style="color: red; font-size: 0.8em; margin-top: 4px;">Nombre de usuario requerido.</div>
             }
           </div>
-
-          <!-- Campo ID Entrenador (solo para registro de atletas) -->
           @if (pageType === 'register') {
             <div class="form-field">
               <ion-label>ID del Entrenador</ion-label>
               <ion-input type="text" formControlName="idEntrenador" placeholder="Ingresa el ID de tu entrenador"></ion-input>
-              <!-- Mostrar error si es inválido y ha sido tocado -->
               @if (idEntrenador?.invalid && (idEntrenador?.dirty || idEntrenador?.touched)) {
                 <div style="color: red; font-size: 0.8em; margin-top: 4px;">ID del entrenador requerido.</div>
               }

@@ -15,16 +15,15 @@ export class UsuariosService {
 
   constructor() { }
 
-  // Elimina los métodos registroEntrenador y registroAtleta
 
-  register(usuario: Usuarios): Promise<any> { // Nuevo método unificado
+  register(usuario: Usuarios): Promise<any> { 
     return new Promise((resolve, reject) => {
       this.httpClient.post(environment.urlBase + 'users/register', usuario)
         .subscribe({
-          next: this.promesaGuardaToken(resolve), // Reutiliza el manejador de token existente
+          next: this.promesaGuardaToken(resolve), 
           error: (err) => {
-            console.error('Error en registro:', err); // Log específico para registro
-            reject(err); // Rechaza la promesa en caso de error HTTP
+            console.error('Error en registro:', err); 
+            reject(err); 
           }
         });
     });
@@ -44,8 +43,6 @@ export class UsuariosService {
     });
   }
 
-
-  //TOKEN
   private promesaGuardaToken(
     resolve: (value: (PromiseLike<unknown> | unknown)) => void) {
     return async (resp: any) => {
