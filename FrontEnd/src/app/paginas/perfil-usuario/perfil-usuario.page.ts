@@ -44,7 +44,9 @@ export class PerfilUsuarioPage implements OnInit {
     email: '',
     foto: 'https://ionicframework.com/docs/img/demos/avatar.svg',
     entrenador: '',
-    esEntrenador: false
+    esEntrenador: false,
+    id: '',
+    idEntrenador: ''
   };
 
   constructor(private usuariosService: UsuariosService) {}
@@ -60,9 +62,10 @@ export class PerfilUsuarioPage implements OnInit {
         email: this.usuariosService.usuario.mail || '',
         foto: 'https://ionicframework.com/docs/img/demos/avatar.svg', 
         entrenador: 'Por asignar',
-        esEntrenador: this.usuariosService.usuario.esEntrenador || false
+        esEntrenador: this.usuariosService.usuario.esEntrenador || false,
+        id: this.usuariosService.usuario._id || '',
+        idEntrenador: this.usuariosService.usuario.idEntrenador || 'Sin asignar'
       };
     }
   }
-
 }
