@@ -63,7 +63,6 @@ export class EjerciciosPage implements OnInit {
 
   abrirModalNuevoEjercicio() {
     this.isModalOpen = true;
-    // Reiniciar el objeto de ejercicio
     this.nuevoEjercicio = {
       nombre: '',
       descripcion: '',
@@ -88,7 +87,6 @@ export class EjerciciosPage implements OnInit {
   }
 
   guardarEjercicio() {
-    // Aquí iría la lógica para guardar el ejercicio
     console.log('Ejercicio a guardar:', this.nuevoEjercicio);
     this.cerrarModal();
   }

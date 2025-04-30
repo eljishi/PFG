@@ -198,7 +198,7 @@ export class AuthPage implements OnInit {
         this.formUser.get('idEntrenador')?.clearValidators();
       }
 
-    } else { // Login
+    } else { 
       this.loginUp = true;
       this.pageTitle = 'Iniciar Sesión';
       this.formUser.get('user')?.clearValidators();

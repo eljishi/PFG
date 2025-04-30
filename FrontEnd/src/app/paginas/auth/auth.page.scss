@@ -64,7 +64,6 @@
   --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Animación para la tarjeta */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -76,7 +75,6 @@
   }
 }
 
-/* Estilos específicos según el tipo de usuario */
 :host-context(.athlete-mode) {
   .auth-title {
     color: var(--ion-color-primary);

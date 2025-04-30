@@ -7,14 +7,13 @@
       Agregar ejercicio
     </ion-button>
   </div>
-  
-  <!-- Modal para nuevo ejercicio -->
+
   <ion-modal [isOpen]="isModalOpen">
     <ng-template>
       <ion-header>
         <ion-toolbar>
           <ion-title>Nuevo ejercicio</ion-title>
-          <!-- Eliminamos el botón X de aquí -->
+
         </ion-toolbar>
       </ion-header>
       
@@ -30,9 +29,7 @@
             rows="4">
           </ion-textarea>
         </ion-item>
-
-        
-        <!-- Sección de Series -->
++
         <div class="series-section">
           <ion-button size="small" expand="block" (click)="agregarSerie()" class="add-series-button">
             Añadir Serie

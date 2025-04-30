@@ -3,15 +3,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { 
   IonContent, 
-  IonHeader, 
-  IonTitle, 
-  IonToolbar, 
   IonCard, 
   IonCardHeader, 
   IonCardTitle, 
   IonCardContent, 
-  IonSpinner,
-  IonIcon  // Add this import
+  IonIcon 
 } from '@ionic/angular/standalone';
 import { ActivatedRoute } from '@angular/router';
 import { HeaderComponent } from 'src/app/componentes/header/header.component';
