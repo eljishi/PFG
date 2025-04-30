@@ -68,7 +68,7 @@ export class UsuariosService {
     await this.cargarToken();
     console.log(this.token)
     if(!this.token){
-      this.router.navigateByUrl('/login');
+      this.router.navigateByUrl('/registro');
       return Promise.resolve(false);
     }
     return new Promise<boolean>(resolve => {
@@ -84,13 +84,13 @@ export class UsuariosService {
               this.usuario = resp.usuario;
               resolve(true);
             } else {
-              this.router.navigateByUrl('/login');
+              this.router.navigateByUrl('/registro');
               resolve(false);
             }
           },
           error: (err) => {
             console.error('Error validando token:', err);
-            this.router.navigateByUrl('/login');
+            this.router.navigateByUrl('/registro');
             resolve(false);
           }
         });
@@ -104,6 +104,6 @@ export class UsuariosService {
   async logout() {
     this.token = '';
     localStorage.removeItem('token');
-    this.router.navigateByUrl('/login');
+    this.router.navigateByUrl('/registro'); // Cambiado de '/login' a '/registro'
   }
 }

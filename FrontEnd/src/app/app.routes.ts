@@ -51,6 +51,7 @@ export const routes: Routes = [
   {
     path: 'videos-detalles/:id',
     loadComponent: () => import('./paginas/videos-detalles/videos-detalles.page').then( m => m.VideosDetallesPage)
-  }
+  },
+  
 
 ];
