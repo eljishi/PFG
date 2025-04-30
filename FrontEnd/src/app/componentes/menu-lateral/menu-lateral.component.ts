@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { 
   IonMenu, 
@@ -11,13 +11,15 @@ import {
   IonIcon,
   IonLabel
 } from '@ionic/angular/standalone';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { addIcons } from 'ionicons';
 import { 
   personOutline, 
   settingsOutline, 
   logOutOutline 
 } from 'ionicons/icons';
+import { UsuariosService } from '../../services/usuarios.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-menu-lateral',
@@ -38,10 +40,14 @@ import {
     RouterLink
   ]
 })
-export class MenuLateralComponent implements OnInit {
+export class MenuLateralComponent implements OnInit, OnDestroy {
+  nombreUsuario: string = '';
+  private subscription: Subscription = new Subscription();
 
-  constructor() {
-    // Register the icons we'll be using
+  constructor(
+    private usuariosService: UsuariosService,
+    private router: Router
+  ) {
     addIcons({
       'person-outline': personOutline,
       'settings-outline': settingsOutline,
@@ -49,6 +55,29 @@ export class MenuLateralComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.cargarDatosUsuario();
+    this.usuariosService.validaToken().then(() => {
+      this.cargarDatosUsuario();
+    });
+  }
 
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
+  cargarDatosUsuario() {
+    if (this.usuariosService.usuario) {
+      this.nombreUsuario = this.usuariosService.usuario.user || '';
+    } else {
+      this.nombreUsuario = '';
+    }
+  }
+
+  cerrarSesion() {
+    this.usuariosService.logout();
+    this.router.navigateByUrl('/auth');
+  }
 }

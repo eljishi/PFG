@@ -37,17 +37,10 @@ import {UsuariosService} from "../../services/usuarios.service";
     IonToolbar,
     IonButton,
     IonInput,
-    IonItem,
     IonBackButton,
     IonButtons,
     ReactiveFormsModule,
-    IonCard,
-    IonCardHeader,
-    IonCardTitle,
-    IonCardContent,
     IonLabel,
-    IonToggle,
-    IonList,
     IonSpinner
   ]
 })
@@ -61,7 +54,7 @@ export class AuthPage implements OnInit {
   private readonly router: Router = inject(Router);
 
   formUser: FormGroup = this.formBuilder.group({
-    idEntrenador: [''], // Añadido para el ID del entrenador
+    idEntrenador: [''], 
     user: ['', Validators.required],
     mail: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required],
@@ -73,7 +66,6 @@ export class AuthPage implements OnInit {
   constructor() {
   }
 
-// GETTERS
   get idEntrenador():any{
     return this.formUser.get('idEntrenador');
   }
@@ -123,7 +115,6 @@ export class AuthPage implements OnInit {
 
     this.formUser.markAllAsTouched();
     if (this.formUser.invalid) {
-      // Mostrar alerta específica si falta idEntrenador para atleta
       if (this.pageType === 'register' && this.formUser.get('idEntrenador')?.hasError('required')) {
         alert('Por favor, ingresa el ID de tu entrenador.');
         return;
@@ -142,7 +133,6 @@ export class AuthPage implements OnInit {
 
       const userData = { ...this.formUser.getRawValue(), esEntrenador: esEntrenadorFlag };
 
-      // Eliminar idEntrenador si es registro de entrenador o si está vacío (opcional, depende de tu backend)
       if (esEntrenadorFlag || !userData.idEntrenador) {
          delete userData.idEntrenador;
       }
@@ -160,10 +150,8 @@ export class AuthPage implements OnInit {
     } catch (error: any) {
       console.error('Error durante el registro:', error);
 
-      // Intentar mostrar un mensaje de error más específico del backend
       let errorMessage = 'Error al intentar registrarse. Por favor, inténtalo de nuevo.';
       if (error && error.error && error.error.message) {
-         // Si el error tiene una estructura como { error: { message: '...' } } (común en NestJS)
          errorMessage = `Error: ${error.error.message}`;
       } else if (error instanceof Error) {
          errorMessage = `Error: ${error.message}`;
@@ -175,7 +163,6 @@ export class AuthPage implements OnInit {
     }
   }
 
-  // Métodos de navegación
   navigateToRegister() {
     this.router.navigate(['/auth'], { queryParams: { type: 'register' } });
   }
@@ -194,10 +181,9 @@ export class AuthPage implements OnInit {
 
   async ngOnInit() {
     const urlParams = new URLSearchParams(window.location.search);
-    const type = urlParams.get('type') || 'login'; // Default to login if no type
+    const type = urlParams.get('type') || 'login'; 
     this.pageType = type;
 
-    // Limpiar clases previas del body
     document.body.classList.remove('coach-mode', 'athlete-mode');
 
     if (type.includes('register')) {
@@ -205,26 +191,20 @@ export class AuthPage implements OnInit {
       this.pageTitle = type === 'coach-register' ? 'Registro de Entrenador' : 'Registro de Atleta';
       document.body.classList.add(type === 'coach-register' ? 'coach-mode' : 'athlete-mode');
 
-      // Configurar validadores para registro
       this.formUser.get('user')?.setValidators(Validators.required);
-      if (type === 'register') { // Registro de Atleta
-        this.formUser.get('idEntrenador')?.setValidators(Validators.required); // Hacer idEntrenador requerido para atletas
-      } else { // Registro de Entrenador
-        this.formUser.get('idEntrenador')?.clearValidators(); // No requerido para entrenadores
+      if (type === 'register') { 
+        this.formUser.get('idEntrenador')?.setValidators(Validators.required);
+      } else { 
+        this.formUser.get('idEntrenador')?.clearValidators();
       }
 
     } else { // Login
       this.loginUp = true;
-      this.pageTitle = 'Iniciar Sesión'; // Título genérico para login
-      // Podrías añadir lógica para diferenciar login de atleta/entrenador si es necesario
-      // document.body.classList.add(type.includes('coach') ? 'coach-mode' : 'athlete-mode'); // Opcional para login
-
-      // Quitar validadores no necesarios para login
+      this.pageTitle = 'Iniciar Sesión';
       this.formUser.get('user')?.clearValidators();
       this.formUser.get('idEntrenador')?.clearValidators();
     }
 
-    // Actualizar estado de validación de todos los controles
     this.formUser.get('user')?.updateValueAndValidity();
     this.formUser.get('idEntrenador')?.updateValueAndValidity();
   }

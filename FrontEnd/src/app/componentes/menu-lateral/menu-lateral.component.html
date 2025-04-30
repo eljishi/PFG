@@ -1,15 +1,15 @@
 <ion-menu side="end" menu-id="menu" content-id="contenido">
   <ion-header>
     <ion-toolbar>
-      <ion-title>Perfil del usuario</ion-title>
+      <ion-title>Menú</ion-title>
     </ion-toolbar>
   </ion-header>
   
   <ion-content>
     <ion-list>
-      <ion-item routerLink="/perfil">
+      <ion-item routerLink="/perfil-usuario">
         <ion-icon name="person-outline" slot="start"></ion-icon>
-        <ion-label>Nombre de usuario</ion-label>
+        <ion-label>{{ nombreUsuario }}</ion-label>
       </ion-item>
       
       <ion-item routerLink="/perfil-usuario">
@@ -19,7 +19,7 @@
     </ion-list>
     
     <ion-list lines="none" class="logout-container">
-      <ion-item routerLink="/login" class="logout-button">
+      <ion-item (click)="cerrarSesion()" class="logout-button">
         <ion-icon name="log-out-outline" slot="start"></ion-icon>
         <ion-label color="danger">Cerrar sesión</ion-label>
       </ion-item>

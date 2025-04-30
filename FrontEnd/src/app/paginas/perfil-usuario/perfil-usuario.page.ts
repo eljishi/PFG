@@ -14,9 +14,11 @@ import {
   IonInput,
   IonButton,
   IonAvatar,
-  IonFooter
+  IonFooter,
+  IonBadge
 } from '@ionic/angular/standalone';
 import { HeaderComponent } from 'src/app/componentes/header/header.component';
+import { UsuariosService } from '../../services/usuarios.service';
 
 @Component({
   selector: 'app-perfil-usuario',
@@ -26,32 +28,41 @@ import { HeaderComponent } from 'src/app/componentes/header/header.component';
   imports: [
     CommonModule, 
     FormsModule, 
-   IonContent, 
+    IonContent, 
     IonList,
     IonItem,
     IonLabel,
     IonInput,
-    IonButton,
     IonAvatar,
-    IonFooter,
+    IonBadge,
     HeaderComponent
   ]
 })
 export class PerfilUsuarioPage implements OnInit {
   usuario = {
-    nombre: 'Usuario Ejemplo',
-    email: 'usuario@ejemplo.com',
+    nombre: '',
+    email: '',
     foto: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-    entrenador: 'Carlos Pérez'
+    entrenador: '',
+    esEntrenador: false
   };
 
-  constructor() {}
+  constructor(private usuariosService: UsuariosService) {}
 
   ngOnInit() {
+    this.cargarDatosUsuario();
   }
 
-  guardarCambios() {
-    console.log('Guardando cambios del perfil', this.usuario);
-
+  cargarDatosUsuario() {
+    if (this.usuariosService.usuario) {
+      this.usuario = {
+        nombre: this.usuariosService.usuario.user || '',
+        email: this.usuariosService.usuario.mail || '',
+        foto: 'https://ionicframework.com/docs/img/demos/avatar.svg', 
+        entrenador: 'Por asignar',
+        esEntrenador: this.usuariosService.usuario.esEntrenador || false
+      };
+    }
   }
+
 }
