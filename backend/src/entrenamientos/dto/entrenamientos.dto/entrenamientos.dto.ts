@@ -1,11 +1,19 @@
 export interface EntrenamientosDTO {
-    name: string
-    seriestotales: number
-    series: SeriesDTO[]
-    dia: Date
+    idAtleta: string;
+    fecha: Date;
+    nombre: string;
+    ejercicios: EjercicioDTO[];
 }
 
-export interface SeriesDTO {
-    repeticiones: number
-    peso: string
+export interface EjercicioDTO {
+    nombre: string;
+    descripcion: string;
+    series: SerieDTO[];
+}
+
+export interface SerieDTO {
+    id?: string;
+    kg: number;
+    rpe: number;
+    repeticiones: number;
 }

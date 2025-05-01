@@ -1,15 +1,24 @@
 import {EntrenamientosDTO} from "../../dto/entrenamientos.dto/entrenamientos.dto";
 
 export interface Entrenamiento {
-    name: string
-    seriestotales: number
-    series: Series[]
-    dia: Date
+    id?: string;
+    idAtleta: string;
+    fecha: Date;
+    nombre: string;
+    ejercicios: Ejercicio[];
 }
 
-export interface Series {
-    reason: string
-    image: string
+export interface Ejercicio {
+    nombre: string;
+    descripcion: string;
+    series: Serie[];
+}
+
+export interface Serie {
+    id?: string;
+    kg: number;
+    rpe: number;
+    repeticiones: number;
 }
 
 export interface ApiResponseEntrenamiento {
@@ -20,11 +29,6 @@ export interface ApiResponseEntrenamiento {
 export interface ApiResponseEntrenamientos {
     status: string;
     data: Entrenamiento[];
-}
-
-export interface ApiResponseSeries {
-    status: string;
-    data: Series[];
 }
 
 export interface ApiResponseMessage {

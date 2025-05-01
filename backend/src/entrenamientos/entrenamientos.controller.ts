@@ -19,7 +19,6 @@ export class EntrenamientosController {
         private readonly entrenamientosService: EntrenamientosService) {
     }
 
-
     @Post('')
     async create(@Body() entrenamientosDTO: EntrenamientosDTO) {
         try {
@@ -35,7 +34,6 @@ export class EntrenamientosController {
                     message: e.message
                 })
         }
-
     }
 
     @Get('')
@@ -55,13 +53,11 @@ export class EntrenamientosController {
         }
     }
 
-
-    @Get('ejercicio/:id')
-    async getEntrenamiento(@Param('id') id: string) {
+    @Get('atleta/:idAtleta')
+    async getEntrenamientosByAtleta(@Param('idAtleta') idAtleta: string) {
         try {
-            const data =
-                await this.entrenamientosService.getEjercicio(id);
-            if (data) {
+            const data = await this.entrenamientosService.getEntrenamientosByAtleta(idAtleta);
+            if (data && data.length > 0) {
                 return {
                     status: 'Ok',
                     data
@@ -69,7 +65,7 @@ export class EntrenamientosController {
             }
             return new NotFoundException({
                 status: 'Error',
-                message: 'Entrenamiento no encontrada'
+                message: 'No se encontraron entrenamientos para este atleta'
             })
         } catch (e: any) {
             if (e instanceof NotFoundException) {
@@ -82,38 +78,45 @@ export class EntrenamientosController {
         }
     }
 
-    /*
-    @Get('search')
-    async getSerieByTitleOrSynopsis(@Query('query') query: string) {
+    @Get(':id')
+    async getEntrenamiento(@Param('id') id: string) {
         try {
-            const series = await this.ejerciciosService.getSerieByTitleOrSynopsis(query);
-            return {
-                status: 'Ok',
-                data: series
-            };
+            const data =
+                await this.entrenamientosService.getEjercicio(id);
+            if (data) {
+                return {
+                    status: 'Ok',
+                    data
+                }
+            }
+            return new NotFoundException({
+                status: 'Error',
+                message: 'Entrenamiento no encontrado'
+            })
         } catch (e: any) {
+            if (e instanceof NotFoundException) {
+                throw e
+            }
             throw new InternalServerErrorException({
-                status: "Error",
+                status: 'Error',
                 message: e.message
-            });
+            })
         }
     }
-    */
 
-    //actualiza una serie SI
-    @Put('/:id')
+    @Put(':id')
     async updateEntrenamiento(
         @Param('id') id: string,
         @Body() entrenamientosDTO: EntrenamientosDTO) {
         try {
-            const updatedMovie =
+            const updatedEntrenamiento =
                 await this.entrenamientosService.updateEjercicio(
                     id, entrenamientosDTO
                 );
-            if (!updatedMovie) {
+            if (!updatedEntrenamiento) {
                 throw new NotFoundException({
                     status: 'Error',
-                    message: 'Entrenamienti no encontrado'
+                    message: 'Entrenamiento no encontrado'
                 })
             }
             return {
@@ -131,7 +134,6 @@ export class EntrenamientosController {
         }
     }
 
-    //Elimina una Serie SI
     @Delete(':id')
     async deleteEntrenamiento(@Param('id') id: string) {
         try {
@@ -157,49 +159,4 @@ export class EntrenamientosController {
             })
         }
     }
-
-    /*
-    @Get('categorias')
-    async getCategories() {
-        try {
-            const data =
-                await this.seriesService.getCategories();
-
-            return {
-                status: 'Ok',
-                data
-            }
-        } catch (e: any) {
-            throw new InternalServerErrorException({
-                status: 'Error',
-                message: e.message
-            })
-        }
-    }
-
-    @Get('categoria/:categoria')
-    async getSeriesByCategory(@Param('categoria') categoria: string) {
-        try {
-            const data = await this.seriesService.getSeriesByCategory(categoria);
-            if (data.length > 0) {
-                return {
-                    status: 'Ok',
-                    data
-                };
-            }
-            throw new NotFoundException({
-                status: 'Error',
-                message: 'No se encontraron series para esta categoría'
-            });
-        } catch (e: any) {
-            if (e instanceof NotFoundException) {
-                throw e;
-            }
-            throw new InternalServerErrorException({
-                status: 'Error',
-                message: e.message
-            });
-        }
-    }
-    */
 }

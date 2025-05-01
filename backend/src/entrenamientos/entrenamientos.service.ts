@@ -7,28 +7,27 @@ import {EntrenamientosDTO} from "./dto/entrenamientos.dto/entrenamientos.dto";
 
 @Injectable()
 export class EntrenamientosService {
-    constructor(@InjectModel('Ejercicio')
+    constructor(@InjectModel('Entrenamiento')
     private entrenamientoModel: Model<Entrenamiento>) {
     }
 
-    // inserta una serie
+    // Crea un nuevo entrenamiento
     async create(entrenamientosDTO: EntrenamientosDTO): Promise<any>{
         const entrenamiento = new this.entrenamientoModel(entrenamientosDTO);
         return entrenamiento.save()
     }
 
-
+    // Obtiene todos los entrenamientos
     async getEjercicios(): Promise<Entrenamiento[]>{
         return this.entrenamientoModel.find();
     }
 
-    //pilla un ejercicio
+    // Obtiene un entrenamiento por ID
     async getEjercicio(idEntrenamiento: string): Promise<any>{
         return this.entrenamientoModel.findById(idEntrenamiento);
     }
 
-
-    //actualiza una serie
+    // Actualiza un entrenamiento
     async updateEjercicio(
         idEntrenamiento: string, entrenamientosDTO: EntrenamientosDTO ): Promise<any>{
         return this.entrenamientoModel.findByIdAndUpdate(
@@ -38,29 +37,13 @@ export class EntrenamientosService {
         );
     }
 
-    //delete
+    // Elimina un entrenamiento
     async deleteEntrenamiento(idEntrenamiento: string): Promise<any>{
         return this.entrenamientoModel.findByIdAndDelete(idEntrenamiento);
     }
 
-    //get por un algo por si acaso
-    /*
-    async get?(): Promise<string[]>{
-        return this.serieModel.find().distinct('categorias')
+    // Obtiene entrenamientos por ID de atleta
+    async getEntrenamientosByAtleta(idAtleta: string): Promise<Entrenamiento[]> {
+        return this.entrenamientoModel.find({ idAtleta: idAtleta }).exec();
     }
-
-
-    async getSerieByTitleOrSynopsis(searchTerm: string): Promise<any[]> {
-        return this.serieModel.find({
-            $or: [
-                { titulo: { $regex: searchTerm, $options: 'i' } },
-                { sinopsis: { $regex: searchTerm, $options: 'i' } }
-            ]
-        }).exec();
-    }
-
-    async getSeriesByCategory(categoria: string): Promise<Serie[]> {
-        return this.serieModel.find({ 'categorias.categoria': categoria }).exec();
-    }
-    */
 }
