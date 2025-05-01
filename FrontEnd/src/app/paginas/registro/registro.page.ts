@@ -17,6 +17,7 @@ import {
   IonCol,
   IonIcon
 } from '@ionic/angular/standalone';
+import { UsuariosService } from '../../services/usuarios.service';
 
 @Component({
   selector: 'app-registro',
@@ -32,7 +33,10 @@ import {
 })
 export class RegistroPage implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private usuariosService: UsuariosService
+  ) { }
 
   ngOnInit() {
   }

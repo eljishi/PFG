@@ -5,6 +5,7 @@ import {
     Get,
     InternalServerErrorException,
     NotFoundException,
+    Param,
     Post, Put, Req, UnauthorizedException
 } from '@nestjs/common';
 import {UsuariosService} from "./usuarios.service";
@@ -24,23 +25,28 @@ export class UsuariosController {
     }
 
     @Post('register')
-    // Cambia el tipo aquí de UsuarioDTO a CreateUsuarioDTO
     async register(@Body() createUsuarioDto: CreateUsuarioDTO) {
-        const hashedPassword = await bcrypt.hash(createUsuarioDto.password, 10); // Ajustado salt rounds a 10 (valor común)
+        const hashedPassword = await bcrypt.hash(createUsuarioDto.password, 10);
         try {
-            // Asegúrate de no pasar _id y usa los campos de createUsuarioDto
             const user = await this.usuariosService.create({
-                // Elimina esta línea: _id: createUsuarioDto._id,
                 idEntrenador: createUsuarioDto.idEntrenador,
                 mail: createUsuarioDto.mail,
                 user: createUsuarioDto.user,
                 password: hashedPassword,
                 esEntrenador: createUsuarioDto.esEntrenador
             });
-
-            // El resto del payload del JWT puede seguir igual si la interfaz Usuario lo permite
+    
+            // Si es un atleta (no es entrenador) y tiene un idEntrenador, vincularlo al entrenador
+            if (!createUsuarioDto.esEntrenador && createUsuarioDto.idEntrenador) {
+                await this.usuariosService.addAtletaToEntrenador(
+                    createUsuarioDto.idEntrenador,
+                    user._id.toString(),
+                    user.user
+                );
+            }
+    
             const jwt = await this.jwtService.signAsync({
-                _id: user._id, // user._id será generado por la BD y devuelto por el servicio
+                _id: user._id,
                 idEntrenador: user.idEntrenador,
                 user: user.user,
                 mail: user.mail,
@@ -121,6 +127,51 @@ export class UsuariosController {
             if (e instanceof UnauthorizedException) {
                 throw e;
             }
+            throw new InternalServerErrorException({
+                ok: false,
+                message: e.message
+            });
+        }
+    }
+
+    // Endpoint para vincular un atleta a un entrenador
+    @Post('vincular-atleta')
+    async vincularAtleta(
+        @Body('entrenadorId') entrenadorId: string,
+        @Body('atletaId') atletaId: string,
+        @Body('atletaNombre') atletaNombre: string
+    ) {
+        try {
+            const entrenador = await this.usuariosService.addAtletaToEntrenador(entrenadorId, atletaId, atletaNombre);
+            
+            return {
+                ok: true,
+                message: 'Atleta vinculado correctamente',
+                entrenador: {
+                    _id: entrenador._id,
+                    user: entrenador.user,
+                    atletas: entrenador.atletas
+                }
+            };
+        } catch (e: any) {
+            throw new InternalServerErrorException({
+                ok: false,
+                message: e.message
+            });
+        }
+    }
+
+    // Endpoint para obtener los atletas de un entrenador
+    @Get('atletas/:entrenadorId')
+    async getAtletasByEntrenador(@Param('entrenadorId') entrenadorId: string) {
+        try {
+            const atletas = await this.usuariosService.getAtletasByEntrenador(entrenadorId);
+            
+            return {
+                ok: true,
+                atletas
+            };
+        } catch (e: any) {
             throw new InternalServerErrorException({
                 ok: false,
                 message: e.message
