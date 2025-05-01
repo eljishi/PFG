@@ -106,4 +106,56 @@ export class UsuariosService {
     localStorage.removeItem('token');
     this.router.navigateByUrl('/registro'); // Cambiado de '/login' a '/registro'
   }
+
+  // Nuevos métodos para la vinculación de atletas y entrenadores
+  vincularAtleta(entrenadorId: string, atletaId: string, atletaNombre: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const headers = new HttpHeaders({
+        'x-token': this.token
+      });
+      
+      this.httpClient.post(
+        environment.urlBase + 'users/vincular-atleta', 
+        { entrenadorId, atletaId, atletaNombre },
+        { headers }
+      ).subscribe({
+        next: (resp: any) => {
+          if (resp.ok) {
+            resolve(resp);
+          } else {
+            reject(resp);
+          }
+        },
+        error: (err) => {
+          console.error('Error al vincular atleta:', err);
+          reject(err);
+        }
+      });
+    });
+  }
+
+  getAtletasByEntrenador(entrenadorId: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const headers = new HttpHeaders({
+        'x-token': this.token
+      });
+      
+      this.httpClient.get(
+        environment.urlBase + 'users/atletas/' + entrenadorId,
+        { headers }
+      ).subscribe({
+        next: (resp: any) => {
+          if (resp.ok) {
+            resolve(resp.atletas);
+          } else {
+            reject(resp);
+          }
+        },
+        error: (err) => {
+          console.error('Error al obtener atletas:', err);
+          reject(err);
+        }
+      });
+    });
+  }
 }

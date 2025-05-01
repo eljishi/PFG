@@ -1,5 +1,21 @@
 <app-header [pageTitle]="'Inicio'"></app-header>
 
 <ion-content [fullscreen]="true">
-
+  <div *ngIf="esEntrenador">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Mis Atletas</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list *ngIf="atletas.length > 0">
+          <ion-item *ngFor="let atleta of atletas">
+            <ion-label>{{ atleta.nombre }}</ion-label>
+          </ion-item>
+        </ion-list>
+        <div *ngIf="atletas.length === 0">
+          <p>No tienes atletas vinculados actualmente.</p>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>

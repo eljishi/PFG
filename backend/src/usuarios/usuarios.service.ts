@@ -23,4 +23,37 @@ export class UsuariosService {
         return this.usuarioModel.findOne(condition).exec();
     }
 
+    // Método para añadir un atleta a un entrenador
+    async addAtletaToEntrenador(entrenadorId: string, atletaId: string, atletaNombre: string): Promise<Usuario> {
+        const entrenador = await this.usuarioModel.findById(entrenadorId);
+        
+        if (!entrenador) {
+            throw new Error('Entrenador no encontrado');
+        }
+        
+        if (!entrenador.atletas) {
+            entrenador.atletas = [];
+        }
+        
+        // Verificar si el atleta ya está en la lista
+        const atletaExistente = entrenador.atletas.find(atleta => atleta.id === atletaId);
+        
+        if (!atletaExistente) {
+            entrenador.atletas.push({ id: atletaId, nombre: atletaNombre });
+            return entrenador.save();
+        }
+        
+        return entrenador;
+    }
+
+    // Método para obtener todos los atletas de un entrenador
+    async getAtletasByEntrenador(entrenadorId: string): Promise<Array<{id: string, nombre: string}>> {
+        const entrenador = await this.usuarioModel.findById(entrenadorId);
+        
+        if (!entrenador) {
+            throw new Error('Entrenador no encontrado');
+        }
+        
+        return entrenador.atletas || [];
+    }
 }

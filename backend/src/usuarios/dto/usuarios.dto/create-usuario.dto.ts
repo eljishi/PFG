@@ -1,4 +1,4 @@
-import { IsBoolean, IsString, IsOptional, IsEmail } from 'class-validator';
+import { IsBoolean, IsString, IsOptional, IsEmail, IsArray } from 'class-validator';
 
 export class CreateUsuarioDTO {
   @IsString()
@@ -16,4 +16,8 @@ export class CreateUsuarioDTO {
 
   @IsBoolean()
   esEntrenador: boolean;
+  
+  @IsArray()
+  @IsOptional()
+  atletas?: Array<{id: string, nombre: string}>;
 }
