@@ -12,43 +12,39 @@ ion-textarea {
   min-height: 80px;
 }
 
+.container {
+  padding: 16px;
+}
+
 ion-item {
-  margin-bottom: 0.5rem;
+  --border-radius: 15px;
+  --background: #f8f8f8;
+  margin-bottom: 10px;
 }
 
-.ion-padding {
-  padding: 12px;
-}
-
-.input-container {
-  --background: transparent;
-  --border-radius: 10px;
-  --border-color: #999999;
-  --border-style: solid;
-  --border-width: 1px;
+// Para asegurar que los inputs dentro de los items también tengan bordes redondeados
+ion-input, ion-textarea {
+  --border-radius: 15px;
   --padding-start: 10px;
-  margin-bottom: 12px;
 }
 
-ion-button[color="primary"] {
-  --background: #666666;
-  --background-activated: #444444;
-  --background-focused: #444444;
-  --background-hover: #555555;
-  --color: white;
-  margin-bottom: 1rem;
-  font-weight: 600;
+// Estilo específico para los labels
+ion-label {
+  font-weight: 500;
 }
 
-ion-button[color="medium"] {
-  --background: #999999;
-  --background-activated: #777777;
-  --background-focused: #777777;
-  --background-hover: #888888;
+// Estilo para el contenedor de series
+.series-container {
+  margin-top: 20px;
+  border-radius: 15px;
+  background: #f8f8f8;
+  padding: 10px;
 }
 
-.series-section {
-  margin-top: 16px;
+// Estilo para los botones
+ion-button {
+  --border-radius: 15px;
+  margin-top: 10px;
 }
 
 .add-series-button {
@@ -91,4 +87,86 @@ ion-button[color="medium"] {
   height: 36px;
   --padding-start: 0;
   --padding-end: 0;
+}
+
+// Estilos para las tarjetas de ejercicios
+.ejercicios-container {
+  margin-top: 20px;
+}
+
+.ejercicio-card {
+  margin-bottom: 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+ion-card-header {
+  padding-bottom: 8px;
+  text-align: center; /* Centrar el título */
+}
+
+ion-card-title {
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center; /* Asegurar que el título esté centrado */
+}
+
+ion-card-subtitle {
+  font-size: 14px;
+  color: var(--ion-color-medium);
+}
+
+.descripcion-ejercicio {
+  margin-top: 15px;
+  margin-bottom: 12px;
+  color: var(--ion-color-dark);
+  font-size: 14px;
+  text-align: center; /* Centrar la descripción */
+}
+
+.series-container {
+  background-color: #f8f8f8;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.series-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.series-container h4 {
+  margin: 0;
+  font-size: 16px;
+  color: var(--ion-color-dark);
+}
+
+.add-series-button-card {
+  margin: 0;
+  --padding-start: 5px;
+  --padding-end: 5px;
+}
+
+.serie-item-card {
+  --background: transparent;
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  margin-bottom: 4px;
+}
+
+.serie-info {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+}
+
+.serie-numero {
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.serie-datos {
+  color: var(--ion-color-dark-shade);
 }
