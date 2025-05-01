@@ -1,5 +1,7 @@
 ion-card {
   margin: 16px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 ion-card-title {
@@ -10,4 +12,38 @@ ion-card-title {
 
 ion-item {
   --padding-start: 8px;
+}
+
+.titulo-seccion {
+  padding: 16px;
+  margin-bottom: 0;
+}
+
+.atletas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  padding: 0 16px 16px 16px;
+}
+
+.atleta-card {
+  margin: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.atleta-card ion-card-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.atleta-card ion-button {
+  margin-top: 16px;
+}
+
+.mensaje-sin-atletas {
+  padding: 0 16px;
 }

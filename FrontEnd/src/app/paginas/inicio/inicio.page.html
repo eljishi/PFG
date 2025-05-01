@@ -1,21 +1,36 @@
 <app-header [pageTitle]="'Inicio'"></app-header>
 
 <ion-content [fullscreen]="true">
-  <div *ngIf="esEntrenador">
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Mis Atletas</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-list *ngIf="atletas.length > 0">
-          <ion-item *ngFor="let atleta of atletas">
-            <ion-label>{{ atleta.nombre }}</ion-label>
-          </ion-item>
-        </ion-list>
-        <div *ngIf="atletas.length === 0">
-          <p>No tienes atletas vinculados actualmente.</p>
-        </div>
-      </ion-card-content>
-    </ion-card>
-  </div>
+  @if (esEntrenador) {
+    <ion-card-header class="titulo-seccion">
+      <ion-card-title>Mis Atletas</ion-card-title>
+    </ion-card-header>
+    
+    @if (atletas.length > 0) {
+      <div class="atletas-grid">
+        @for (atleta of atletas; track atleta.id) {
+          <ion-card class="atleta-card">
+            <ion-card-header>
+              <ion-card-title>{{ atleta.nombre }}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-button expand="block" color="primary" (click)="agregarRutina(atleta)">
+                Añadir Entrenamiento
+              </ion-button>
+            </ion-card-content>
+          </ion-card>
+        }
+      </div>
+    }
+    
+    @if (atletas.length === 0) {
+      <div class="mensaje-sin-atletas">
+        <ion-card>
+          <ion-card-content>
+            <p>No tienes atletas vinculados actualmente.</p>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    }
+  }
 </ion-content>
