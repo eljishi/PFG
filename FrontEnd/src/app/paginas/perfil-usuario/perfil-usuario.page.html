@@ -21,21 +21,20 @@
       <ion-label position="stacked">Correo electrónico</ion-label>
       <ion-input [(ngModel)]="usuario.email" type="email" placeholder="email" class="custom-input"></ion-input>
     </ion-item>
-
-    <ion-item lines="none" class="rounded-input" *ngIf="!usuario.esEntrenador">
-      <ion-label position="stacked">Entrenador</ion-label>
-      <ion-input [(ngModel)]="usuario.entrenador" placeholder="Entrenador asignado" class="custom-input" disabled></ion-input>
-    </ion-item>
     
-    <ion-item lines="none" class="rounded-input" *ngIf="usuario.esEntrenador">
-      <ion-label position="stacked">Tu ID</ion-label>
-      <ion-input [(ngModel)]="usuario.id" placeholder="ID de entrenador" class="custom-input" disabled></ion-input>
-    </ion-item>
+    @if (usuario.esEntrenador) {
+      <ion-item lines="none" class="rounded-input">
+        <ion-label position="stacked">Tu ID</ion-label>
+        <ion-input [(ngModel)]="usuario.id" placeholder="ID de entrenador" class="custom-input" disabled></ion-input>
+      </ion-item>
+    }
     
-    <ion-item lines="none" class="rounded-input" *ngIf="!usuario.esEntrenador">
-      <ion-label position="stacked">ID Entrenador</ion-label>
-      <ion-input [(ngModel)]="usuario.idEntrenador" placeholder="ID del entrenador asignado" class="custom-input" disabled></ion-input>
-    </ion-item>
+    @if (!usuario.esEntrenador) {
+      <ion-item lines="none" class="rounded-input">
+        <ion-label position="stacked">ID Entrenador</ion-label>
+        <ion-input [(ngModel)]="usuario.idEntrenador" placeholder="ID del entrenador asignado" class="custom-input" disabled></ion-input>
+      </ion-item>
+    }
   </ion-list>
 </ion-content>
 

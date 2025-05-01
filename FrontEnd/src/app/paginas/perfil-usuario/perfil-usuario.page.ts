@@ -1,20 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { 
-  IonHeader, 
-  IonToolbar, 
-  IonTitle, 
+import {  
   IonContent, 
-  IonButtons, 
-  IonBackButton,
   IonList,
   IonItem,
   IonLabel,
   IonInput,
-  IonButton,
   IonAvatar,
-  IonFooter,
   IonBadge
 } from '@ionic/angular/standalone';
 import { HeaderComponent } from 'src/app/componentes/header/header.component';

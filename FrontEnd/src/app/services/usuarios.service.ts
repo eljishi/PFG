@@ -104,6 +104,6 @@ export class UsuariosService {
   async logout() {
     this.token = '';
     localStorage.removeItem('token');
-    this.router.navigateByUrl('/registro'); // Cambiado de '/login' a '/registro'
+    this.router.navigateByUrl('/registro');
   }
 }
