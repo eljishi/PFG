@@ -11,23 +11,19 @@ export class EntrenamientosService {
     private entrenamientoModel: Model<Entrenamiento>) {
     }
 
-    // Crea un nuevo entrenamiento
     async create(entrenamientosDTO: EntrenamientosDTO): Promise<any>{
         const entrenamiento = new this.entrenamientoModel(entrenamientosDTO);
         return entrenamiento.save()
     }
 
-    // Obtiene todos los entrenamientos
     async getEjercicios(): Promise<Entrenamiento[]>{
         return this.entrenamientoModel.find();
     }
 
-    // Obtiene un entrenamiento por ID
     async getEjercicio(idEntrenamiento: string): Promise<any>{
         return this.entrenamientoModel.findById(idEntrenamiento);
     }
 
-    // Actualiza un entrenamiento
     async updateEjercicio(
         idEntrenamiento: string, entrenamientosDTO: EntrenamientosDTO ): Promise<any>{
         return this.entrenamientoModel.findByIdAndUpdate(
@@ -37,12 +33,10 @@ export class EntrenamientosService {
         );
     }
 
-    // Elimina un entrenamiento
     async deleteEntrenamiento(idEntrenamiento: string): Promise<any>{
         return this.entrenamientoModel.findByIdAndDelete(idEntrenamiento);
     }
 
-    // Obtiene entrenamientos por ID de atleta
     async getEntrenamientosByAtleta(idAtleta: string): Promise<Entrenamiento[]> {
         return this.entrenamientoModel.find({ idAtleta: idAtleta }).exec();
     }

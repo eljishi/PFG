@@ -22,7 +22,7 @@ import * as process from "node:process";
       JwtModule.registerAsync({
           imports: [ConfigModule],
           useFactory: async (configService: ConfigService) => ({
-            secret: configService.get<string>('SECRET'), // <-- Asegúrate que aquí se lee la variable correcta
+            secret: configService.get<string>('SECRET'),
             signOptions: { expiresIn: '1h' },
           }),
           inject: [ConfigService],

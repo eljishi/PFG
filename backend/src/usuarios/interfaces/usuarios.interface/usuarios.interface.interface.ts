@@ -7,7 +7,7 @@ export interface Usuario extends Document{
     user: string;
     password: string;
     esEntrenador: boolean;
-    atletas?: Array<{id: string, nombre: string}>; // Array de atletas para entrenadores
+    atletas?: Array<{id: string, nombre: string}>;
 }
 
 

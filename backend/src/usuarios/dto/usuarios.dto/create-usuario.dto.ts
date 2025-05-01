@@ -2,10 +2,10 @@ import { IsBoolean, IsString, IsOptional, IsEmail, IsArray } from 'class-validat
 
 export class CreateUsuarioDTO {
   @IsString()
-  @IsOptional() // Hacer opcional si no todos los usuarios son atletas
-  idEntrenador?: string; // Marcar como opcional con '?' si no siempre se envía
+  @IsOptional() 
+  idEntrenador?: string;
 
-  @IsEmail() // Usar IsEmail para validar el formato del correo
+  @IsEmail() 
   mail: string;
 
   @IsString()

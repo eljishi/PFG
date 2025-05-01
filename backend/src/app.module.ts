@@ -16,7 +16,6 @@ import {EntrenamientosModule} from "./entrenamientos/entrenamientos.module";
     ),
     EjerciciosModule,
       UsuariosModule,
-     // EntrenamientosModule
       ],
   controllers: [AppController],
   providers: [AppService],

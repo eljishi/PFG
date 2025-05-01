@@ -1,21 +1,18 @@
 import {
-    BadRequestException,
+
     Body,
-    Controller, Delete,
+    Controller,
     Get,
     InternalServerErrorException,
-    NotFoundException,
     Param,
-    Post, Put, Req, UnauthorizedException
+    Post, Req, UnauthorizedException
 } from '@nestjs/common';
-import {UsuariosService} from "./usuarios.service";
-// Cambia esta importación
-// import {UsuarioDTO} from "./dto/usuarios.dto/usuarios.dto";
-// Por esta:
-import { CreateUsuarioDTO } from './dto/usuarios.dto/create-usuario.dto'; // Asegúrate que la ruta sea correcta
+import { UsuariosService } from "./usuarios.service";
+
+import { CreateUsuarioDTO } from './dto/usuarios.dto/create-usuario.dto';
 import * as bcrypt from 'bcrypt';
-import {JwtService} from "@nestjs/jwt";
-import {Request} from "express";
+import { JwtService } from "@nestjs/jwt";
+import { Request } from "express";
 
 @Controller('api/v1/users')
 export class UsuariosController {
@@ -35,8 +32,7 @@ export class UsuariosController {
                 password: hashedPassword,
                 esEntrenador: createUsuarioDto.esEntrenador
             });
-    
-            // Si es un atleta (no es entrenador) y tiene un idEntrenador, vincularlo al entrenador
+
             if (!createUsuarioDto.esEntrenador && createUsuarioDto.idEntrenador) {
                 await this.usuariosService.addAtletaToEntrenador(
                     createUsuarioDto.idEntrenador,
@@ -44,7 +40,7 @@ export class UsuariosController {
                     user.user
                 );
             }
-    
+
             const jwt = await this.jwtService.signAsync({
                 _id: user._id,
                 idEntrenador: user.idEntrenador,
@@ -119,8 +115,8 @@ export class UsuariosController {
 
             return {
                 ok: true,
-                usuario: (({ _id, idEntrenador , user, mail, esEntrenador }) => ({
-                    _id, idEntrenador , user, mail, esEntrenador
+                usuario: (({ _id, idEntrenador, user, mail, esEntrenador }) => ({
+                    _id, idEntrenador, user, mail, esEntrenador
                 }))(user)
             };
         } catch (e) {
@@ -134,7 +130,6 @@ export class UsuariosController {
         }
     }
 
-    // Endpoint para vincular un atleta a un entrenador
     @Post('vincular-atleta')
     async vincularAtleta(
         @Body('entrenadorId') entrenadorId: string,
@@ -143,7 +138,7 @@ export class UsuariosController {
     ) {
         try {
             const entrenador = await this.usuariosService.addAtletaToEntrenador(entrenadorId, atletaId, atletaNombre);
-            
+
             return {
                 ok: true,
                 message: 'Atleta vinculado correctamente',
@@ -161,12 +156,11 @@ export class UsuariosController {
         }
     }
 
-    // Endpoint para obtener los atletas de un entrenador
     @Get('atletas/:entrenadorId')
     async getAtletasByEntrenador(@Param('entrenadorId') entrenadorId: string) {
         try {
             const atletas = await this.usuariosService.getAtletasByEntrenador(entrenadorId);
-            
+
             return {
                 ok: true,
                 atletas
