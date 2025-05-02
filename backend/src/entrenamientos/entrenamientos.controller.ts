@@ -40,7 +40,7 @@ export class EntrenamientosController {
     async getEntrenamientos() {
         try {
             const data =
-                await this.entrenamientosService.getEjercicios();
+                await this.entrenamientosService.getEntrenamientos();
             return {
                 status: 'Ok',
                 data
@@ -82,7 +82,7 @@ export class EntrenamientosController {
     async getEntrenamiento(@Param('id') id: string) {
         try {
             const data =
-                await this.entrenamientosService.getEjercicio(id);
+                await this.entrenamientosService.getEntrenamiento(id);
             if (data) {
                 return {
                     status: 'Ok',
@@ -110,7 +110,7 @@ export class EntrenamientosController {
         @Body() entrenamientosDTO: EntrenamientosDTO) {
         try {
             const updatedEntrenamiento =
-                await this.entrenamientosService.updateEjercicio(
+                await this.entrenamientosService.updateEntrenamiento(
                     id, entrenamientosDTO
                 );
             if (!updatedEntrenamiento) {
@@ -149,6 +149,31 @@ export class EntrenamientosController {
                 status: 'Ok',
                 message: 'Entrenamiento eliminado'
             }
+        } catch (e: any) {
+            if (e instanceof NotFoundException) {
+                throw e
+            }
+            throw new InternalServerErrorException({
+                status: 'Error',
+                message: e.message
+            })
+        }
+    }
+    
+    @Get('fecha/:fecha')
+    async getEntrenamientosByFecha(@Param('fecha') fecha: string) {
+        try {
+            const data = await this.entrenamientosService.getEntrenamientosByFecha(fecha);
+            if (data && data.length > 0) {
+                return {
+                    status: 'Ok',
+                    data
+                }
+            }
+            return new NotFoundException({
+                status: 'Error',
+                message: 'No se encontraron entrenamientos para esta fecha'
+            })
         } catch (e: any) {
             if (e instanceof NotFoundException) {
                 throw e

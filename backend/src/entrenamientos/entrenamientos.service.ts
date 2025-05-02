@@ -16,15 +16,15 @@ export class EntrenamientosService {
         return entrenamiento.save()
     }
 
-    async getEjercicios(): Promise<Entrenamiento[]>{
+    async getEntrenamientos(): Promise<Entrenamiento[]>{
         return this.entrenamientoModel.find();
     }
 
-    async getEjercicio(idEntrenamiento: string): Promise<any>{
+    async getEntrenamiento(idEntrenamiento: string): Promise<any>{
         return this.entrenamientoModel.findById(idEntrenamiento);
     }
 
-    async updateEjercicio(
+    async updateEntrenamiento(
         idEntrenamiento: string, entrenamientosDTO: EntrenamientosDTO ): Promise<any>{
         return this.entrenamientoModel.findByIdAndUpdate(
             idEntrenamiento,
@@ -39,5 +39,9 @@ export class EntrenamientosService {
 
     async getEntrenamientosByAtleta(idAtleta: string): Promise<Entrenamiento[]> {
         return this.entrenamientoModel.find({ idAtleta: idAtleta }).exec();
+    }
+    
+    async getEntrenamientosByFecha(fecha: string): Promise<Entrenamiento[]> {
+        return this.entrenamientoModel.find({ fecha: fecha }).exec();
     }
 }

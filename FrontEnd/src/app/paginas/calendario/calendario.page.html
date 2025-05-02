@@ -1,5 +1,41 @@
 <app-header [pageTitle]="'Calendario'"></app-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="calendario-container">
+    <ion-datetime 
+      presentation="date" 
+      [showDefaultButtons]="true" 
+      doneText="Seleccionar" 
+      cancelText="Cancelar"
+      (ionChange)="onFechaSeleccionada($event)">
+    </ion-datetime>
+  </div>
 
+  <div class="entrenamientos-container" *ngIf="fechaSeleccionada">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Entrenamientos para {{ fechaSeleccionada | date:'dd/MM/yyyy' }}</ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content>
+        <div *ngIf="cargando" class="ion-text-center">
+          <p>Cargando entrenamientos...</p>
+        </div>
+        
+        <div *ngIf="!cargando && entrenamientosDelDia.length === 0">
+          <p>No hay entrenamientos programados para esta fecha.</p>
+        </div>
+        
+        <ion-list *ngIf="!cargando && entrenamientosDelDia.length > 0">
+          <ion-item *ngFor="let entrenamiento of entrenamientosDelDia">
+            <ion-label>
+              <h2>{{ entrenamiento.titulo }}</h2>
+              <p>{{ entrenamiento.descripcion }}</p>
+              <p>Duración: {{ entrenamiento.duracion }} minutos</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>

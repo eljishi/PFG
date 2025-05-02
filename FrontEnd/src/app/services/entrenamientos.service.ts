@@ -18,8 +18,11 @@ export class EntrenamientosService {
     return this.httpClient.get<Ejercicios>(`${environment.urlBase}entrenamiento/${id}`);
   }
 
+  // Nuevo método para obtener entrenamientos por fecha
+  getEntrenamientosPorFecha(fecha: string): Observable<any[]> {
+    return this.httpClient.get<any[]>(`${environment.urlBase}entrenamientos/fecha/${fecha}`);
+  }
+
   constructor() {
-
-
   }
 }
