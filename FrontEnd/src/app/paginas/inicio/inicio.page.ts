@@ -45,11 +45,11 @@ export class InicioPage implements OnInit {
 
   agregarRutina(atleta: {id: string, nombre: string}) {
     console.log('Añadiendo rutina para:', atleta);
-    // Aquí puedes implementar la navegación a la página de creación de rutinas
-    // Por ejemplo:
-    // this.router.navigate(['/crear-rutina'], { queryParams: { atletaId: atleta.id, atletaNombre: atleta.nombre } });
-    
-    // Por ahora, solo mostramos un mensaje en la consola
-    alert(`Funcionalidad para añadir rutina a ${atleta.nombre} en desarrollo`);
+    // Navegamos a la página de ejercicios con el ID del atleta como parámetro
+    this.router.navigate(['/ejercicios'], { 
+      queryParams: { 
+        atletaId: atleta.id, 
+      } 
+    });
   }
 }

@@ -23,10 +23,6 @@ export const routes: Routes = [
         loadComponent: () => import('./paginas/inicio/inicio.page').then(m => m.InicioPage)
       },
       {
-        path: 'ejercicios',
-        loadComponent: () => import('./paginas/ejercicios/ejercicios.page').then(m => m.EjerciciosPage)
-      },
-      {
         path: 'videos',
         loadComponent: () => import('./paginas/videos/videos.page').then(m => m.VideosPage)
       },{
@@ -39,6 +35,10 @@ export const routes: Routes = [
         pathMatch: 'full'
       }
     ]
+  },
+  {
+    path: 'ejercicios',
+    loadComponent: () => import('./paginas/ejercicios/ejercicios.page').then(m => m.EjerciciosPage)
   },
   {
     path: 'auth',

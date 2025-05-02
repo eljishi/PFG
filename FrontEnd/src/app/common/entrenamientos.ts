@@ -1,18 +1,35 @@
 export interface Entrenamiento {
-  id: number
-  dia: string
-  ejercicio: Ejercicio[]
+  id?: string;
+  idAtleta: string;
+  fecha: Date;
+  nombre: string;
+  ejercicios: Ejercicio[];
 }
 
 export interface Ejercicio {
-  id: number
-  nombre: string
-  series: Series[]
+  nombre: string;
+  descripcion: string;
+  series: Serie[];
 }
 
-export interface Series {
-  id: number
-  kilos: number
-  repeticiones: number
-  rpe: number
+export interface Serie {
+  id?: string;
+  kg: number;
+  rpe: number;
+  repeticiones: number;
+}
+
+export interface ApiResponseEntrenamiento {
+  status: string;
+  data: Entrenamiento;
+}
+
+export interface ApiResponseEntrenamientos {
+  status: string;
+  data: Entrenamiento[];
+}
+
+export interface ApiResponseMessage {
+  status: string;
+  message: string;
 }
