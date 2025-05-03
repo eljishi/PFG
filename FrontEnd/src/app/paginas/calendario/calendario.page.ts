@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonList, IonItem, IonLabel, IonDatetime } from '@ionic/angular/standalone';
 import { HeaderComponent } from 'src/app/componentes/header/header.component';
 import { EntrenamientosService } from 'src/app/services/entrenamientos.service';
+import { UsuariosService } from 'src/app/services/usuarios.service';
 
 @Component({
   selector: 'app-calendario',
@@ -29,10 +30,21 @@ export class CalendarioPage implements OnInit {
   fechaSeleccionada: string = '';
   entrenamientosDelDia: any[] = [];
   cargando: boolean = false;
+  userId: string = '';
 
-  constructor(private entrenamientosService: EntrenamientosService) { }
+  constructor(
+    private entrenamientosService: EntrenamientosService,
+    private usuariosService: UsuariosService
+  ) { }
 
   ngOnInit() {
+    this.obtenerUsuarioActual();
+  }
+
+  obtenerUsuarioActual() {
+    if (this.usuariosService.usuario && this.usuariosService.usuario._id) {
+      this.userId = this.usuariosService.usuario._id;
+    }
   }
 
   onFechaSeleccionada(event: any) {
@@ -44,33 +56,22 @@ export class CalendarioPage implements OnInit {
   }
 
   cargarEntrenamientosDelDia() {
+    if (!this.fechaSeleccionada || !this.userId) {
+      this.entrenamientosDelDia = [];
+      return;
+    }
+
     this.cargando = true;
     
-    // Simulamos la carga de entrenamientos
-    // En un caso real, deberías usar tu servicio para obtener los datos del backend
-    setTimeout(() => {
-      // Ejemplo de datos de entrenamiento (reemplazar con datos reales)
-      this.entrenamientosDelDia = [
-        {
-          titulo: 'Entrenamiento de fuerza',
-          descripcion: 'Ejercicios para fortalecer el tren superior',
-          duracion: 60
-        },
-        {
-          titulo: 'Cardio',
-          descripcion: 'Entrenamiento cardiovascular de intensidad media',
-          duracion: 45
-        }
-      ];
-      this.cargando = false;
-    }, 1000);
-    
-    // Cuando tengas el endpoint en el backend, usa esto:
-    /*
+    // Utilizamos el servicio para obtener los entrenamientos por fecha
     this.entrenamientosService.getEntrenamientosPorFecha(this.fechaSeleccionada)
       .subscribe({
         next: (data) => {
-          this.entrenamientosDelDia = data;
+          // Filtramos los entrenamientos para mostrar solo los del usuario actual
+          this.entrenamientosDelDia = data.filter(entrenamiento => 
+            entrenamiento.usuarioId === this.userId || 
+            entrenamiento.atletaId === this.userId
+          );
           this.cargando = false;
         },
         error: (error) => {
@@ -79,6 +80,5 @@ export class CalendarioPage implements OnInit {
           this.cargando = false;
         }
       });
-    */
   }
 }
