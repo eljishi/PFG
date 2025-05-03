@@ -64,6 +64,13 @@
     </div>
   </div>
 
+  <!-- Botón flotante en la parte inferior -->
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+    <ion-fab-button color="success" (click)="guardarEntrenamiento()">
+      <ion-icon name="save-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
   <ion-modal [isOpen]="isModalOpen">
     <ng-template>
       <ion-header>

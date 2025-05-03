@@ -4,11 +4,11 @@ import { FormsModule } from '@angular/forms';
 import {
   IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonIcon, IonModal, IonItem, IonInput,
   IonTextarea, IonFooter, IonGrid, IonRow, IonCol, ModalController, IonLabel, IonList,
-  IonCard, IonCardContent, IonCardHeader, IonCardTitle
+  IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonFab, IonFabButton
 } from '@ionic/angular/standalone';
 
 import { addIcons } from 'ionicons';
-import { addCircleOutline, closeCircleOutline, closeOutline } from 'ionicons/icons';
+import { addCircleOutline, closeCircleOutline, closeOutline, saveOutline } from 'ionicons/icons';
 import { HeaderComponent } from 'src/app/componentes/header/header.component';
 
 // Definición de la interfaz Ejercicio
@@ -51,7 +51,9 @@ interface Serie {
     IonCard,
     IonCardContent,
     IonCardHeader,
-    IonCardTitle
+    IonCardTitle,
+    IonFab,
+    IonFabButton
   ]
 })
 export class EjerciciosPage implements OnInit {
@@ -67,7 +69,7 @@ export class EjerciciosPage implements OnInit {
   };
 
   constructor(private modalController: ModalController) {
-    addIcons({ addCircleOutline, closeCircleOutline, closeOutline });
+    addIcons({ addCircleOutline, closeCircleOutline, closeOutline, saveOutline });
   }
 
   ngOnInit() {
@@ -137,5 +139,26 @@ export class EjerciciosPage implements OnInit {
       descripcion: '',
       series: []
     };
+  }
+
+  guardarEntrenamiento() {
+    if (!this.tituloEntrenamiento || !this.fechaEntrenamiento || this.ejerciciosAgregados.length === 0) {
+      console.log('El entrenamiento debe tener título, fecha y al menos un ejercicio');
+      return;
+    }
+
+    const entrenamiento = {
+      titulo: this.tituloEntrenamiento,
+      fecha: this.fechaEntrenamiento,
+      ejercicios: [...this.ejerciciosAgregados]
+    };
+
+    console.log('Entrenamiento guardado:', entrenamiento);
+    // Aquí puedes añadir la lógica para guardar el entrenamiento en tu backend
+    
+    // Opcional: Limpiar el formulario después de guardar
+    this.tituloEntrenamiento = '';
+    this.fechaEntrenamiento = '';
+    this.ejerciciosAgregados = [];
   }
 }

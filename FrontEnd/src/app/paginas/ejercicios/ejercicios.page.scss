@@ -170,3 +170,13 @@ ion-card-subtitle {
 .serie-datos {
   color: var(--ion-color-dark-shade);
 }
+
+
+// Estilos para el botón flotante
+ion-fab {
+  margin-bottom: 20px;
+}
+
+ion-fab-button {
+  --box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
