@@ -3,6 +3,7 @@ import {Observable} from "rxjs";
 import {Ejercicios} from "../common/ejercicios";
 import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
+import {Entrenamiento, ApiResponseEntrenamiento} from "../common/entrenamientos";
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,11 @@ export class EntrenamientosService {
   // Nuevo método para obtener entrenamientos por fecha
   getEntrenamientosPorFecha(fecha: string): Observable<any[]> {
     return this.httpClient.get<any[]>(`${environment.urlBase}entrenamientos/fecha/${fecha}`);
+  }
+
+  // Nuevo método para guardar un entrenamiento
+  guardarEntrenamiento(entrenamiento: Entrenamiento): Observable<ApiResponseEntrenamiento> {
+    return this.httpClient.post<ApiResponseEntrenamiento>(`${environment.urlBase}entrenamientos`, entrenamiento);
   }
 
   constructor() {

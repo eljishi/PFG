@@ -4,12 +4,16 @@ import { FormsModule } from '@angular/forms';
 import {
   IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonIcon, IonModal, IonItem, IonInput,
   IonTextarea, IonFooter, IonGrid, IonRow, IonCol, ModalController, IonLabel, IonList,
-  IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonFab, IonFabButton
+  IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonFab, IonFabButton, ToastController
 } from '@ionic/angular/standalone';
+import { ActivatedRoute } from '@angular/router'; // Importar ActivatedRoute
 
 import { addIcons } from 'ionicons';
 import { addCircleOutline, closeCircleOutline, closeOutline, saveOutline } from 'ionicons/icons';
 import { HeaderComponent } from 'src/app/componentes/header/header.component';
+import { EntrenamientosService } from 'src/app/services/entrenamientos.service';
+import { Entrenamiento, Ejercicio as EjercicioBackend, Serie as SerieBackend } from 'src/app/common/entrenamientos';
+import { UsuariosService } from 'src/app/services/usuarios.service'; // Replace AuthService import
 
 // Definición de la interfaz Ejercicio
 interface Ejercicio {
@@ -54,6 +58,7 @@ interface Serie {
     IonCardTitle,
     IonFab,
     IonFabButton
+    // Remove ToastController from here
   ]
 })
 export class EjerciciosPage implements OnInit {
@@ -67,12 +72,26 @@ export class EjerciciosPage implements OnInit {
     descripcion: '',
     series: []
   };
+  idAtleta: string = '1'; // Esto debería venir de un servicio de autenticación
 
-  constructor(private modalController: ModalController) {
+  constructor(
+    private modalController: ModalController,
+    private entrenamientosService: EntrenamientosService,
+    private toastController: ToastController,
+    private usuariosService: UsuariosService // Replace authService with usuariosService
+  ) {
     addIcons({ addCircleOutline, closeCircleOutline, closeOutline, saveOutline });
   }
 
   ngOnInit() {
+    // Obtain user ID from UsuariosService instead
+    if (this.usuariosService.usuario && this.usuariosService.usuario._id) {
+      this.idAtleta = this.usuariosService.usuario._id;
+    } else {
+      // Default value or error handling
+      console.error('No se pudo obtener el ID del atleta');
+      this.idAtleta = '1'; // Default value
+    }
   }
 
   abrirModalNuevoEjercicio() {
@@ -141,24 +160,57 @@ export class EjerciciosPage implements OnInit {
     };
   }
 
-  guardarEntrenamiento() {
+  async guardarEntrenamiento() {
     if (!this.tituloEntrenamiento || !this.fechaEntrenamiento || this.ejerciciosAgregados.length === 0) {
-      console.log('El entrenamiento debe tener título, fecha y al menos un ejercicio');
+      this.mostrarToast('El entrenamiento debe tener título, fecha y al menos un ejercicio');
       return;
     }
 
-    const entrenamiento = {
-      titulo: this.tituloEntrenamiento,
-      fecha: this.fechaEntrenamiento,
-      ejercicios: [...this.ejerciciosAgregados]
+    // Convertir las series de string a number para el backend
+    const ejerciciosFormateados: EjercicioBackend[] = this.ejerciciosAgregados.map(ejercicio => {
+      const seriesFormateadas: SerieBackend[] = ejercicio.series.map(serie => {
+        return {
+          kg: Number(serie.kg),
+          rpe: Number(serie.rpe),
+          repeticiones: Number(serie.repeticiones)
+        };
+      });
+
+      return {
+        nombre: ejercicio.nombre,
+        descripcion: ejercicio.descripcion,
+        series: seriesFormateadas
+      };
+    });
+
+    const entrenamiento: Entrenamiento = {
+      idAtleta: this.idAtleta,
+      fecha: new Date(this.fechaEntrenamiento),
+      nombre: this.tituloEntrenamiento,
+      ejercicios: ejerciciosFormateados
     };
 
-    console.log('Entrenamiento guardado:', entrenamiento);
-    // Aquí puedes añadir la lógica para guardar el entrenamiento en tu backend
-    
-    // Opcional: Limpiar el formulario después de guardar
-    this.tituloEntrenamiento = '';
-    this.fechaEntrenamiento = '';
-    this.ejerciciosAgregados = [];
+    try {
+      const respuesta = await this.entrenamientosService.guardarEntrenamiento(entrenamiento).toPromise();
+      console.log('Entrenamiento guardado:', respuesta);
+      this.mostrarToast('Entrenamiento guardado con éxito');
+      
+      // Limpiar el formulario después de guardar
+      this.tituloEntrenamiento = '';
+      this.fechaEntrenamiento = '';
+      this.ejerciciosAgregados = [];
+    } catch (error) {
+      console.error('Error al guardar el entrenamiento:', error);
+      this.mostrarToast('Error al guardar el entrenamiento');
+    }
+  }
+
+  async mostrarToast(mensaje: string) {
+    const toast = await this.toastController.create({
+      message: mensaje,
+      duration: 2000,
+      position: 'bottom'
+    });
+    await toast.present();
   }
 }
