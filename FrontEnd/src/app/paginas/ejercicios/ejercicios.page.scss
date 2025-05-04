@@ -71,12 +71,14 @@ ion-button {
   margin: 0;
   --min-height: 36px;
   max-width: 90px;
+  text-align: center;
 }
 
 .serie-input ion-input {
   --padding-start: 5px;
   --padding-end: 5px;
   font-size: 14px;
+  text-align: center;
 }
 
 .delete-btn {
