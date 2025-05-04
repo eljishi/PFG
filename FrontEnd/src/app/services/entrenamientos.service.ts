@@ -36,7 +36,6 @@ export class EntrenamientosService {
   }
 
   getAllEntrenamientos(): Observable<ApiResponseEntrenamientos> {
-    console.log('Solicitando todos los entrenamientos');
     return this.httpClient.get<ApiResponseEntrenamientos>(`${environment.urlBase}entrenamientos`);
   }
 
