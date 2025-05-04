@@ -8,12 +8,14 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <div *ngIf="cargando" class="ion-text-center">
-    <ion-spinner name="crescent"></ion-spinner>
-    <p>Cargando detalles del entrenamiento...</p>
-  </div>
+  @if (cargando) {
+    <div class="ion-text-center">
+      <ion-spinner name="crescent"></ion-spinner>
+      <p>Cargando detalles del entrenamiento...</p>
+    </div>
+  }
 
-  <div *ngIf="!cargando && entrenamiento">
+  @if (!cargando && entrenamiento) {
     <ion-card>
       <ion-card-header>
         <ion-card-title>{{ entrenamiento.titulo }}</ion-card-title>
@@ -21,41 +23,59 @@
       </ion-card-header>
       
       <ion-card-content>
-        <p *ngIf="entrenamiento.descripcion">{{ entrenamiento.descripcion }}</p>
+        @if (entrenamiento.descripcion) {
+          <p>{{ entrenamiento.descripcion }}</p>
+        }
         
-        <div *ngIf="entrenamiento.ejercicios && entrenamiento.ejercicios.length > 0">
-          <h3>Ejercicios</h3>
-          
-          <ion-list>
-            <ion-item *ngFor="let ejercicio of entrenamiento.ejercicios; let i = index">
-              <ion-label>
-                <h2>{{ i + 1 }}. {{ ejercicio.nombre }}</h2>
-                <p *ngIf="ejercicio.descripcion">{{ ejercicio.descripcion }}</p>
-                
-                <div *ngIf="ejercicio.series && ejercicio.series.length > 0">
-                  <p><strong>Series:</strong></p>
-                  <ion-list>
-                    <ion-item *ngFor="let serie of ejercicio.series; let j = index" lines="none">
-                      <ion-label>
-                        Serie {{ j + 1 }}: {{ serie.kg }}kg x {{ serie.repeticiones }} reps
-                        <span *ngIf="serie.rpe"> (RPE: {{ serie.rpe }})</span>
-                      </ion-label>
-                    </ion-item>
-                  </ion-list>
-                </div>
-              </ion-label>
-            </ion-item>
-          </ion-list>
-        </div>
+        @if (entrenamiento.ejercicios && entrenamiento.ejercicios.length > 0) {
+          <div>
+            <h3>Ejercicios</h3>
+            
+            <ion-list>
+              @for (ejercicio of entrenamiento.ejercicios; track $index; let i = $index) {
+                <ion-item>
+                  <ion-label>
+                    <h2>{{ i + 1 }}. {{ ejercicio.nombre }}</h2>
+                    @if (ejercicio.descripcion) {
+                      <p>{{ ejercicio.descripcion }}</p>
+                    }
+                    
+                    @if (ejercicio.series && ejercicio.series.length > 0) {
+                      <div>
+                        <p><strong>Series:</strong></p>
+                        <ion-list>
+                          @for (serie of ejercicio.series; track $index; let j = $index) {
+                            <ion-item lines="none">
+                              <ion-label>
+                                Serie {{ j + 1 }}: {{ serie.kg }}kg x {{ serie.repeticiones }} reps
+                                @if (serie.rpe) {
+                                  <span> (RPE: {{ serie.rpe }})</span>
+                                }
+                              </ion-label>
+                            </ion-item>
+                          }
+                        </ion-list>
+                      </div>
+                    }
+                  </ion-label>
+                </ion-item>
+              }
+            </ion-list>
+          </div>
+        }
         
-        <div *ngIf="!entrenamiento.ejercicios || entrenamiento.ejercicios.length === 0">
-          <p>Este entrenamiento no tiene ejercicios asignados.</p>
-        </div>
+        @if (!entrenamiento.ejercicios || entrenamiento.ejercicios.length === 0) {
+          <div>
+            <p>Este entrenamiento no tiene ejercicios asignados.</p>
+          </div>
+        }
       </ion-card-content>
     </ion-card>
-  </div>
+  }
   
-  <div *ngIf="!cargando && !entrenamiento" class="ion-text-center">
-    <p>No se encontró el entrenamiento solicitado.</p>
-  </div>
+  @if (!cargando && !entrenamiento) {
+    <div class="ion-text-center">
+      <p>No se encontró el entrenamiento solicitado.</p>
+    </div>
+  }
 </ion-content>

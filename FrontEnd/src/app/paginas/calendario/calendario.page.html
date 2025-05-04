@@ -11,34 +11,45 @@
     </ion-datetime>
   </div>
 
-  <div class="entrenamientos-container" *ngIf="fechaSeleccionada">
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Entrenamientos para {{ fechaSeleccionada | date:'dd/MM/yyyy' }}</ion-card-title>
-      </ion-card-header>
-      
-      <ion-card-content>
-        <div *ngIf="cargando" class="ion-text-center">
-          <p>Cargando entrenamientos...</p>
-        </div>
+  @if (fechaSeleccionada) {
+    <div class="entrenamientos-container">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Entrenamientos para {{ fechaSeleccionada | date:'dd/MM/yyyy' }}</ion-card-title>
+        </ion-card-header>
         
-        <div *ngIf="!cargando && entrenamientosDelDia.length === 0">
-          <p>No hay entrenamientos programados para esta fecha.</p>
-        </div>
-        
-        <ion-list *ngIf="!cargando && entrenamientosDelDia.length > 0">
-          <ion-item *ngFor="let entrenamiento of entrenamientosDelDia" 
-                    button 
-                    detail="true"
-                    (click)="verDetalleEntrenamiento(entrenamiento)">
-            <ion-label>
-              <h2>{{ entrenamiento.titulo }}</h2>
-              <p>{{ entrenamiento.descripcion || 'Sin descripción' }}</p>
-              <p *ngIf="entrenamiento.ejercicios">Ejercicios: {{ entrenamiento.ejercicios.length }}</p>
-            </ion-label>
-          </ion-item>
-        </ion-list>
-      </ion-card-content>
-    </ion-card>
-  </div>
+        <ion-card-content>
+          @if (cargando) {
+            <div class="ion-text-center">
+              <p>Cargando entrenamientos...</p>
+            </div>
+          }
+          
+          @if (!cargando && entrenamientosDelDia.length === 0) {
+            <div>
+              <p>No hay entrenamientos programados para esta fecha.</p>
+            </div>
+          }
+          
+          @if (!cargando && entrenamientosDelDia.length > 0) {
+            <ion-list>
+              @for (entrenamiento of entrenamientosDelDia; track $index) {
+                <ion-item button 
+                        detail="true"
+                        (click)="verDetalleEntrenamiento(entrenamiento)">
+                  <ion-label>
+                    <h2>{{ entrenamiento.titulo }}</h2>
+                    <p>{{ entrenamiento.descripcion || 'Sin descripción' }}</p>
+                    @if (entrenamiento.ejercicios) {
+                      <p>Ejercicios: {{ entrenamiento.ejercicios.length }}</p>
+                    }
+                  </ion-label>
+                </ion-item>
+              }
+            </ion-list>
+          }
+        </ion-card-content>
+      </ion-card>
+    </div>
+  }
 </ion-content>

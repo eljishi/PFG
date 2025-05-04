@@ -71,7 +71,8 @@ export class EjerciciosPage implements OnInit {
   };
   idAtleta: string = '';
   entrenamientoId: string = '';
-
+  esAtleta: boolean = false;
+  
   constructor(
     private entrenamientosService: EntrenamientosService,
     private toastController: ToastController,
@@ -85,12 +86,19 @@ export class EjerciciosPage implements OnInit {
     this.route.queryParams.subscribe(params => {
       if (params['atletaId']) {
         this.idAtleta = params['atletaId'];
+        // Si hay un atletaId en los parámetros, probablemente es un entrenador creando un entrenamiento
+        this.esAtleta = false;
       } else if (params['entrenamientoId']) {
         this.entrenamientoId = params['entrenamientoId'];
         this.cargarEntrenamiento(params['entrenamientoId']);
+        // Verificamos si el usuario actual es un atleta
+        if (this.usuariosService.usuario && !this.usuariosService.usuario.esEntrenador) {
+          this.esAtleta = true;
+        }
       } else {
         if (this.usuariosService.usuario && this.usuariosService.usuario._id) {
           this.idAtleta = this.usuariosService.usuario._id;
+          this.esAtleta = !this.usuariosService.usuario.esEntrenador;
         } else {
           console.log('No se pudo obtener el ID del atleta');
         }
