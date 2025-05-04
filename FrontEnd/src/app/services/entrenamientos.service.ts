@@ -15,6 +15,10 @@ export class EntrenamientosService {
     return this.httpClient.get<Ejercicios[]>(`${environment.urlBase}entrenamientos`);
   }
 
+  getEjercicio(id: string): Observable<Ejercicios> {
+    return this.httpClient.get<Ejercicios>(`${environment.urlBase}entrenamiento/${id}`);
+  }
+
   getEntrenamientosPorFecha(fecha: string): Observable<any[]> {
     return this.httpClient.get<any[]>(`${environment.urlBase}entrenamientos/fecha/${fecha}`);
   }
@@ -36,12 +40,10 @@ export class EntrenamientosService {
     return this.httpClient.get<ApiResponseEntrenamientos>(`${environment.urlBase}entrenamientos`);
   }
 
-  // Método para obtener un entrenamiento por ID
   getEntrenamiento(id: string): Observable<ApiResponseEntrenamiento> {
     return this.httpClient.get<ApiResponseEntrenamiento>(`${environment.urlBase}entrenamientos/${id}`);
   }
 
-  // Método para actualizar un entrenamiento existente
   actualizarEntrenamiento(id: string, entrenamiento: Entrenamiento): Observable<ApiResponseEntrenamiento> {
     return this.httpClient.put<ApiResponseEntrenamiento>(`${environment.urlBase}entrenamientos/${id}`, entrenamiento);
   }
