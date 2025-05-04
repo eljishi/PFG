@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonList, IonItem, IonLabel, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton } from '@ionic/angular/standalone';
+import { IonContent, IonList, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton } from '@ionic/angular/standalone';
 import { HeaderComponent } from 'src/app/componentes/header/header.component';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import { Router } from '@angular/router';
+import { EntrenamientosService } from 'src/app/services/entrenamientos.service';
+import { Entrenamiento } from 'src/app/common/entrenamientos';
 
 @Component({
   selector: 'app-inicio',
@@ -14,11 +16,14 @@ import { Router } from '@angular/router';
   imports: [IonContent, CommonModule, FormsModule, HeaderComponent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton]
 })
 export class InicioPage implements OnInit {
-  atletas: Array<{id: string, nombre: string}> = [];
+  atletas: Array<{ id: string, nombre: string }> = [];
   esEntrenador: boolean = false;
+  entrenamientos: Entrenamiento[] = [];
+  cargandoEntrenamientos: boolean = false;
 
   constructor(
     private usuariosService: UsuariosService,
+    private entrenamientosService: EntrenamientosService,
     private router: Router
   ) { }
 
@@ -28,28 +33,52 @@ export class InicioPage implements OnInit {
 
   async cargarDatosUsuario() {
     await this.usuariosService.validaToken();
-    
+
     if (this.usuariosService.usuario) {
       this.esEntrenador = this.usuariosService.usuario.esEntrenador;
-      
-      // Si es entrenador, cargar sus atletas
       if (this.esEntrenador && this.usuariosService.usuario._id) {
         try {
           this.atletas = await this.usuariosService.getAtletasByEntrenador(this.usuariosService.usuario._id);
         } catch (error) {
           console.error('Error al cargar atletas:', error);
         }
+      } else if (!this.esEntrenador && this.usuariosService.usuario._id) {
+        this.cargarEntrenamientosAtleta(this.usuariosService.usuario._id);
       }
     }
   }
 
-  agregarRutina(atleta: {id: string, nombre: string}) {
-    console.log('Añadiendo rutina para:', atleta);
-    // Navegamos a la página de ejercicios con el ID del atleta como parámetro
-    this.router.navigate(['/ejercicios'], { 
-      queryParams: { 
-        atletaId: atleta.id, 
-      } 
+  cargarEntrenamientosAtleta(idAtleta: string) {
+    this.cargandoEntrenamientos = true;
+    
+    this.entrenamientosService.getEntrenamientosPorAtleta(idAtleta).subscribe({
+      next: (response) => {
+        if (response && response.data) {
+          this.entrenamientos = response.data;
+        } else {
+          this.entrenamientos = [];
+        }
+        this.cargandoEntrenamientos = false;
+      },
+      error: (error) => {
+        this.cargandoEntrenamientos = false;
+      }
+    });
+  }
+
+  agregarRutina(atleta: { id: string, nombre: string }) {
+    this.router.navigate(['/ejercicios'], {
+      queryParams: {
+        atletaId: atleta.id,
+      }
+    });
+  }
+
+  verDetalleEntrenamiento(entrenamiento: Entrenamiento) {
+    this.router.navigate(['/detalle-entrenamiento'], {
+      queryParams: {
+        entrenamientoId: entrenamiento._id || entrenamiento.id
+      }
     });
   }
 }

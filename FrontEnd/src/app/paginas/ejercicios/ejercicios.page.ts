@@ -72,26 +72,29 @@ export class EjerciciosPage implements OnInit {
     descripcion: '',
     series: []
   };
-  idAtleta: string = '1'; // Esto debería venir de un servicio de autenticación
+  idAtleta: string = ''; 
 
   constructor(
-    private modalController: ModalController,
     private entrenamientosService: EntrenamientosService,
     private toastController: ToastController,
-    private usuariosService: UsuariosService // Replace authService with usuariosService
+    private usuariosService: UsuariosService,
+    private route: ActivatedRoute 
   ) {
     addIcons({ addCircleOutline, closeCircleOutline, closeOutline, saveOutline });
   }
 
   ngOnInit() {
-    // Obtain user ID from UsuariosService instead
-    if (this.usuariosService.usuario && this.usuariosService.usuario._id) {
-      this.idAtleta = this.usuariosService.usuario._id;
-    } else {
-      // Default value or error handling
-      console.error('No se pudo obtener el ID del atleta');
-      this.idAtleta = '1'; // Default value
-    }
+    this.route.queryParams.subscribe(params => {
+      if (params['atletaId']) {
+        this.idAtleta = params['atletaId'];
+      } else {
+        if (this.usuariosService.usuario && this.usuariosService.usuario._id) {
+          this.idAtleta = this.usuariosService.usuario._id;
+        } else {
+          console.log('No se pudo obtener el ID del atleta');
+        }
+      }
+    });
   }
 
   abrirModalNuevoEjercicio() {
@@ -166,7 +169,6 @@ export class EjerciciosPage implements OnInit {
       return;
     }
 
-    // Convertir las series de string a number para el backend
     const ejerciciosFormateados: EjercicioBackend[] = this.ejerciciosAgregados.map(ejercicio => {
       const seriesFormateadas: SerieBackend[] = ejercicio.series.map(serie => {
         return {

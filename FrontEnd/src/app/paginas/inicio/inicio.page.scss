@@ -47,3 +47,29 @@ ion-item {
 .mensaje-sin-atletas {
   padding: 0 16px;
 }
+
+.entrenamientos-lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  padding: 0 16px 16px 16px;
+}
+
+.entrenamiento-card {
+  margin: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.entrenamiento-card ion-card-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.mensaje-sin-entrenamientos,
+.mensaje-cargando {
+  padding: 0 16px;
+}

@@ -32,5 +32,45 @@
         </ion-card>
       </div>
     }
+  } @else {
+    <ion-card-header class="titulo-seccion">
+      <ion-card-title>Mis Entrenamientos</ion-card-title>
+    </ion-card-header>
+    
+    @if (cargandoEntrenamientos) {
+      <div class="mensaje-cargando">
+        <ion-card>
+          <ion-card-content>
+            <p>Cargando entrenamientos...</p>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    } @else if (entrenamientos && entrenamientos.length > 0) {
+      <div class="entrenamientos-lista">
+        @for (entrenamiento of entrenamientos; track entrenamiento._id || $index) {
+          <ion-card class="entrenamiento-card">
+            <ion-card-header>
+              <ion-card-title>{{ entrenamiento.nombre }}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <p><strong>Fecha:</strong> {{ entrenamiento.fecha | date:'dd/MM/yyyy' }}</p>
+              <p><strong>Ejercicios:</strong> {{ entrenamiento.ejercicios?.length || 0 }}</p>
+              <ion-button expand="block" color="primary" (click)="verDetalleEntrenamiento(entrenamiento)">
+                Ver Entrene
+              </ion-button>
+            </ion-card-content>
+          </ion-card>
+        }
+      </div>
+    } @else {
+      <div class="mensaje-sin-entrenamientos">
+        <ion-card>
+          <ion-card-content>
+            <p>Sin entrenamientos asignados</p>
+
+          </ion-card-content>
+        </ion-card>
+      </div>
+    }
   }
 </ion-content>
