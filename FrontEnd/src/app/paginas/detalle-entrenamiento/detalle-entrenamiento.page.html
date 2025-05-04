@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/calendario"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalle de Entrenamiento</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="cargando" class="ion-text-center">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Cargando detalles del entrenamiento...</p>
+  </div>
+
+  <div *ngIf="!cargando && entrenamiento">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>{{ entrenamiento.titulo }}</ion-card-title>
+        <ion-card-subtitle>{{ entrenamiento.fecha | date:'dd/MM/yyyy' }}</ion-card-subtitle>
+      </ion-card-header>
+      
+      <ion-card-content>
+        <p *ngIf="entrenamiento.descripcion">{{ entrenamiento.descripcion }}</p>
+        
+        <div *ngIf="entrenamiento.ejercicios && entrenamiento.ejercicios.length > 0">
+          <h3>Ejercicios</h3>
+          
+          <ion-list>
+            <ion-item *ngFor="let ejercicio of entrenamiento.ejercicios; let i = index">
+              <ion-label>
+                <h2>{{ i + 1 }}. {{ ejercicio.nombre }}</h2>
+                <p *ngIf="ejercicio.descripcion">{{ ejercicio.descripcion }}</p>
+                
+                <div *ngIf="ejercicio.series && ejercicio.series.length > 0">
+                  <p><strong>Series:</strong></p>
+                  <ion-list>
+                    <ion-item *ngFor="let serie of ejercicio.series; let j = index" lines="none">
+                      <ion-label>
+                        Serie {{ j + 1 }}: {{ serie.kg }}kg x {{ serie.repeticiones }} reps
+                        <span *ngIf="serie.rpe"> (RPE: {{ serie.rpe }})</span>
+                      </ion-label>
+                    </ion-item>
+                  </ion-list>
+                </div>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </div>
+        
+        <div *ngIf="!entrenamiento.ejercicios || entrenamiento.ejercicios.length === 0">
+          <p>Este entrenamiento no tiene ejercicios asignados.</p>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+  
+  <div *ngIf="!cargando && !entrenamiento" class="ion-text-center">
+    <p>No se encontró el entrenamiento solicitado.</p>
+  </div>
+</ion-content>

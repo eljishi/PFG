@@ -27,11 +27,14 @@
         </div>
         
         <ion-list *ngIf="!cargando && entrenamientosDelDia.length > 0">
-          <ion-item *ngFor="let entrenamiento of entrenamientosDelDia">
+          <ion-item *ngFor="let entrenamiento of entrenamientosDelDia" 
+                    button 
+                    detail="true"
+                    (click)="verDetalleEntrenamiento(entrenamiento)">
             <ion-label>
               <h2>{{ entrenamiento.titulo }}</h2>
-              <p>{{ entrenamiento.descripcion }}</p>
-              <p>Duración: {{ entrenamiento.duracion }} minutos</p>
+              <p>{{ entrenamiento.descripcion || 'Sin descripción' }}</p>
+              <p *ngIf="entrenamiento.ejercicios">Ejercicios: {{ entrenamiento.ejercicios.length }}</p>
             </ion-label>
           </ion-item>
         </ion-list>
