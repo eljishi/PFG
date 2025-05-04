@@ -75,7 +75,7 @@ export class InicioPage implements OnInit {
   }
 
   verDetalleEntrenamiento(entrenamiento: Entrenamiento) {
-    this.router.navigate(['/detalle-entrenamiento'], {
+    this.router.navigate(['/ejercicios'], {
       queryParams: {
         entrenamientoId: entrenamiento._id || entrenamiento.id
       }

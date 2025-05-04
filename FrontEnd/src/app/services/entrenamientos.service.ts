@@ -15,34 +15,35 @@ export class EntrenamientosService {
     return this.httpClient.get<Ejercicios[]>(`${environment.urlBase}entrenamientos`);
   }
 
-  getEjercicio(id: string): Observable<Ejercicios> {
-    return this.httpClient.get<Ejercicios>(`${environment.urlBase}entrenamiento/${id}`);
-  }
-
-  // Nuevo método para obtener entrenamientos por fecha
   getEntrenamientosPorFecha(fecha: string): Observable<any[]> {
     return this.httpClient.get<any[]>(`${environment.urlBase}entrenamientos/fecha/${fecha}`);
   }
 
-  // Nuevo método para guardar un entrenamiento
   guardarEntrenamiento(entrenamiento: Entrenamiento): Observable<ApiResponseEntrenamiento> {
     return this.httpClient.post<ApiResponseEntrenamiento>(`${environment.urlBase}entrenamientos`, entrenamiento);
   }
   
-  // Nuevo método para obtener entrenamientos por ID de atleta
   getEntrenamientosPorAtleta(idAtleta: string): Observable<ApiResponseEntrenamientos> {
     return this.httpClient.get<ApiResponseEntrenamientos>(`${environment.urlBase}entrenamientos/atleta/${idAtleta}`);
   }
 
-  // Método alternativo con formato diferente de ruta
   getEntrenamientosPorAtletaAlternativo(idAtleta: string): Observable<ApiResponseEntrenamientos> {
     return this.httpClient.get<ApiResponseEntrenamientos>(`${environment.urlBase}entrenamientos?idAtleta=${idAtleta}`);
   }
 
-  // Método para obtener todos los entrenamientos
   getAllEntrenamientos(): Observable<ApiResponseEntrenamientos> {
     console.log('Solicitando todos los entrenamientos');
     return this.httpClient.get<ApiResponseEntrenamientos>(`${environment.urlBase}entrenamientos`);
+  }
+
+  // Método para obtener un entrenamiento por ID
+  getEntrenamiento(id: string): Observable<ApiResponseEntrenamiento> {
+    return this.httpClient.get<ApiResponseEntrenamiento>(`${environment.urlBase}entrenamientos/${id}`);
+  }
+
+  // Método para actualizar un entrenamiento existente
+  actualizarEntrenamiento(id: string, entrenamiento: Entrenamiento): Observable<ApiResponseEntrenamiento> {
+    return this.httpClient.put<ApiResponseEntrenamiento>(`${environment.urlBase}entrenamientos/${id}`, entrenamiento);
   }
 
   constructor() {
