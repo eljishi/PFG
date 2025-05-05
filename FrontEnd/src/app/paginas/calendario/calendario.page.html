@@ -11,49 +11,47 @@
     </ion-datetime>
   </div>
 
-  @if (fechaSeleccionada) {
+  <div *ngIf="fechaSeleccionada">
     <ion-card-header class="titulo-seccion">
       <ion-card-title>Entrenamientos para {{ fechaSeleccionada | date:'dd/MM/yyyy' }}</ion-card-title>
     </ion-card-header>
     
-    @if (cargando) {
-      <div class="mensaje-cargando">
-        <ion-card>
-          <ion-card-content>
-            <p>Cargando entrenamientos...</p>
-          </ion-card-content>
-        </ion-card>
-      </div>
-    } @else if (entrenamientosDelDia.length > 0) {
-      <div class="entrenamientos-lista">
-        @for (entrenamiento of entrenamientosDelDia; track $index) {
-          <ion-card class="entrenamiento-card">
-            <ion-card-header>
-              <ion-card-title>{{ entrenamiento.titulo || 'Entrenamiento' }}</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-              <p><strong>Fecha:</strong> {{ fechaSeleccionada | date:'dd/MM/yyyy' }}</p>
-              @if (entrenamiento.descripcion) {
-                <p><strong>Descripción:</strong> {{ entrenamiento.descripcion }}</p>
-              }
-              @if (entrenamiento.ejercicios) {
-                <p><strong>Ejercicios:</strong> {{ entrenamiento.ejercicios.length }}</p>
-              }
-              <ion-button expand="block" color="primary" (click)="verDetalleEntrenamiento(entrenamiento)">
-                Ver Entrene
-              </ion-button>
-            </ion-card-content>
-          </ion-card>
-        }
-      </div>
-    } @else {
-      <div class="mensaje-sin-entrenamientos">
-        <ion-card>
-          <ion-card-content>
-            <p>No hay entrenamientos programados para esta fecha.</p>
-          </ion-card-content>
-        </ion-card>
-      </div>
-    }
-  }
+    <div *ngIf="cargando" class="mensaje-cargando">
+      <ion-card>
+        <ion-card-content>
+          <p>Cargando entrenamientos...</p>
+        </ion-card-content>
+      </ion-card>
+    </div>
+    <div *ngIf="!cargando">
+      <p>Número de entrenamientos: {{ entrenamientosDelDia.length }}</p>
+    </div>
+    
+    <div *ngIf="!cargando && entrenamientosDelDia.length > 0" class="entrenamientos-lista">
+      <ion-card *ngFor="let entrenamiento of entrenamientosDelDia; let i = index" class="entrenamiento-card">
+        <ion-card-header>
+          <ion-card-title>{{ entrenamiento.titulo || 'Entrenamiento ' + (i+1) }}</ion-card-title>
+          <ion-card-subtitle *ngIf="esEntrenador">
+            Atleta: {{ entrenamiento.nombreAtleta || 'Nombre no disponible' }}
+          </ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          <p><strong>Fecha:</strong> {{ fechaSeleccionada | date:'dd/MM/yyyy' }}</p>
+          <p *ngIf="entrenamiento.descripcion"><strong>Descripción:</strong> {{ entrenamiento.descripcion }}</p>
+          <p *ngIf="entrenamiento.ejercicios"><strong>Ejercicios:</strong> {{ entrenamiento.ejercicios.length }}</p>
+          <ion-button expand="block" color="primary" (click)="verDetalleEntrenamiento(entrenamiento)">
+            Ver Entrene
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+    </div>
+    
+    <div *ngIf="!cargando && entrenamientosDelDia.length === 0" class="mensaje-sin-entrenamientos">
+      <ion-card>
+        <ion-card-content>
+          <p>No hay entrenamientos programados para esta fecha.</p>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
 </ion-content>
