@@ -76,7 +76,20 @@ export class InicioPage implements OnInit {
     this.entrenamientosService.getEntrenamientosPorAtleta(idAtleta).subscribe({
       next: (response) => {
         if (response && response.data) {
-          this.entrenamientos = response.data;
+          const fechaActual = new Date();
+          fechaActual.setHours(0, 0, 0, 0);
+          this.entrenamientos = response.data.filter(entrenamiento => {
+            if (!entrenamiento.fecha) return true;
+            const fechaEntrenamiento = new Date(entrenamiento.fecha);
+            return fechaEntrenamiento >= fechaActual;
+          });
+          this.entrenamientos.sort((a, b) => {
+            if (!a.fecha) return 1;  
+            if (!b.fecha) return -1;        
+            const fechaA = new Date(a.fecha);
+            const fechaB = new Date(b.fecha);      
+            return fechaA.getTime() - fechaB.getTime();
+          });
         } else {
           this.entrenamientos = [];
         }
