@@ -58,7 +58,7 @@
             <ion-card-content>
               <div class="entrenamiento-info">
                 <p><strong>Fecha:</strong> {{ entrenamiento.fecha | date:'dd/MM/yyyy' }}</p>
-                <p><strong>Ejercicios:</strong> {{ entrenamiento.ejercicios?.length || 0 }}</p>
+                <p><strong>Ejercicios del entrenamiento:</strong> {{ entrenamiento.ejercicios.length}}</p>
               </div>
               <ion-button expand="block" color="primary" (click)="verDetalleEntrenamiento(entrenamiento)">
                 <ion-icon name="eye-outline" slot="start"></ion-icon>

@@ -4,18 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { 
   IonContent, 
-  IonHeader, 
-  IonTitle, 
-  IonToolbar, 
   IonButton,
-  IonCard,
-  IonCardHeader,
-  IonCardTitle,
-  IonCardContent,
-  IonGrid,
-  IonRow,
-  IonCol,
-  IonIcon
 } from '@ionic/angular/standalone';
 import { UsuariosService } from '../../services/usuarios.service';
 

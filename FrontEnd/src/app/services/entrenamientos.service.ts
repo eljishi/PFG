@@ -15,10 +15,6 @@ export class EntrenamientosService {
     return this.httpClient.get<Ejercicios[]>(`${environment.urlBase}entrenamientos`);
   }
 
-  getEjercicio(id: string): Observable<Ejercicios> {
-    return this.httpClient.get<Ejercicios>(`${environment.urlBase}entrenamiento/${id}`);
-  }
-
   getEntrenamientosPorFecha(fecha: string): Observable<any[]> {
     return this.httpClient.get<any[]>(`${environment.urlBase}entrenamientos/fecha/${fecha}`);
   }
@@ -29,14 +25,6 @@ export class EntrenamientosService {
   
   getEntrenamientosPorAtleta(idAtleta: string): Observable<ApiResponseEntrenamientos> {
     return this.httpClient.get<ApiResponseEntrenamientos>(`${environment.urlBase}entrenamientos/atleta/${idAtleta}`);
-  }
-
-  getEntrenamientosPorAtletaAlternativo(idAtleta: string): Observable<ApiResponseEntrenamientos> {
-    return this.httpClient.get<ApiResponseEntrenamientos>(`${environment.urlBase}entrenamientos?idAtleta=${idAtleta}`);
-  }
-
-  getAllEntrenamientos(): Observable<ApiResponseEntrenamientos> {
-    return this.httpClient.get<ApiResponseEntrenamientos>(`${environment.urlBase}entrenamientos`);
   }
 
   getEntrenamiento(id: string): Observable<ApiResponseEntrenamiento> {

@@ -86,7 +86,6 @@ export class EjerciciosPage implements OnInit {
     this.route.queryParams.subscribe(params => {
       if (params['atletaId']) {
         this.idAtleta = params['atletaId'];
-        // Si hay un atletaId en los parámetros, probablemente es un entrenador creando un entrenamiento
         this.esAtleta = false;
       } else if (params['entrenamientoId']) {
         this.entrenamientoId = params['entrenamientoId'];

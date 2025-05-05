@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonList, IonItem, IonLabel, IonDatetime, IonButton } from '@ionic/angular/standalone';
+import { IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonDatetime, IonButton } from '@ionic/angular/standalone';
 import { HeaderComponent } from 'src/app/componentes/header/header.component';
 import { EntrenamientosService } from 'src/app/services/entrenamientos.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
@@ -20,10 +20,7 @@ import { Router } from '@angular/router';
     IonCard, 
     IonCardHeader, 
     IonCardTitle, 
-    IonCardContent, 
-    IonList, 
-    IonItem, 
-    IonLabel,
+    IonCardContent,  
     IonDatetime,
     IonButton
   ]

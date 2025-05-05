@@ -30,10 +30,6 @@ export const routes: Routes = [
         loadComponent: () => import('./paginas/calendario/calendario.page').then( m => m.CalendarioPage)
       },
       {
-        path: 'detalle-entrenamiento/:id',
-        loadComponent: () => import('./paginas/detalle-entrenamiento/detalle-entrenamiento.page').then( m => m.DetalleEntrenamientoPage)
-      },
-      {
         path: '',
         redirectTo: 'inicio',
         pathMatch: 'full'
@@ -56,13 +52,5 @@ export const routes: Routes = [
     path: 'videos-detalles/:id',
     loadComponent: () => import('./paginas/videos-detalles/videos-detalles.page').then( m => m.VideosDetallesPage)
   },
-  {
-    path: 'detalle-entrenamiento',
-    loadComponent: () => import('./paginas/detalle-entrenamiento/detalle-entrenamiento.page').then( m => m.DetalleEntrenamientoPage)
-  },
-  // Add this new route to handle the ID parameter at the root level
-  {
-    path: 'detalle-entrenamiento/:id',
-    loadComponent: () => import('./paginas/detalle-entrenamiento/detalle-entrenamiento.page').then( m => m.DetalleEntrenamientoPage)
-  },
+  
 ];

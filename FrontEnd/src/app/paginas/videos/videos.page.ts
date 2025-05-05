@@ -2,7 +2,7 @@ import { Component, inject, Injector, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonContent, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonIcon, IonSpinner } from '@ionic/angular/standalone';
+import { IonContent, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonIcon } from '@ionic/angular/standalone';
 import { HeaderComponent } from 'src/app/componentes/header/header.component';
 import { EjerciciosService } from 'src/app/services/ejercicios.service';
 import { Ejercicios } from 'src/app/common/ejercicios';
@@ -58,11 +58,10 @@ export class VideosPage implements OnInit {
       },
       error: err => {
         console.error(err);
-        this.error = 'Error al cargar los ejercicios. Por favor, inténtalo de nuevo más tarde.';
+        this.error = 'No se pueden cargar los ejercicios.';
         this.isLoading = false;
       },
       complete: () => {
-        console.log("Carga de ejercicios completada");
         this.isLoading = false;
       }
     });
