@@ -1,75 +1,113 @@
-ion-card {
-  margin: 16px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+:host {
+  --card-background: white;
+  --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --border-radius: 12px;
 }
 
-ion-card-title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #333;
-}
-
-ion-item {
-  --padding-start: 8px;
+ion-content {
+  --background: #f5f7fa;
 }
 
 .titulo-seccion {
-  padding: 16px;
-  margin-bottom: 0;
+  padding: var(--spacing-lg) var(--spacing-md) var(--spacing-sm);
+  margin-top: var(--spacing-lg);
+  background: transparent;
+  
+  ion-card-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--ion-color-dark);
+    position: relative;
+    
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background: var(--ion-color-primary);
+      border-radius: 2px;
+    }
+  }
 }
 
-.atletas-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 16px;
-  padding: 0 16px 16px 16px;
+ion-card {
+  margin: var(--spacing-md);
+  border-radius: var(--border-radius);
+  background: var(--card-background);
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  }
 }
 
-.atleta-card {
-  margin: 0;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+ion-card-header {
+  background: var(--ion-color-primary);
+  padding: var(--spacing-md);
 }
 
-.atleta-card ion-card-content {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+ion-card-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: white;
 }
 
-.atleta-card ion-button {
-  margin-top: 16px;
+ion-card-content {
+  padding: var(--spacing-md);
 }
 
-.mensaje-sin-atletas {
-  padding: 0 16px;
-}
-
+.atletas-grid,
 .entrenamientos-lista {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 16px;
-  padding: 0 16px 16px 16px;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  margin-top: var(--spacing-md);
 }
 
-.entrenamiento-card {
-  margin: 0;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+ion-button {
+  --border-radius: 8px;
+  margin-top: var(--spacing-md);
+  font-weight: 500;
 }
 
-.entrenamiento-card ion-card-content {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
+.mensaje-sin-atletas,
 .mensaje-sin-entrenamientos,
 .mensaje-cargando {
-  padding: 0 16px;
+  padding: var(--spacing-lg);
+  text-align: center;
+  
+  ion-card {
+    max-width: 400px;
+    margin: 0 auto;
+    
+    p {
+      margin-top: var(--spacing-md);
+      color: var(--ion-color-medium);
+    }
+    
+    ion-icon {
+      font-size: 32px;
+      color: var(--ion-color-primary);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .atletas-grid,
+  .entrenamientos-lista {
+    grid-template-columns: 1fr;
+  }
+  
+  .titulo-seccion ion-card-title {
+    font-size: 1.5rem;
+  }
 }

@@ -15,6 +15,7 @@
             </ion-card-header>
             <ion-card-content>
               <ion-button expand="block" color="primary" (click)="agregarRutina(atleta)">
+                <ion-icon name="add-circle-outline" slot="start"></ion-icon>
                 Añadir Entrenamiento
               </ion-button>
             </ion-card-content>
@@ -27,6 +28,7 @@
       <div class="mensaje-sin-atletas">
         <ion-card>
           <ion-card-content>
+            <ion-icon name="people-outline" size="large"></ion-icon>
             <p>No tienes atletas vinculados actualmente.</p>
           </ion-card-content>
         </ion-card>
@@ -41,6 +43,7 @@
       <div class="mensaje-cargando">
         <ion-card>
           <ion-card-content>
+            <ion-spinner name="crescent"></ion-spinner>
             <p>Cargando entrenamientos...</p>
           </ion-card-content>
         </ion-card>
@@ -53,9 +56,12 @@
               <ion-card-title>{{ entrenamiento.nombre }}</ion-card-title>
             </ion-card-header>
             <ion-card-content>
-              <p><strong>Fecha:</strong> {{ entrenamiento.fecha | date:'dd/MM/yyyy' }}</p>
-              <p><strong>Ejercicios:</strong> {{ entrenamiento.ejercicios?.length || 0 }}</p>
+              <div class="entrenamiento-info">
+                <p><strong>Fecha:</strong> {{ entrenamiento.fecha | date:'dd/MM/yyyy' }}</p>
+                <p><strong>Ejercicios:</strong> {{ entrenamiento.ejercicios?.length || 0 }}</p>
+              </div>
               <ion-button expand="block" color="primary" (click)="verDetalleEntrenamiento(entrenamiento)">
+                <ion-icon name="eye-outline" slot="start"></ion-icon>
                 Ver Entrene
               </ion-button>
             </ion-card-content>
@@ -66,8 +72,8 @@
       <div class="mensaje-sin-entrenamientos">
         <ion-card>
           <ion-card-content>
+            <ion-icon name="fitness-outline" size="large"></ion-icon>
             <p>Sin entrenamientos asignados</p>
-
           </ion-card-content>
         </ion-card>
       </div>

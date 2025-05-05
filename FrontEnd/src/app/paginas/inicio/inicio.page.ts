@@ -1,7 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonList, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton } from '@ionic/angular/standalone';
+import { 
+  IonContent, 
+  IonList, 
+  IonCard, 
+  IonCardHeader, 
+  IonCardTitle, 
+  IonCardContent, 
+  IonButton,
+  IonIcon,
+  IonSpinner
+} from '@ionic/angular/standalone';
 import { HeaderComponent } from 'src/app/componentes/header/header.component';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import { Router } from '@angular/router';
@@ -13,7 +23,19 @@ import { Entrenamiento } from 'src/app/common/entrenamientos';
   templateUrl: './inicio.page.html',
   styleUrls: ['./inicio.page.scss'],
   standalone: true,
-  imports: [IonContent, CommonModule, FormsModule, HeaderComponent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton]
+  imports: [
+    IonContent, 
+    CommonModule, 
+    FormsModule, 
+    HeaderComponent, 
+    IonCard, 
+    IonCardHeader, 
+    IonCardTitle, 
+    IonCardContent, 
+    IonButton,
+    IonIcon,
+    IonSpinner
+  ]
 })
 export class InicioPage implements OnInit {
   atletas: Array<{ id: string, nombre: string }> = [];

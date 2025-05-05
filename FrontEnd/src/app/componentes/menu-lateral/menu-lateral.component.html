@@ -7,19 +7,15 @@
   
   <ion-content>
     <ion-list>
-      <ion-item>
-        <ion-icon name="person-outline" slot="start"></ion-icon>
-        <ion-label>{{ nombreUsuario }}</ion-label>
-      </ion-item>
       
-      <ion-item routerLink="/perfil-usuario">
+      <ion-item routerLink="/perfil-usuario" (click)="cerrarMenu()">
         <ion-icon name="settings-outline" slot="start"></ion-icon>
         <ion-label>Ajustes de usuario</ion-label>
       </ion-item>
     </ion-list>
     
     <ion-list lines="none" class="logout-container">
-      <ion-item (click)="cerrarSesion()" class="logout-button">
+      <ion-item (click)="cerrarSesion()" class="logout-button" (click)="cerrarMenu()">
         <ion-icon name="log-out-outline" slot="start"></ion-icon>
         <ion-label color="danger">Cerrar sesión</ion-label>
       </ion-item>

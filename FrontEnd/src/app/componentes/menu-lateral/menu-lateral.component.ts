@@ -9,7 +9,8 @@ import {
   IonList,
   IonItem,
   IonIcon,
-  IonLabel
+  IonLabel,
+  MenuController
 } from '@ionic/angular/standalone';
 import { Router, RouterLink } from '@angular/router';
 import { addIcons } from 'ionicons';
@@ -46,7 +47,8 @@ export class MenuLateralComponent implements OnInit, OnDestroy {
 
   constructor(
     private usuariosService: UsuariosService,
-    private router: Router
+    private router: Router,
+    private menuCtrl: MenuController
   ) {
     addIcons({
       'person-outline': personOutline,
@@ -78,6 +80,14 @@ export class MenuLateralComponent implements OnInit, OnDestroy {
 
   cerrarSesion() {
     this.usuariosService.logout();
-    this.router.navigateByUrl('/auth');
+    localStorage.clear();
+    sessionStorage.clear();
+    this.nombreUsuario = '';
+    this.cerrarMenu();
+    this.router.navigateByUrl('/registro', { replaceUrl: true });
+  }
+
+  cerrarMenu() {
+    this.menuCtrl.close('menu');
   }
 }
