@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonList, IonItem, IonLabel, IonDatetime } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonList, IonItem, IonLabel, IonDatetime, IonButton } from '@ionic/angular/standalone';
 import { HeaderComponent } from 'src/app/componentes/header/header.component';
 import { EntrenamientosService } from 'src/app/services/entrenamientos.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
@@ -24,7 +24,8 @@ import { Router } from '@angular/router';
     IonList, 
     IonItem, 
     IonLabel,
-    IonDatetime
+    IonDatetime,
+    IonButton
   ]
 })
 export class CalendarioPage implements OnInit {
@@ -100,7 +101,10 @@ export class CalendarioPage implements OnInit {
   }
 
   verDetalleEntrenamiento(entrenamiento: any) {
-    // Navegar a la página de detalle pasando el ID del entrenamiento
-    this.router.navigate(['/detalle-entrenamiento', entrenamiento._id]);
+    this.router.navigate(['/ejercicios'], {
+      queryParams: {
+        entrenamientoId: entrenamiento._id || entrenamiento.id
+      }
+    });
   }
 }
