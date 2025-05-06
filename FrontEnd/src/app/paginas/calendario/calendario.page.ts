@@ -97,24 +97,45 @@ export class CalendarioPage implements OnInit {
     this.entrenamientosService.getEntrenamientosPorFecha(this.fechaSeleccionada)
       .subscribe({
         next: (data: any) => {
-                    if (Array.isArray(data)) {
-            this.entrenamientosDelDia = data;
+          let entrenamientos = [];
+          if (Array.isArray(data)) {
+            entrenamientos = data;
           } else if (data && data.data && Array.isArray(data.data)) {
-            this.entrenamientosDelDia = data.data;
+            entrenamientos = data.data;
           } else {
-            this.entrenamientosDelDia = [];
+            entrenamientos = [];
           }
           
+          // Filtrar entrenamientos según el rol del usuario
+          if (this.esEntrenador) {
+            // Si es entrenador, mostrar solo entrenamientos de sus atletas
+            if (this.atletasDelEntrenador && this.atletasDelEntrenador.length > 0) {
+              const idsAtletas = this.atletasDelEntrenador.map(atleta => atleta.id);
+              entrenamientos = entrenamientos.filter((entrenamiento: { idAtleta: string }) =>
+                idsAtletas.includes(entrenamiento.idAtleta)
+              );
+            }
+          } else {
+            // Si es atleta, mostrar solo sus propios entrenamientos
+            entrenamientos = entrenamientos.filter((entrenamiento: { idAtleta: string }) =>
+              entrenamiento.idAtleta === this.userId
+            );
+          }
+          
+          this.entrenamientosDelDia = entrenamientos;
+          
+          // Añadir nombre de atleta para entrenadores
           if (this.esEntrenador && this.atletasDelEntrenador.length > 0) {
             this.entrenamientosDelDia = this.entrenamientosDelDia.map(entrenamiento => {
-              const atleta = this.atletasDelEntrenador.find(a => a._id === entrenamiento.idAtleta);              
+              const atleta = this.atletasDelEntrenador.find(a => a.id === entrenamiento.idAtleta);              
               return {
                 ...entrenamiento,
-                nombreAtleta: atleta ? atleta.user : 'Atleta desconocido'
+                nombreAtleta: atleta ? atleta.nombre : 'Atleta desconocido'
               };
             });
           }
-                    this.cargando = false;
+          
+          this.cargando = false;
         },
         error: (error) => {
           console.error('Error al cargar entrenamientos:', error);
