@@ -30,7 +30,7 @@
     <div *ngIf="!cargando && entrenamientosDelDia.length > 0" class="entrenamientos-lista">
       <ion-card *ngFor="let entrenamiento of entrenamientosDelDia; let i = index" class="entrenamiento-card">
         <ion-card-header>
-          <ion-card-title>{{ entrenamiento.titulo || 'Entrenamiento ' + (i+1) }}</ion-card-title>
+          <ion-card-title>{{ entrenamiento.nombre || 'Sin título' }}</ion-card-title>
           <ion-card-subtitle *ngIf="esEntrenador">
             Atleta: {{ entrenamiento.nombreAtleta || 'Nombre no disponible' }}
           </ion-card-subtitle>
