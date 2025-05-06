@@ -90,7 +90,6 @@ export class EjerciciosPage implements OnInit {
       } else if (params['entrenamientoId']) {
         this.entrenamientoId = params['entrenamientoId'];
         this.cargarEntrenamiento(params['entrenamientoId']);
-        // Verificamos si el usuario actual es un atleta
         if (this.usuariosService.usuario && !this.usuariosService.usuario.esEntrenador) {
           this.esAtleta = true;
         }
@@ -99,7 +98,7 @@ export class EjerciciosPage implements OnInit {
           this.idAtleta = this.usuariosService.usuario._id;
           this.esAtleta = !this.usuariosService.usuario.esEntrenador;
         } else {
-          console.log('No se pudo obtener el ID del atleta');
+          console.log('No se puede obtener Id atleta');
         }
       }
     });
@@ -134,7 +133,6 @@ export class EjerciciosPage implements OnInit {
         }
       },
       error: (error) => {
-        console.error('Error al cargar el entrenamiento:', error);
         this.mostrarToast('Error al cargar el entrenamiento');
       }
     });
@@ -212,6 +210,37 @@ export class EjerciciosPage implements OnInit {
       return;
     }
 
+
+    let valoresInvalidos = false;
+
+    for (let i = 0; i < this.ejerciciosAgregados.length; i++) {
+      for (let j = 0; j < this.ejerciciosAgregados[i].series.length; j++) {
+        const serie = this.ejerciciosAgregados[i].series[j];
+
+        if (Number(serie.kg) < 0) {
+          valoresInvalidos = true;
+          this.mostrarToast('KG negativos no guardando');
+        }
+
+        if (Number(serie.rpe) < 0) {
+          valoresInvalidos = true;
+          this.mostrarToast('RPE negativos no guardando');
+        } else if (Number(serie.rpe) > 10) {
+          valoresInvalidos = true;
+          this.mostrarToast('El maximo de RPE es 10');
+        }
+
+        if (Number(serie.repeticiones) < 0) {
+          valoresInvalidos = true;
+          this.mostrarToast('Repeticiones negativas no guardando');
+        }
+      }
+    }
+
+    if (valoresInvalidos) {
+      return; 
+    }
+
     const ejerciciosFormateados: EjercicioBackend[] = this.ejerciciosAgregados.map(ejercicio => {
       const seriesFormateadas: SerieBackend[] = ejercicio.series.map(serie => {
         return {
@@ -240,21 +269,17 @@ export class EjerciciosPage implements OnInit {
       
       if (this.entrenamientoId) {
         respuesta = await this.entrenamientosService.actualizarEntrenamiento(this.entrenamientoId, entrenamiento).toPromise();
-        console.log('Entrenamiento actualizado:', respuesta);
-        this.mostrarToast('Entrenamiento actualizado con éxito');
+        this.mostrarToast('Entrenamiento actualizado');
       } else {
         respuesta = await this.entrenamientosService.guardarEntrenamiento(entrenamiento).toPromise();
-        console.log('Entrenamiento guardado:', respuesta);
-        this.mostrarToast('Entrenamiento guardado con éxito');
+        if (respuesta && respuesta.data && respuesta.data._id) {
+          this.entrenamientoId = respuesta.data._id;
+        }
+        this.mostrarToast('Entrenamiento guardado');
       }
-      
-      this.tituloEntrenamiento = '';
-      this.fechaEntrenamiento = '';
-      this.ejerciciosAgregados = [];
-      this.entrenamientoId = '';
+
     } catch (error) {
-      console.error('Error al guardar/actualizar el entrenamiento:', error);
-      this.mostrarToast('Error al guardar/actualizar el entrenamiento');
+      this.mostrarToast('Error al guardar el entrenamiento');
     }
   }
 

@@ -41,25 +41,4 @@ export class EjerciciosService {
     async deleteEjercicio(idEjercicio: string): Promise<any>{
         return this.ejercicioModel.findByIdAndDelete(idEjercicio);
     }
-
-    //get por un algo por si acaso
-    /*
-    async get?(): Promise<string[]>{
-        return this.serieModel.find().distinct('categorias')
-    }
-
-
-    async getSerieByTitleOrSynopsis(searchTerm: string): Promise<any[]> {
-        return this.serieModel.find({
-            $or: [
-                { titulo: { $regex: searchTerm, $options: 'i' } },
-                { sinopsis: { $regex: searchTerm, $options: 'i' } }
-            ]
-        }).exec();
-    }
-
-    async getSeriesByCategory(categoria: string): Promise<Serie[]> {
-        return this.serieModel.find({ 'categorias.categoria': categoria }).exec();
-    }
-    */
 }

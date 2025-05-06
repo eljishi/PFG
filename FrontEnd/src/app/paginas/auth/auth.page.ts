@@ -1,7 +1,7 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormBuilder, FormGroup, Validators, ReactiveFormsModule} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
+import { Router} from '@angular/router';
 import {
   IonContent,
   IonHeader,
@@ -9,17 +9,11 @@ import {
   IonToolbar,
   IonButton,
   IonInput,
-  IonItem,
   IonBackButton,
   IonButtons,
-  IonCard,
-  IonCardHeader,
-  IonCardTitle,
-  IonCardContent,
   IonLabel,
-  IonToggle,
-  IonList,
-  IonSpinner
+  IonSpinner,
+  ToastController
 } from '@ionic/angular/standalone';
 import {UsuariosService} from "../../services/usuarios.service";
 
@@ -52,6 +46,7 @@ export class AuthPage implements OnInit {
   private readonly formBuilder: FormBuilder = inject(FormBuilder);
   private readonly userService: UsuariosService = inject(UsuariosService);
   private readonly router: Router = inject(Router);
+  private readonly toastController: ToastController = inject(ToastController);
 
   formUser: FormGroup = this.formBuilder.group({
     idEntrenador: [''], 
@@ -64,6 +59,22 @@ export class AuthPage implements OnInit {
   loginUp =true;
 
   constructor() {
+  }
+
+  async mostrarToast(mensaje: string, color: string = 'danger') {
+    const toast = await this.toastController.create({
+      message: mensaje,
+      duration: 2500,
+      position: 'bottom',
+      color: color,
+      buttons: [
+        {
+          text: 'Cerrar',
+          role: 'cancel'
+        }
+      ]
+    });
+    await toast.present();
   }
 
   get idEntrenador():any{
@@ -84,9 +95,8 @@ export class AuthPage implements OnInit {
 
 
   async login(){
-    console.log('Iniciando login');
     if (this.formUser.invalid) {
-      alert('Por favor, completa todos los campos requeridos');
+      this.mostrarToast('Rellena los campos');
       return;
     }
 
@@ -94,32 +104,26 @@ export class AuthPage implements OnInit {
     
     try {
       const valido = await this.userService.login(this.mail.value, this.password.value);
-      console.log('Resultado login:', valido);
-
       this.isLoading = false;
       
       if (valido){
         this.router.navigateByUrl('/tabs');
       } else {
-        alert('Usuario y contraseña incorrectos');
+        this.mostrarToast('Usuario o contraseña incorrectos.');
       }
     } catch (error) {
       this.isLoading = false;
-      console.error('Error durante el login:', error);
-      alert('Error al intentar iniciar sesión. Por favor, inténtalo de nuevo.');
     }
   }
 
   async register() {
-    console.log('Iniciando registro con pageType:', this.pageType);
-
     this.formUser.markAllAsTouched();
     if (this.formUser.invalid) {
       if (this.pageType === 'register' && this.formUser.get('idEntrenador')?.hasError('required')) {
-        alert('Por favor, ingresa el ID de tu entrenador.');
+        this.mostrarToast('Id de entrenador no valido.');
         return;
       }
-      alert('Por favor, completa todos los campos requeridos correctamente.');
+      this.mostrarToast('Completa todos los campos.');
       return;
     }
 
@@ -130,33 +134,24 @@ export class AuthPage implements OnInit {
       if (this.pageType === 'coach-register') {
         esEntrenadorFlag = true;
       }
-
       const userData = { ...this.formUser.getRawValue(), esEntrenador: esEntrenadorFlag };
-
       if (esEntrenadorFlag || !userData.idEntrenador) {
          delete userData.idEntrenador;
       }
-
-      console.log('Datos a enviar para registro:', userData);
-
       const valido = await this.userService.register(userData);
-
-      console.log('Resultado registro:', valido);
       if (valido) {
+        this.mostrarToast('Registro exitoso', 'success');
         this.router.navigateByUrl('/tabs');
       } else {
-        alert('El correo o el usuario ya existen, o hubo un error en el registro.');
+        this.mostrarToast('Correo usado.');
       }
     } catch (error: any) {
-      console.error('Error durante el registro:', error);
-
-      let errorMessage = 'Error al intentar registrarse. Por favor, inténtalo de nuevo.';
       if (error && error.error && error.error.message) {
-         errorMessage = `Error: ${error.error.message}`;
+        this.mostrarToast('Error ');
       } else if (error instanceof Error) {
-         errorMessage = `Error: ${error.message}`;
+        this.mostrarToast('Error ');
       }
-      alert(errorMessage);
+      this.mostrarToast('Error al');
 
     } finally {
       this.isLoading = false;

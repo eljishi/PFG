@@ -107,7 +107,6 @@ export class UsuariosService {
     this.router.navigateByUrl('/registro');
   }
 
-  // Nuevos métodos para la vinculación de atletas y entrenadores
   vincularAtleta(entrenadorId: string, atletaId: string, atletaNombre: string): Promise<any> {
     return new Promise((resolve, reject) => {
       const headers = new HttpHeaders({

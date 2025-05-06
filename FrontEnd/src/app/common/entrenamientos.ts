@@ -1,10 +1,10 @@
 export interface Entrenamiento {
   id?: string;
-  _id?: string;  // Add this line to support both formats
+  _id?: string;  
   nombre: string;
   fecha: Date;
   ejercicios: any[];
-  idAtleta?: string; // Add this property to support the idAtleta field
+  idAtleta?: string; 
 }
 
 export interface Ejercicio {

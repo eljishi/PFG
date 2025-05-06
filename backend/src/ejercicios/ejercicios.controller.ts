@@ -81,25 +81,8 @@ export class EjerciciosController {
             })
         }
     }
-    /*
-    @Get('search')
-    async getSerieByTitleOrSynopsis(@Query('query') query: string) {
-        try {
-            const series = await this.ejerciciosService.getSerieByTitleOrSynopsis(query);
-            return {
-                status: 'Ok',
-                data: series
-            };
-        } catch (e: any) {
-            throw new InternalServerErrorException({
-                status: "Error",
-                message: e.message
-            });
-        }
-    }
-    */
 
-    //actualiza una serie SI
+    //actualiza una serie por id
     @Put('/:id')
     async updateEjercicio(
         @Param('id') id: string,
@@ -130,7 +113,7 @@ export class EjerciciosController {
         }
     }
 
-    //Elimina una Serie SI
+    //borra una serie por id
     @Delete(':id')
     async deleteEjercicio(@Param('id') id: string) {
         try {
@@ -157,48 +140,4 @@ export class EjerciciosController {
         }
     }
 
-    /*
-    @Get('categorias')
-    async getCategories() {
-        try {
-            const data =
-                await this.seriesService.getCategories();
-
-            return {
-                status: 'Ok',
-                data
-            }
-        } catch (e: any) {
-            throw new InternalServerErrorException({
-                status: 'Error',
-                message: e.message
-            })
-        }
-    }
-
-    @Get('categoria/:categoria')
-    async getSeriesByCategory(@Param('categoria') categoria: string) {
-        try {
-            const data = await this.seriesService.getSeriesByCategory(categoria);
-            if (data.length > 0) {
-                return {
-                    status: 'Ok',
-                    data
-                };
-            }
-            throw new NotFoundException({
-                status: 'Error',
-                message: 'No se encontraron series para esta categoría'
-            });
-        } catch (e: any) {
-            if (e instanceof NotFoundException) {
-                throw e;
-            }
-            throw new InternalServerErrorException({
-                status: 'Error',
-                message: e.message
-            });
-        }
-    }
-    */
 }
