@@ -56,3 +56,24 @@ ion-icon {
   border-radius: 16px;
   font-weight: normal;
 }
+
+.id-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.copy-icon {
+  margin-left: 10px;
+  font-size: 1.2rem;
+  color: var(--ion-color-primary);
+  cursor: pointer;
+}
+
+.copy-icon:hover {
+  opacity: 0.8;
+}
+
+.custom-input {
+  flex: 1;
+}
