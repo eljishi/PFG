@@ -9,12 +9,16 @@ import {
   IonCardContent, 
   IonDatetime, 
   IonButton,
-  IonCardSubtitle 
+  IonCardSubtitle,
+  IonIcon,
+  ToastController
 } from '@ionic/angular/standalone';
 import { HeaderComponent } from 'src/app/componentes/header/header.component';
 import { EntrenamientosService } from 'src/app/services/entrenamientos.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import { Router } from '@angular/router';
+import { addIcons } from 'ionicons';
+import { trashOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-calendario',
@@ -32,7 +36,8 @@ import { Router } from '@angular/router';
     IonCardContent,  
     IonDatetime,
     IonButton,
-    IonCardSubtitle
+    IonCardSubtitle,
+    IonIcon
   ]
 })
 export class CalendarioPage implements OnInit {
@@ -46,8 +51,11 @@ export class CalendarioPage implements OnInit {
   constructor(
     private entrenamientosService: EntrenamientosService,
     private usuariosService: UsuariosService,
-    private router: Router
-  ) { }
+    private router: Router,
+    private toastController: ToastController
+  ) { 
+    addIcons({ trashOutline });
+  }
 
   ngOnInit() {
     this.obtenerUsuarioActual();
@@ -106,9 +114,7 @@ export class CalendarioPage implements OnInit {
             entrenamientos = [];
           }
           
-          // Filtrar entrenamientos según el rol del usuario
           if (this.esEntrenador) {
-            // Si es entrenador, mostrar solo entrenamientos de sus atletas
             if (this.atletasDelEntrenador && this.atletasDelEntrenador.length > 0) {
               const idsAtletas = this.atletasDelEntrenador.map(atleta => atleta.id);
               entrenamientos = entrenamientos.filter((entrenamiento: { idAtleta: string }) =>
@@ -116,7 +122,6 @@ export class CalendarioPage implements OnInit {
               );
             }
           } else {
-            // Si es atleta, mostrar solo sus propios entrenamientos
             entrenamientos = entrenamientos.filter((entrenamiento: { idAtleta: string }) =>
               entrenamiento.idAtleta === this.userId
             );
@@ -124,7 +129,6 @@ export class CalendarioPage implements OnInit {
           
           this.entrenamientosDelDia = entrenamientos;
           
-          // Añadir nombre de atleta para entrenadores
           if (this.esEntrenador && this.atletasDelEntrenador.length > 0) {
             this.entrenamientosDelDia = this.entrenamientosDelDia.map(entrenamiento => {
               const atleta = this.atletasDelEntrenador.find(a => a.id === entrenamiento.idAtleta);              
@@ -151,5 +155,37 @@ export class CalendarioPage implements OnInit {
         entrenamientoId: entrenamiento._id || entrenamiento.id
       }
     });
+  }
+
+  async presentToast(message: string, color: string = 'success') {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      position: 'bottom',
+      color: color
+    });
+    toast.present();
+  }
+
+  eliminarEntrenamiento(entrenamiento: any) {
+    const entrenamientoId = entrenamiento._id || entrenamiento.id;
+    
+    this.entrenamientosService.eliminarEntrenamiento(entrenamientoId)
+      .subscribe({
+        next: (response) => {
+          if (response && response.status === 'Ok') {
+            this.entrenamientosDelDia = this.entrenamientosDelDia.filter(
+              e => (e._id || e.id) !== entrenamientoId
+            );
+            this.presentToast('Entrenamiento eliminado correctamente');
+          } else {
+            this.presentToast('Error al eliminar el entrenamiento', 'danger');
+          }
+        },
+        error: (error) => {
+          console.error('Error al eliminar entrenamiento:', error);
+          this.presentToast('Error al eliminar el entrenamiento', 'danger');
+        }
+      });
   }
 }

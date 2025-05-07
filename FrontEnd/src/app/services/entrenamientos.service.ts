@@ -3,7 +3,7 @@ import {Observable} from "rxjs";
 import {Ejercicios} from "../common/ejercicios";
 import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
-import {Entrenamiento, ApiResponseEntrenamiento, ApiResponseEntrenamientos} from "../common/entrenamientos";
+import {Entrenamiento, ApiResponseEntrenamiento, ApiResponseEntrenamientos, ApiResponseMessage} from "../common/entrenamientos";
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +33,10 @@ export class EntrenamientosService {
 
   actualizarEntrenamiento(id: string, entrenamiento: Entrenamiento): Observable<ApiResponseEntrenamiento> {
     return this.httpClient.put<ApiResponseEntrenamiento>(`${environment.urlBase}entrenamientos/${id}`, entrenamiento);
+  }
+
+  eliminarEntrenamiento(id: string): Observable<ApiResponseMessage> {
+    return this.httpClient.delete<ApiResponseMessage>(`${environment.urlBase}entrenamientos/${id}`);
   }
 
   constructor() {

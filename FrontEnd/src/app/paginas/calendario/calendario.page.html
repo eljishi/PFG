@@ -34,6 +34,11 @@
         @for (entrenamiento of entrenamientosDelDia; track $index; let i = $index) {
           <ion-card class="entrenamiento-card">
             <ion-card-header>
+              @if (esEntrenador) {
+                <div class="delete-icon" (click)="eliminarEntrenamiento(entrenamiento)">
+                  <ion-icon name="trash-outline" color="danger"></ion-icon>
+                </div>
+              }
               <ion-card-title>{{ entrenamiento.nombre || 'Sin título' }}</ion-card-title>
               @if (esEntrenador) {
                 <ion-card-subtitle>
@@ -42,16 +47,10 @@
               }
             </ion-card-header>
             <ion-card-content>
-              <p><strong>Fecha:</strong> {{ fechaSeleccionada | date:'dd/MM/yyyy' }}</p>
-              @if (entrenamiento.descripcion) {
-                <p><strong>Descripción:</strong> {{ entrenamiento.descripcion }}</p>
-              }
-              @if (entrenamiento.ejercicios) {
-                <p><strong>Ejercicios:</strong> {{ entrenamiento.ejercicios.length }}</p>
-              }
-              <ion-button expand="block" color="primary" (click)="verDetalleEntrenamiento(entrenamiento)">
-                Ver Entrene
+              <ion-button expand="block" (click)="verDetalleEntrenamiento(entrenamiento)">
+                Ver detalle
               </ion-button>
+            
             </ion-card-content>
           </ion-card>
         }
@@ -62,7 +61,7 @@
       <div class="mensaje-sin-entrenamientos">
         <ion-card>
           <ion-card-content>
-            <p>No hay entrenamientos programados para esta fecha.</p>
+            <p>No hay entrenamientos para esta fecha.</p>
           </ion-card-content>
         </ion-card>
       </div>
