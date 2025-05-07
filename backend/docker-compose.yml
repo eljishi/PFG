@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  pfg-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: pfg-backend
+    ports:
+      - '3000:3000'
+    env_file:
+      - .env
+    restart: unless-stopped
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
