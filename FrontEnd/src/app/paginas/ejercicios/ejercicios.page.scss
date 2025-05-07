@@ -17,13 +17,13 @@ ion-textarea {
 }
 
 ion-item {
-  --border-radius: 15px;
+  --border-radius: 20px;
   --background: #f8f8f8;
   margin-bottom: 10px;
 }
 
 ion-input, ion-textarea {
-  --border-radius: 15px;
+  --border-radius: 20px; 
   --padding-start: 10px;
 }
 
@@ -33,14 +33,13 @@ ion-label {
 
 .series-container {
   margin-top: 20px;
-  border-radius: 15px;
+  border-radius: 20px; 
   background: #f8f8f8;
   padding: 10px;
 }
 
-
 ion-button {
-  --border-radius: 15px;
+  --border-radius: 20px; 
   margin-top: 10px;
 }
 
@@ -50,7 +49,7 @@ ion-button {
 
 .serie-item {
   border: 1px solid #cccccc;
-  border-radius: 8px;
+  border-radius: 15px;
   padding: 8px;
   margin-bottom: 10px;
 }
@@ -94,7 +93,7 @@ ion-button {
 
 .ejercicio-card {
   margin-bottom: 16px;
-  border-radius: 12px;
+  border-radius: 20px; 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 

@@ -74,7 +74,7 @@ ion-card-content {
 }
 
 ion-button {
-  --border-radius: 8px;
+  --border-radius: 15px; 
   margin-top: var(--spacing-md);
   font-weight: 500;
 }
@@ -88,6 +88,7 @@ ion-button {
   ion-card {
     max-width: 400px;
     margin: 0 auto;
+    border-radius: 20px; 
     
     p {
       margin-top: var(--spacing-md);
@@ -96,7 +97,7 @@ ion-button {
     
     ion-icon {
       font-size: 32px;
-      color: var(--ion-color-primary);
+      color: #9370DB; 
     }
   }
 }

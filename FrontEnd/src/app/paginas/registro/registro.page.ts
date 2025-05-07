@@ -34,12 +34,8 @@ export class RegistroPage implements OnInit {
     this.router.navigate(['/auth'], { queryParams: { type: 'register' } });
   }
 
-  navigateToAthleteLogin() {
-    this.router.navigate(['/auth'], { queryParams: { type: 'athlete-login' } });
-  }
-
-  navigateToCoachLogin() {
-    this.router.navigate(['/auth'], { queryParams: { type: 'coach-login' } });
+  navigateToLogin() {
+    this.router.navigate(['/auth'], { queryParams: { type: 'login' } });
   }
 
   navigateToCoachRegister() {

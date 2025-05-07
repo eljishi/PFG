@@ -11,7 +11,7 @@
 .main-title {
   font-size: 32px;
   font-weight: bold;
-  color: var(--ion-color-primary);
+  color: #9370DB; 
   margin-bottom: 30px; 
   text-align: center;
 }
@@ -46,11 +46,11 @@
 }
 
 .athlete {
-  border-top: 5px solid var(--ion-color-primary);
+  border-top: 5px solid #9370DB; 
 }
 
 .coach {
-  border-top: 5px solid var(--ion-color-secondary);
+  border-top: 5px solid #B57EDC;
 }
 
 .button-group {
@@ -60,7 +60,7 @@
 }
 
 .register-btn {
-  --border-radius: 10px;
+  --border-radius: 15px; 
   height: 44px;
   font-weight: 500;
   --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -70,7 +70,7 @@
 }
 
 .login-btn {
-  --border-radius: 10px;
+  --border-radius: 15px;
   height: 44px;
   font-weight: 500;
   font-size: 14px; 
