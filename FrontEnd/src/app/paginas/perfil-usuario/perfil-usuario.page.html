@@ -25,14 +25,19 @@
     @if (usuario.esEntrenador) {
       <ion-item lines="none" class="rounded-input">
         <ion-label position="stacked">Tu ID</ion-label>
-        <ion-input [(ngModel)]="usuario.id" placeholder="ID de entrenador" class="custom-input" disabled></ion-input>
+        <div class="id-container">
+          <ion-input [(ngModel)]="usuario.id" placeholder="ID de entrenador" class="custom-input" disabled></ion-input>
+          <ion-icon name="clipboard-outline" (click)="copiarAlPortapapeles(usuario.id)" class="copy-icon"></ion-icon>
+        </div>
       </ion-item>
     }
     
     @if (!usuario.esEntrenador) {
       <ion-item lines="none" class="rounded-input">
         <ion-label position="stacked">ID Entrenador</ion-label>
-        <ion-input [(ngModel)]="usuario.idEntrenador" placeholder="ID del entrenador asignado" class="custom-input" disabled></ion-input>
+        <div class="id-container">
+          <ion-input [(ngModel)]="usuario.idEntrenador" placeholder="ID del entrenador asignado" class="custom-input" disabled></ion-input>
+        </div>
       </ion-item>
     }
   </ion-list>
