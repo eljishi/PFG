@@ -22,7 +22,14 @@
         @for (ejercicio of ejerciciosAgregados; track $index; let i = $index) {
           <ion-card class="ejercicio-card">
             <ion-card-header>
-              <ion-card-title>{{ ejercicio.nombre }}</ion-card-title>
+              <div class="ejercicio-header">
+                <ion-card-title>{{ ejercicio.nombre }}</ion-card-title>
+                @if (!esAtleta) {
+                  <ion-button fill="clear" color="danger" (click)="eliminarEjercicio(i)" class="eliminar-btn">
+                    <ion-icon name="trash-outline" slot="icon-only" size="large"></ion-icon>
+                  </ion-button>
+                }
+              </div>
             </ion-card-header>
             
             <ion-card-content>

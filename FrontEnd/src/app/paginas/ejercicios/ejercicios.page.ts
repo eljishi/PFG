@@ -291,4 +291,21 @@ export class EjerciciosPage implements OnInit {
     });
     await toast.present();
   }
+
+  eliminarEjercicio(index: number) {
+    if (this.esAtleta) {
+      this.mostrarToast('Solo los entrenadores pueden eliminar ejercicios');
+      return;
+    }
+    
+    if (this.ejerciciosAgregados.length <= 1) {
+      this.mostrarToast('Debe haber como mínimo 1 ejercicio');
+      return;
+    }
+    
+    if (confirm('¿Estás seguro de que deseas eliminar este ejercicio?')) {
+      this.ejerciciosAgregados.splice(index, 1);
+      this.mostrarToast('Ejercicio eliminado correctamente');
+    }
+  }
 }
