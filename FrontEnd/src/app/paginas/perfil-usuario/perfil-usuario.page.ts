@@ -40,7 +40,7 @@ export class PerfilUsuarioPage implements OnInit {
   usuario = {
     nombre: '',
     email: '',
-    foto: 'https://ionicframework.com/docs/img/demos/avatar.svg',
+  
     entrenador: '',
     esEntrenador: false,
     id: '',
@@ -63,7 +63,6 @@ export class PerfilUsuarioPage implements OnInit {
       this.usuario = {
         nombre: this.usuariosService.usuario.user || '',
         email: this.usuariosService.usuario.mail || '',
-        foto: 'https://ionicframework.com/docs/img/demos/avatar.svg', 
         entrenador: 'Por asignar',
         esEntrenador: this.usuariosService.usuario.esEntrenador || false,
         id: this.usuariosService.usuario._id || '',

@@ -6,7 +6,6 @@ import { UsuariosService } from './usuarios.service';
 import {MongooseModule} from "@nestjs/mongoose";
 import {UsuariosSchema} from "./schemas/usuarios.schema/usuarios.schema";
 
-import * as process from "node:process";
 
 @Module({
   imports: [

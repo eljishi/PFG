@@ -18,7 +18,6 @@ export class EjerciciosController {
         private readonly ejerciciosService: EjerciciosService) {
     }
 
-    // inserta un ejercicio
     @Post('')
     async create(@Body() ejercicioDto: EjercicioDTO) {
         try {
@@ -37,7 +36,6 @@ export class EjerciciosController {
 
     }
 
-    // pilla todos los ercicios
     @Get('')
     async getEjercicios() {
         try {
@@ -55,7 +53,6 @@ export class EjerciciosController {
         }
     }
 
-    //pilla una serie
     @Get('ejercicio/:id')
     async getEjercicio(@Param('id') id: string) {
         try {
@@ -82,7 +79,6 @@ export class EjerciciosController {
         }
     }
 
-    //actualiza una serie por id
     @Put('/:id')
     async updateEjercicio(
         @Param('id') id: string,
@@ -113,7 +109,6 @@ export class EjerciciosController {
         }
     }
 
-    //borra una serie por id
     @Delete(':id')
     async deleteEjercicio(@Param('id') id: string) {
         try {

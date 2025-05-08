@@ -2,9 +2,6 @@
 
 <ion-content class="ion-padding">
   <div class="profile-header">
-    <ion-avatar class="profile-avatar">
-      <img [src]="usuario.foto" alt="Foto de perfil">
-    </ion-avatar>
     <h2 class="profile-name">{{ usuario.nombre }}</h2>
     <ion-badge color="{{ usuario.esEntrenador ? 'primary' : 'success' }}" class="user-type-badge">
       {{ usuario.esEntrenador ? 'Entrenador' : 'Atleta' }}

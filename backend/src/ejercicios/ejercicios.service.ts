@@ -10,7 +10,6 @@ export class EjerciciosService {
     private ejercicioModel: Model<Ejercicio>) {
     }
 
-    // inserta una serie
     async create(ejercicioDto: EjercicioDTO): Promise<any>{
         const ejercicio = new this.ejercicioModel(ejercicioDto);
         return ejercicio.save()
@@ -21,13 +20,11 @@ export class EjerciciosService {
         return this.ejercicioModel.find().exec();
     }
 
-    //pilla un ejercicio
     async getEjercicio(idEjercicio: string): Promise<any>{
         return this.ejercicioModel.findById(idEjercicio);
     }
 
 
-    //actualiza una serie
     async updateEjercicio(
         idEjercicio: string, ejercicioDto: EjercicioDTO ): Promise<any>{
         return this.ejercicioModel.findByIdAndUpdate(
