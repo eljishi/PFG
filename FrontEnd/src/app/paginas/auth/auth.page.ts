@@ -134,25 +134,24 @@ export class AuthPage implements OnInit {
       if (this.pageType === 'coach-register') {
         esEntrenadorFlag = true;
       }
+      
       const userData = { ...this.formUser.getRawValue(), esEntrenador: esEntrenadorFlag };
-      if (esEntrenadorFlag || !userData.idEntrenador) {
-         delete userData.idEntrenador;
+      
+      if (esEntrenadorFlag || !userData.idEntrenador || userData.idEntrenador.trim() === '') {
+        delete userData.idEntrenador;
       }
+      
+      console.log('Datos de registro:', userData);
+      
       const valido = await this.userService.register(userData);
       if (valido) {
         this.mostrarToast('Registro exitoso', 'success');
         this.router.navigateByUrl('/tabs');
       } else {
-        this.mostrarToast('Correo usado.');
+        this.mostrarToast('Correo ya registrado o no válido.');
       }
     } catch (error: any) {
-      if (error && error.error && error.error.message) {
-        this.mostrarToast('Error ');
-      } else if (error instanceof Error) {
-        this.mostrarToast('Error ');
-      }
-      this.mostrarToast('Error al');
-
+      this.mostrarToast('Error al registrar usuario. Inténtalo de nuevo.');
     } finally {
       this.isLoading = false;
     }
