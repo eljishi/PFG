@@ -25,8 +25,8 @@
               <div class="ejercicio-header">
                 <ion-card-title>{{ ejercicio.nombre }}</ion-card-title>
                 @if (!esAtleta) {
-                  <ion-button fill="clear" color="danger" (click)="eliminarEjercicio(i)" class="eliminar-btn">
-                    <ion-icon name="trash-outline" slot="icon-only" size="large"></ion-icon>
+                  <ion-button fill="clear" class="eliminar-btn" (click)="eliminarEjercicio(i)">
+                    <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
                   </ion-button>
                 }
               </div>

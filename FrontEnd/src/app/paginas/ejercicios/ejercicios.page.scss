@@ -203,3 +203,10 @@ ion-fab-button {
   cursor: pointer;
   margin-left: 10px;
 }
+
+.eliminar-btn {
+  ion-icon {
+    color: var(--ion-color-danger) !important;
+    font-size: 24px;
+  }
+}

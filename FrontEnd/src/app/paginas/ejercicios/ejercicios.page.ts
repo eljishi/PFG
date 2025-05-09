@@ -203,6 +203,15 @@ export class EjerciciosPage implements OnInit {
       series: []
     };
   }
+  async mostrarToast(mensaje: string) {
+    const toast = await this.toastController.create({
+      message: mensaje,
+      duration: 2000,
+      position: 'bottom'
+    });
+    await toast.present();
+  }
+
 
   async guardarEntrenamiento() {
     if (!this.tituloEntrenamiento || !this.fechaEntrenamiento || this.ejerciciosAgregados.length === 0) {
@@ -283,15 +292,7 @@ export class EjerciciosPage implements OnInit {
     }
   }
 
-  async mostrarToast(mensaje: string) {
-    const toast = await this.toastController.create({
-      message: mensaje,
-      duration: 2000,
-      position: 'bottom'
-    });
-    await toast.present();
-  }
-
+  
   eliminarEjercicio(index: number) {
     if (this.esAtleta) {
       this.mostrarToast('Solo los entrenadores pueden eliminar ejercicios');
